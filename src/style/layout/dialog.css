@@ -1,0 +1,50 @@
+.dialog{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,.4);
+    z-index: 100;
+}
+.message{
+    position: absolute;
+    padding: 24px;
+    background-color: #ffffff;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.mess-content{
+    display: flex;
+}
+.mess-content__text{
+    overflow: auto;
+    max-height: 400px;
+    margin-bottom: 32px;
+    padding-left: 16px;
+    padding-top: 12px;
+}
+.mess-line{
+    height: 1px;
+    background: #b8bcc3;
+    margin-bottom: 20px;
+    /* margin-left: 32px;
+    margin-right: 32px; */
+}
+.mess-footer{
+    display: flex;   
+    justify-content: space-between;
+}
+.mess-footer__alone{
+    display: flex;
+    justify-content: center;
+}
+.mess-footer__right{
+    display: flex;
+}
+.dialog-icon{
+    display: flex;
+}
+
+

@@ -1,0 +1,48 @@
+/* width-height */
+.hw-14{
+    width: 14px;
+    height: 14px;
+    min-width: 14px;
+    min-height: 14px;
+}
+.hw-16{
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+    min-height: 16px;
+}
+.hw-24{
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    min-height: 24px;
+}
+.hw-32{
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    min-height: 32px;  
+}
+.hw-48{
+    width: 48x;
+    height: 48px;
+    min-width: 48px;
+    min-height: 48px;
+}
+.pd-l-10{
+    padding-left: 10px;
+}
+/* height */
+.h-32{
+    height: 32px;
+}
+/* margin-left */
+
+/* min-width */
+.mw-444{
+    min-width: 444px;
+    width: 444px;
+}
+.z-index-5{
+    z-index: 5;
+}

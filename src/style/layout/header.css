@@ -1,0 +1,42 @@
+.header{
+    display: flex;
+    background: #fff;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 900px;
+}
+.header-left{
+    display: flex;
+    height: 100%;
+    align-items: center;
+}
+.header-ringht{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-right: 20px;
+    height: 100%;
+}
+.header-icon{
+    margin: 0 10px;
+    cursor: pointer;
+    background: url(../../assets/img/Sprites.64af8f61.svg) -843px -30px;
+}
+.title-barnch{
+    cursor: pointer;
+    align-items: center;
+    display: flex;
+    margin: 0 10px;
+}
+.header-user{
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+}
+.header-name__user{
+    margin-right: 6px;
+    font-family:  Misa Bold;
+}
+.group-name{
+    font-family:  Misa Bold;
+}

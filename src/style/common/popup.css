@@ -1,0 +1,72 @@
+.popup{
+    background-color: #fff;
+    width: 900px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.popup-header{
+    display: flex;
+    justify-content: space-between;
+}
+.ms-checkbox{
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+}
+.popup-title{
+    display: flex;
+    padding: 20px 32px;
+}
+.header-popup-title{
+    font-size: 24px;
+    color: #111;
+    font-weight: 700;
+    font-family: Misa Bold;
+}
+.employee1-left__user{
+    display: flex;
+}
+.popup-content__employee{
+    padding: 0 32px;
+    padding-bottom: 20px;
+}
+.popup-content__employee1{
+    display: flex;
+}
+.content__employee1-left{
+    padding-right: 26px;
+    width: 50%;
+}
+.content__employee1-right{
+    width: 50%;
+}
+.popup-content__employee2 .employee1-left__user .m-row{
+    padding-right: 6px;
+    width: 25%;
+}
+.popup-footer{
+    padding: 0 32px;
+    padding-bottom: 20px;
+}
+.popup .mess-line{
+    margin-left: 32px;
+    margin-right: 32px;
+}
+.employee1-right__user1{
+    display: flex;
+}
+.option-gen{
+    display: flex;
+    height: 32px;
+    align-items: center;
+}
+.label-gen{
+    margin-left: 5px;
+}
+.gen{
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+}

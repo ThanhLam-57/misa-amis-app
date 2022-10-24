@@ -1,0 +1,60 @@
+.icon{
+    background: url(../../assets/img/Sprites.64af8f61.svg)  no-repeat;
+    cursor: pointer;
+}
+.icon-rectangle{
+    background-position: -80px -360px;
+    transform: rotate(90deg);
+    margin-left: 10px;
+}
+.icon-rectangle-down{
+    background-position: -1076px -32px;
+}
+.icon-user{
+    border-radius: 50%;
+    background-position: -352px -894px;
+    margin-right: 6px;
+}
+.icon-noti{
+    background-position: -788px -30px;
+    margin: 0 10px;
+}
+.icon-utilities{
+    background-position: -560px -359px;
+}
+.icon-add__emp{
+    background-position: -848px -359px;
+}
+.mess-content__icon{
+    background-position: -826px -456px;
+}
+.mess-warning__icon{
+    background-position: -592px -456px;
+}
+.icon-reload{
+    background-position: -424px -200px;
+    margin: 6px;
+}
+.popup-close__icon{
+    background-position: -144px -144px;
+    margin: 12px;
+}
+.popup-help__icon {
+    background-position: -89px -144px;
+    margin: 12px 0;
+}
+.arrow-up--blueicon {
+    background-position: -896px -359px;
+    padding: 8px 10px;
+    border: none;
+}
+.icon-paging__after{
+    background-position: -76px -356px;
+    margin-left: 8px;
+}
+.icon-paging__before{
+    background-position:-28px -356px;
+}
+.mess-err-icon{
+    background-position: -24px -954px;
+}

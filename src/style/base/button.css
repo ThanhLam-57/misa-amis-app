@@ -1,0 +1,37 @@
+.btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 8px;
+	min-width: 48px;
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: 14px;
+    text-align: left;
+    text-align: center;
+    line-height: 36px;
+    border: none;
+    cursor: pointer;
+
+}
+.btnSave:hover{
+    background-color: #57C841;
+}
+.btnSave{
+    color: #fff;
+    background: #50b83c;
+    height: 34px;
+    padding: 0 16px;
+
+}
+.btnCancel{
+    background: #FFFFFF;
+    border:1px solid #8d9096;
+    height: 32px;
+    padding: 0 16px;
+    margin: 0;
+    /* font-weight: 400; */
+}
+.btnCancel:hover{
+    background: #EEEEEE;
+}
