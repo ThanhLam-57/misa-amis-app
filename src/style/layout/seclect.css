@@ -1,11 +1,4 @@
 .select{
-  /* width: 250px;
-  height: auto;
-  position: absolute;
-  left: 0px;
-  right: 0px;
-  margin: auto;
-  margin-top: 60px; */
 }
 .span-text{
     display: flex;
@@ -68,8 +61,9 @@
   background-color: #ebedf0;
 }
 .option-number__list .select{
+  border: 1px solid #babec5;
   width: 70px;
-  padding: 0 0 0 10px;
+  margin: 0 0 0 10px;
 }
 [data-title]:hover:after {
   opacity: 1;
@@ -97,7 +91,6 @@
 }
 .combobox {
   padding-left:10px;
-  border: 1px solid #babec5;
   height: 30px;
   border-radius: 2px;
   outline: none;
@@ -134,7 +127,7 @@
   align-items: center;
   justify-content: center;
   display: flex;
-  height: 30px;
+  height: 32px;
   width: 32px;
 }
 .btn-select:hover{

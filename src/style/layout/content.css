@@ -32,8 +32,8 @@
     min-height: 600px;
 }
 .content-table{
-    min-height: 470px;
-    max-height: calc(100vh - 284px);
+    /* min-height: 470px; */
+    height: calc(100vh - 284px);
     margin: 0 16px;
     overflow: auto;
     flex: 1;

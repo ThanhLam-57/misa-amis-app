@@ -1,5 +1,5 @@
 <template lang="">
-    <div id="dlgEmployeeDetail" class="dialog" hidden>
+    <div id="dlgEmployeeDetail" class="dialog">
     <div class="mw-900">
       <div class="popup">
         <div class="popup-header">
@@ -17,7 +17,7 @@
               <div class="checkbox-text pd-l-10">Là khách hàng</div>
             </label>
             <label   for="" class="ms-checkbox">
-              <label id="tabindex23" tabindex="23" html-for="table-check" class="checkbox custom-checkbox">
+              <label id="tabindex23" tabindex="23" class="checkbox custom-checkbox">
                 <input type="checkbox" id="table" hidden />
                 <div class="wrap-icon__custom">
                   <i class="icofont-check"></i>
@@ -27,8 +27,8 @@
             </label>
           </div>
           <div class="dialog-icon">
-            <div class="popup-help__icon icon hw-24" title="Giúp (F1)"></div>
-            <div class="popup-close__icon icon hw-24" title="Đóng (ESC)"></div>
+            <div class="popup-help__icon icon hw-24"  title="Giúp (F1)"></div>
+            <div  class="popup-close__icon icon hw-24" @click="closeOption" title="Đóng (ESC)"></div>
           </div>
         </div>
         <div class="popup-content">
@@ -181,7 +181,11 @@
 </template>
 <script>
 export default {
-    
+  methods:{
+    closeOption(){
+      this.$emit("closeDiaLog");
+    }
+  }
 }
 </script>
 <style >

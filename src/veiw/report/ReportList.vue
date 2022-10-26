@@ -1,7 +1,5 @@
 <template lang="">
-    <div>
-        
-    </div>
+    <router-view>abc</router-view>
 </template>
 <script>
 export default {

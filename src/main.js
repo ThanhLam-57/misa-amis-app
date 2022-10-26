@@ -1,20 +1,35 @@
 import { createApp } from 'vue'
-// import {createRouter, createWeHistory} from 'vue-router'
 import App from './App.vue'
-// import EmployeeList from './veiw/employee/EmployeeList.vue'
-
+import { createRouter } from 'vue-router';
+import { createWebHistory } from 'vue-router';
+import VueClickAway from "vue3-click-away";
+import EmployeeList from '@/veiw/employee/EmployeeList.vue';
+import ReportList from './veiw/report/ReportList.vue';
 
 // const routes = [
-//     // { path: '/', component: Home },
-//     { path: '/employee', component: EmployeeList },
-//   ]
+//     {path: "/nhan-vien", component: EmployeeList, name: "/nhan-vien" },
+//     {path: "/bao-cao", component:ReportList }
+// ];
 
-//   const router = createRouter({
-//     // 4. Provide the history implementation to use. We are using the hash history for simplicity here.
-//     history: createWeHistory(),
-//     routes, // short for `routes: routes`
-//   })
-//   // 5. Create and mount the root instance.
+// const router = createRouter({
+//     history: createWebHistory(),
+//     routes: routes,
+// })
+const routers = [
+    { path: "/", redirect: "nhan-vien", name: "/" },
+    { path: "", redirect: "nhan-vien", name: "" },
+    {path: "/nhan-vien", component: EmployeeList, name: "/nhan-vien" },
+    {path: "/bao-cao", component:ReportList }
+  ];
+// B3: Khởi tạo router:
+const router = createRouter({
+    history: createWebHistory(),
+    routes: routers,
+});
 
+ const app =createApp(App);
 
-createApp(App).mount('#app')
+ app.use(VueClickAway);
+ app.use(router);
+ app.mount('#app');
+

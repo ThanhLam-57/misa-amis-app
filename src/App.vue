@@ -1,21 +1,20 @@
 <template>
   <div class="container">
     <TheHeader/>
-    <TheContent/>
     <Thenavbar/>
+    <div class="content">
+      <router-view ></router-view>
+    </div>
   </div>
-      <EmployeeDetail/>
 </template>
 
 <script>
 import TheHeader from './components/layout/TheHeader.vue'
-import TheContent from './components/layout/TheContent.vue'
 import Thenavbar from './components/layout/TheNavbar.vue'
-import EmployeeDetail from './veiw/employee/EmployeeDetail.vue'
 export default {
   name: "App",
   components: {
-    TheHeader,TheContent,Thenavbar,EmployeeDetail
+    TheHeader,Thenavbar
   },
 };
 </script>
