@@ -1,5 +1,6 @@
 <template lang="">
     <div class="content">
+      <router-view></router-view>
         <div class="content-header">
           <div class="content-header__title">Nhân viên</div>
           <button id="btnAdd" class="content-header__button">
@@ -150,7 +151,8 @@
               <tbody></tbody>
             </table>
           </div>
-          <div class="content-table-paging">
+          <Mcombobox/>
+          <!-- <div class="content-table-paging">
             <div class="paging-left"></div>
             <div class="paging-right">
               <div class="option-number__list">
@@ -184,15 +186,19 @@
                 ></div>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
 </template>
 <script>
+import Mcombobox from '../../components/base/combobox/MCombobox.vue'
 export default {
-    
+    name: "TheContent",
+    components:{
+      Mcombobox
+    }
 }
 </script>
 <style scoped>
-    @import url(../../style/layout/content.css);
+    /* @import url(../../style/main.css); */
 </style>

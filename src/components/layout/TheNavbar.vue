@@ -11,74 +11,74 @@
           />
         </div>
         <div class="menu-list--item" id="style-1">
-          <div class="list-item list-item__active" title="Tổng quan">
+          <router-link class="list-item list-item__active" title="Tổng quan">
             <div class="list-icon hw-24 icon-overview"></div>
             <div class="menu-list--tittle">Tổng quan</div>
-          </div>
-          <div class="list-item" title="Tiền mặt">
+          </router-link>
+          <router-link class="list-item" title="Tiền mặt">
             <div class="list-icon hw-24 icon-cash"></div>
             <div class="menu-list--tittle">Tiền mặt</div>
-          </div>
-          <div class="list-item" title="Tiền gửi">
+          </router-link>
+          <router-link class="list-item" title="Tiền gửi">
             <div class="list-icon hw-24 icon-deposits"></div>
             <div class="menu-list--tittle">Tiền gửi</div>
-          </div>
-          <div class="list-item" title="Mua hàng">
+          </router-link>
+          <router-link class="list-item" title="Mua hàng">
             <div class="list-icon hw-24 icon-buy"></div>
             <div class="menu-list--tittle">Mua hàng</div>
-          </div>
-          <div class="list-item" title="Bán hàng">
+          </router-link>
+          <router-link class="list-item" title="Bán hàng">
             <div class="list-icon hw-24 icon-sell"></div>
             <div class="menu-list--tittle">Bán hàng</div>
-          </div>
-          <div class="list-item" title="Quảng lý hóa đơn">
+          </router-link>
+          <router-link class="list-item" title="Quảng lý hóa đơn">
             <div class="list-icon hw-24 icon-invoice"></div>
             <div class="menu-list--tittle">Quản lý hóa đơn</div>
-          </div>
-          <div class="list-item" title="Kho">
+          </router-link>
+          <router-link class="list-item" title="Kho">
             <div class="list-icon hw-24 icon-warehouse"></div>
             <div class="menu-list--tittle">Kho</div>
-          </div>
-          <div class="list-item" title="Công cụ dụng cụ">
+          </router-link>
+          <router-link class="list-item" title="Công cụ dụng cụ">
             <div class="list-icon hw-24 icon-tools"></div>
             <div class="menu-list--tittle">Công cụ dụng cụ</div>
-          </div>
-          <div class="list-item" title="Tài sản cố định">
+          </router-link>
+          <router-link class="list-item" title="Tài sản cố định">
             <div class="list-icon hw-24 icon-asset"></div>
             <div class="menu-list--tittle">Tài sản cố định</div>
-          </div>
-          <div class="list-item" title="Thuế">
+          </router-link>
+          <router-link class="list-item" title="Thuế">
             <div class="list-icon hw-24 icon-tax"></div>
             <div class="menu-list--tittle">Thuế</div>
-          </div>
-          <div class="list-item" title="Giá thành">
+          </router-link>
+          <router-link class="list-item" title="Giá thành">
             <div class="list-icon hw-24 icon-price"></div>
             <div class="menu-list--tittle">Giá thành</div>
-          </div>
-          <div class="list-item" title="Tổng hợp">
+          </router-link>
+          <router-link class="list-item" title="Tổng hợp">
             <div class="list-icon hw-24 icon-general"></div>
             <div class="menu-list--tittle">Tổng hợp</div>
-          </div>
-          <div class="list-item" title="Ngân sách">
+          </router-link>
+          <router-link class="list-item" title="Ngân sách">
             <div class="list-icon hw-24 icon-budget"></div>
             <div class="menu-list--tittle">Ngân sách</div>
-          </div>
-          <div class="list-item" title="Báo cáo">
+          </router-link>
+          <router-link class="list-item" title="Báo cáo">
             <div class="list-icon hw-24 icon-report"></div>
             <div class="menu-list--tittle">Báo cáo</div>
-          </div>
-          <div class="list-item" title="Tài chính">
+          </router-link>
+          <router-link class="list-item" title="Tài chính">
             <div class="list-icon hw-24 icon-finance"></div>
             <div class="menu-list--tittle">Tài chính</div>
-          </div>
+          </router-link>
         </div>
       </div>
 </template>
 <script>
 export default {
-    
-}
+
+};
 </script>
 <style scoped>
-    @import url(../../style/layout/menu.css);    
+/* @import url(../../style/layout/menu.css); */
 </style>

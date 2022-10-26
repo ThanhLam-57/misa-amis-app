@@ -23,5 +23,5 @@ export default {
 }
 </script>
 <style scoped> 
-    @import url(../../style/layout/header.css);
+    /* @import url(../../style/layout/header.css); */
 </style>

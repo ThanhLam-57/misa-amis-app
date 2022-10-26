@@ -43,7 +43,7 @@
 .select ul{
   z-index: 11;
   border-radius: 4px;
-  display: none;
+  /* display: none; */
   position: absolute;
   padding: 10px;
   border: 1px solid #babec5;
@@ -126,7 +126,7 @@
   position: absolute;
   background-color: unset;
   cursor: pointer;
-  background-image: url(/assets/img/Sprites.64af8f61.svg);
+  background-image: url(../../assets/img/Sprites.64af8f61.svg);
   background-position: -560px -359px;
 }
 .btn-select{
@@ -134,7 +134,7 @@
   align-items: center;
   justify-content: center;
   display: flex;
-  height: 32px;
+  height: 30px;
   width: 32px;
 }
 .btn-select:hover{
@@ -184,7 +184,7 @@
   border: 1px solid;
 }
 .sl-icon{
-  background-image: url(/assets/img/Sprites.64af8f61.svg);
+  background-image: url(../../assets/img/Sprites.64af8f61.svg);
   background-position: -1129px -365px;
 }
 .sl-box ul{

@@ -11,6 +11,7 @@
 @import url(./base/table.css);
 @import url(./base/input.css);
 @import url(./common/popup.css);
+@import url(./layout/seclect.css);
 body{
     margin: 0;
     font-family: Misa Fonts;
