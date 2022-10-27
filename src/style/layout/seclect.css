@@ -216,7 +216,7 @@
 .ttable{
   background-color: white;
   position: relative;
-  display: none;
+  /* display: none; */
   position: absolute;
   max-height: 160px;
   overflow: auto;

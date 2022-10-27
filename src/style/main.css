@@ -12,6 +12,7 @@
 @import url(./base/input.css);
 @import url(./common/popup.css);
 @import url(./layout/seclect.css);
+@import url(../assets/icofont/icofont.min.css);
 body{
     margin: 0;
     font-family: Misa Fonts;
