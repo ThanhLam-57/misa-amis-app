@@ -5,16 +5,11 @@ import { createWebHistory } from 'vue-router';
 import VueClickAway from "vue3-click-away";
 import EmployeeList from '@/veiw/employee/EmployeeList.vue';
 import ReportList from './veiw/report/ReportList.vue';
+// import mitt from 'mitt';
 
-// const routes = [
-//     {path: "/nhan-vien", component: EmployeeList, name: "/nhan-vien" },
-//     {path: "/bao-cao", component:ReportList }
-// ];
+// const emitter = mitt();
+// app.config.globalProperties.emitter = emitter;
 
-// const router = createRouter({
-//     history: createWebHistory(),
-//     routes: routes,
-// })
 const routers = [
     { path: "/", redirect: "nhan-vien", name: "/" },
     { path: "", redirect: "nhan-vien", name: "" },

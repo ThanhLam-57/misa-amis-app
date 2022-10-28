@@ -28,7 +28,6 @@ export default {
     },
     activeClass(item){
       this.classActive = item.value;
-      console.log("test");
     }
   },
   data() {

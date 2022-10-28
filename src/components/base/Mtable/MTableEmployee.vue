@@ -8,15 +8,7 @@
                     format="sticky_header_left"
                     class="text-align--center sticky_header_left"
                   >
-                    <label
-                      html-for="table-check"
-                      class="checkbox custom-checkbox"
-                    >
-                      <input type="checkbox" id="table" hidden />
-                      <div class="wrap-icon__custom">
-                        <i class="icofont-check"></i>
-                      </div>
-                    </label>
+                  <MCheckbox></MCheckbox>
                   </th>
                   <th
                     propValue="EmployeeCode"
@@ -131,9 +123,10 @@
           </div>
 </template>
 <script>
+import MCheckbox from '../input/MCheckbox.vue'
 export default {
     name:"MTableEmployeeList",
-    components:{}
+    components:{MCheckbox}
 }
 </script>
 <style lang="">

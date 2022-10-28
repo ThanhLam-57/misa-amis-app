@@ -1,5 +1,5 @@
 <template lang="">
-          <div id="menu" class="menu big-menu">
+      <div id="menu" class="menu big-menu">
         <div id="logo-container" class="logo-container">
           <div id="header-icon1" class="header-icon hw-24 display-none"></div>
           <a id="list-app" href="" class="hw-24 logo-icon--app"></a>
@@ -20,23 +20,23 @@
       </div>
 </template>
 <script>
-import { MENU_ITEMS } from '../../const.js'
+import { MENU_ITEMS } from "../../const.js";
 export default {
-  data(){
+  data() {
     return {
       menuItems: [],
-      routeActive: null
+      routeActive: null,
     };
   },
-  created(){
+  created() {
     this.menuItems = MENU_ITEMS;
   },
   methods: {
-    changeRouter(item){
+    changeRouter(item) {
       this.routeActive = item.route;
-      this.$router.push({path: item.route});
-    }
-  }
+      this.$router.push({ path: item.route });
+    },
+  },
 };
 </script>
 <style scoped>

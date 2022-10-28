@@ -97,3 +97,17 @@ export const OPTION_PAGING=[
     {value: "30", name:"30"},
     {value: "50", name:"50"},
 ]
+export const LIST_GENDER=[
+  {
+    value: 1,
+    name : "Nam"
+  },
+  {
+    value: 2,
+    name : "Nữ"
+  },
+  {
+    value: 3,
+    name : "Khác"
+  }
+]

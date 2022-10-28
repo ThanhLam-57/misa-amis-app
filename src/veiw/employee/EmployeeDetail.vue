@@ -7,22 +7,24 @@
             <div id="header-popup-title" class="header-popup-title">
               Thông tin nhân viên
             </div>
-            <label   for="" class="ms-checkbox">
-              <label  tabindex="22" html-for="table-check" class="checkbox custom-checkbox">
+            <label class="ms-checkbox">
+              <!-- <label  tabindex="22" html-for="table-check" class="checkbox custom-checkbox">
                 <input  type="checkbox" id="table" hidden />
                 <div class="wrap-icon__custom">
                   <i class="icofont-check"></i>
                 </div>
-              </label>
+              </label> -->
+              <MCheckbox></MCheckbox>
               <div class="checkbox-text pd-l-10">Là khách hàng</div>
             </label>
-            <label   for="" class="ms-checkbox">
-              <label id="tabindex23" tabindex="23" class="checkbox custom-checkbox">
+            <label  class="ms-checkbox">
+              <!-- <label id="tabindex23" tabindex="23" class="checkbox custom-checkbox">
                 <input type="checkbox" id="table" hidden />
                 <div class="wrap-icon__custom">
                   <i class="icofont-check"></i>
                 </div>
-              </label>
+              </label> -->
+              <MCheckbox></MCheckbox>
               <div class="checkbox-text pd-l-10">Là nhân viên</div>
             </label>
           </div>
@@ -89,23 +91,7 @@
                     <label class="m-label">Ngày sinh</label>
                     <input tabindex="5" propValue="DateOfBirth" class="m-input" type="date" name="input" />
                   </div>
-                  <div class="m-row" style="padding-left: 10px">
-                    <label class="m-label">Giới tính</label>
-                    <div class="option-gen">
-                      <div class="gen">
-                        <input tabindex="6" type="radio" name="Nam" id="" />
-                        <label class="label-gen">Nam</label>
-                      </div>
-                      <div class="gen">
-                        <input tabindex="7" type="radio" name="Nam" id="" />
-                        <label class="label-gen">Nữ</label>
-                      </div>
-                      <div class="gen">
-                        <input tabindex="8" type="radio" name="Nam" id="" />
-                        <label class="label-gen">Khác</label>
-                      </div>
-                    </div>
-                  </div>
+                  <MRadio/>
                 </div>
                 <div class="employee1-left__user">
                   <div class="m-row" title="Số chứng minh nhân dân" style="width: 60%; padding-right: 6px">
@@ -180,7 +166,11 @@
   </div>
 </template>
 <script>
+import MCheckbox from "../../components/base/input/MCheckbox.vue"
+import MRadio from "../../components/base/input/MRadio.vue"
 export default {
+  name:"EMployeeDetail",
+  components:{MCheckbox,MRadio},
   methods:{
     closeOption(){
       this.$emit("closeDiaLog");
