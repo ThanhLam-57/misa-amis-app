@@ -19,7 +19,7 @@
 .input-wrapper:active{
     border-color: #73c663;
 }
-.m-input {
+.m__input {
     padding: 0 12px 0 10px;
     font-size: 13px;
     height: 32px;
@@ -32,12 +32,12 @@
     width: 100%;
 }
 
-.m-input::placeholder {
+.m__input::placeholder {
     color: #bbb;
     font-size: 14px;
 }
 
-.m-input:hover {
+.m__input:hover {
     border-color: #73c663;
     cursor: auto;
 }
@@ -52,7 +52,7 @@ input[type=radio]{
     height: 18px;
     width: 18px;
 }
-.m-input:focus {
+.m__input:focus {
     border: 1px solid #50b83c;
     outline: none;
 }
@@ -63,7 +63,7 @@ input[type=radio]{
     position: relative;
     justify-content: center;
 }
-.m-input-icon {
+.m__input-icon {
     background-repeat: no-repeat;
     background-position: right 6px center;
     padding-right: 32px;

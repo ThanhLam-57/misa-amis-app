@@ -21,9 +21,7 @@ const router = createRouter({
     history: createWebHistory(),
     routes: routers,
 });
-
- const app =createApp(App);
-
+const app =createApp(App);
  app.use(VueClickAway);
  app.use(router);
  app.mount('#app');

@@ -1,3 +1,4 @@
+//Dữ liệu menu
 export const MENU_ITEMS =[
     {
         text: "Tổng quan",
@@ -97,6 +98,7 @@ export const OPTION_PAGING=[
     {value: "30", name:"30"},
     {value: "50", name:"50"},
 ]
+//Dữ liệu giới tính
 export const LIST_GENDER=[
   {
     value: 1,

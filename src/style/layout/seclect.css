@@ -127,7 +127,7 @@
   align-items: center;
   justify-content: center;
   display: flex;
-  height: 32px;
+  height: 30px;
   width: 32px;
 }
 .btn-select:hover{
