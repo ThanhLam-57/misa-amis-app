@@ -45,6 +45,11 @@ export default {
     style:String
   },
   methods:{
+    /**
+     * Hàm up date input
+     * Author:NTLAM 28/10/2022
+     * @param {event} event 
+     */
     updateInput(event){
         this.$emit("update:modelValue",event.target.value);
     }

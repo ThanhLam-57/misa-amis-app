@@ -102,7 +102,6 @@ th{
 
 /* Thành phần sưa */
 .dlg-option{
-    display: none;
     z-index: 5;
     background-color: #fff;
     position: absolute;

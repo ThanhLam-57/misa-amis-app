@@ -20,12 +20,25 @@ export default {
     this.optionPagings = OPTION_PAGING;
   },
   methods:{
+    /**
+     * Hàm show option
+     * Author:NTLAM 26/10/2022
+     */
     showOption() {
       this.isShow = !this.isShow;
     },
+    /**
+     * Hàm đóng option
+     * Author:NTLAM 26/10/2022
+     */
     closeOption(){
       this.isShow =false;
     },
+    /**
+     * Hàm thêm mới class vào option
+     * Author:NTLAM 26/10/2022
+     * @param {*} item 
+     */
     activeClass(item){
       this.classActive = item.value;
     }

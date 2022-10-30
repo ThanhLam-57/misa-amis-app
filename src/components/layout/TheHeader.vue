@@ -19,7 +19,9 @@
 </template>
 <script>
 export default {
-
+  name:"TheHeader",
+  methods:{
+  }
 }
 </script>
 <style scoped> 

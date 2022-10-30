@@ -11,103 +11,11 @@
                   <MCheckbox></MCheckbox>
                   </th>
                   <th
-                    propValue="EmployeeCode"
-                    format="sticky_header_left_1"
-                    class="text-align--left sticky_header_left_1"
-                    title=""
-                    style="min-width: 100px"
-                  >
-                    MÃ NHÂN VIÊN
-                  </th>
-                  <th
-                    propValue="EmployeeName"
-                    class="text-align--left"
-                    style="min-width: 200px"
-                  >
-                    TÊN NHÂN VIÊN
-                  </th>
-                  <th
-                    propValue="Gender"
-                    class="text-align--left"
-                    style="min-width: 70px"
-                  >
-                    GIỚI TÍNH
-                  </th>
-                  <th
-                    propValue="DateOfBirth"
-                    format="date"
-                    class="text-align--center"
-                    style="min-width: 100px"
-                  >
-                    NGÀY SINH
-                  </th>
-                  <th
-                    propValue="IdentityNumber"
-                    title="Số chứng minh nhân dân"
-                    class="text-align--left"
-                    style="min-width: 120px"
-                  >
-                    SỐ CMND
-                  </th>
-                  <th
-                    propValue="IdentityDate"
-                    format="date"
-                    class="text-align--center"
-                    style="min-width: 120px"
-                  >
-                    NGÀY CẤP
-                  </th>
-                  <th
-                    propValue="IdentityPlace"
-                    class="text-align--left"
-                    style="min-width: 150px"
-                  >
-                    NƠI CẤP
-                  </th>
-                  <th
-                    propValue="PositionName"
-                    class="text-align--left"
-                    style="min-width: 150px"
-                  >
-                    CHỨC DANH
-                  </th>
-                  <th
-                    propValue="DepartmentCode"
-                    class="text-align--left"
-                    style="min-width: 150px"
-                  >
-                    MÃ ĐƠN VỊ
-                  </th>
-                  <th
-                    propValue="DepartmentName"
-                    class="text-align--left"
-                    style="min-width: 150px"
-                  >
-                    TÊN ĐƠN VỊ
-                  </th>
-                  <th
-                    propValue="PhoneNumber"
-                    title="Điện thoại di động"
-                    class="text-align--left"
-                    style="min-width: 150px"
-                  >
-                    ĐT DI ĐỘNG
-                  </th>
-                  <th
-                    propValue
-                    title="điện thoại cố định"
-                    class="text-align--left"
-                    style="min-width: 150px"
-                  >
-                    ĐT CỐ ĐỊNH
-                  </th>
-                  <th
-                    propValue="Email"
-                    class="text-align--left"
-                    style="min-width: 150px"
-                  >
-                    EMAIL
-                  </th>
+                    v-for="(item, index) in headers"
+                    :class="item.Class"
+                    :style="{ 'min-width': item.Width + 'px' }"
+                    :key="index"
+                  >{{ item.Caption }}</th>
                   <th
                     format="stickyRight"
                     propValue="function"
@@ -118,17 +26,91 @@
                   </th>
                 </tr>
               </thead>
-              <tbody></tbody>
+              <tbody>
+                <tr v-for="employee in employees" :key="employee.EmployeeId">
+                  <td
+                  propValue="check"
+                    format="sticky_header_left"
+                    class="text-align--center sticky_body_left"><MCheckbox></MCheckbox></td>
+                  <td
+                    v-for="(item, index) in headers"
+                    :class="item.CellClass"
+                    :style="{ 'min-width': item.Width + 'px' }"
+                    :key="index"
+                  >{{ employee[item.propValue] }}</td>
+                  <td
+                    format="stickyRight"
+                    propValue="function"
+                    class="text-align--center sticky_body_right"
+                    :class="{'index-td-selection' : isShowOption && itemSelected.EmployeeId == employee.EmployeeId}"
+                    style="min-width: 120px"
+                  >
+                    <div class="edit-option">
+                      <div @click="showDialog" class="text-edit">Sửa</div>
+                      <button @click="showOpttion(employee)" class="icon arrow-up--blueicon hw-16">
+                      </button>
+                    </div>
+                    <div v-show="isShowOption && itemSelected.EmployeeId == employee.EmployeeId" class="dlg-option">
+                      <div class="option option-delete">Xoá</div>
+                      <div class="option option-stop__use">Ngừng sử dụng</div>
+                    </div>
+                  </td>
+                </tr>
+
+              </tbody>
             </table>
           </div>
 </template>
 <script>
-import MCheckbox from '../input/MCheckbox.vue'
+import MCheckbox from "../input/MCheckbox.vue";
+import { getData } from "../../../axios/employeeController/employeeController.js";
 export default {
-    name:"MTableEmployeeList",
-    components:{MCheckbox}
-}
+  name: "MTableEmployeeList",
+  components: { MCheckbox },
+  props: {
+    headers: {
+      Type: Array,
+      default: [],
+    },
+  },
+  created() {
+    this.getDataPaging();
+  },
+  data() {
+    return {
+      isShowOption :false,
+      employees: [],
+      itemSelected: null
+    };
+  },
+  methods: {
+    getDataPaging() {
+      getData()
+        .then((res) => {
+          this.employees = res.data;
+        })
+        .catch();
+    },
+    showDialog(){
+      this.$emit("showDialog")
+    },
+    showOpttion(item){
+      if(this.itemSelected && this.itemSelected.EmployeeId == item.EmployeeId){
+        this.itemSelected = null;
+        this.isShowOption = false;
+      }
+      else{
+        this.itemSelected = item;
+        this.isShowOption = true;
+      }
+      //this.isShowOption = !this.isShowOption;
+    },
+  },
+
+};
 </script>
-<style lang="">
-    
+<style>
+.index-td-selection{
+  z-index: 1;
+}
 </style>

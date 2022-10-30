@@ -7,8 +7,12 @@
             <div id="header-popup-title" class="header-popup-title">
               Thông tin nhân viên
             </div>
+            <label class="ms-checkbox">
               <MCheckbox text="Là khách hàng"></MCheckbox>
+            </label>
+            <label class="ms-checkbox">             
               <MCheckbox text="Là nhân viên"></MCheckbox>
+            </label>
           </div>
           <div class="dialog-icon">
             <div class="popup-help__icon icon hw-24"  title="Giúp (F1)"></div>
@@ -20,28 +24,12 @@
             <div class="popup-content__employee1">
               <div class="content__employee1-left">
                 <div class="employee1-left__user">
-                    <MInput style="width: 40%; padding-right: 6px" index="1" label="Mã" type="text"/>
-                    <MInput style="width: calc(60% - 6px)" index="1" label="Tên" type="text"/>
+                    <MInput style="width: 40%; padding-right: 6px" index="1" label="Mã nhân viên " type="text"/>
+                    <MInput style="width: calc(60% - 6px)" index="1" label="Tên nhân viên" type="text"/>
                 </div>
                 <div class="m-row">
                   <div id="select" class="select" style="position: relative;">
-                    <MInputIcon style="height: 30px;" label="Đơn vị" index="1" />
-                    <div id="ttable" class="ttable" hidden>
-                      <table class="table-select" style=" margin: 0px;z-index: 3;">
-                        <thead class="table-header" style="position: sticky;">
-                          <tr >
-                            <th propValue="DepartmentCode" style="width: 30%;" class="DVid">Mã đơn vị</th>
-                            <th propValue="DepartmentName" style="width: 70%;" class="DVname">Tên Đơn vị</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                      </table>
-                      <div class="table-bot">
-                        Cập nhật cơ cấu tổ chức
-                      </div>
-                    </div>
-
+                    <MComboboxDepartment label="Đơn vị"/>
                   </div>
                   <!-- <div class="err-message" hidden>Thông tin này không được để trống</div> -->
                 </div>
@@ -93,15 +81,24 @@
 import MCheckbox from "../../components/base/input/MCheckbox.vue"
 import MRadio from "../../components/base/input/MRadio.vue"
 import MInput from "../../components/base/input/MInput.vue";
-import MInputIcon from "../../components/base/input/MInputIcon.vue";
 import MButton from "../../components/base/Mbutton/MButton.vue"
+import MComboboxDepartment from "../../components/base/combobox/MComboboxDepartment.vue"
 export default {
   name:"EMployeeDetail",
-  components:{MCheckbox,MRadio,MInput,MInputIcon,MButton},
+  components:{MCheckbox,MRadio,MInput,MButton,MComboboxDepartment},
+  data(){
+    return{
+      isShowTb : false,
+    }
+  },
   methods:{
+    /**
+     * Hàm đóng dialog thêm mới nhân viên
+     * Author:NTLAM 27/10/2022
+     */
     closeOption(){
       this.$emit("closeDiaLog");
-    }
+    },
   }
 }
 </script>

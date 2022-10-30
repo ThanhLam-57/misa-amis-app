@@ -85,7 +85,7 @@ export const MENU_ITEMS =[
         route: "/bao-cao",
       },
       {
-        text: "Phân tích tài chính",
+        text: "Tài chính",
         iconCoordinates: [207, 1664],
         activeClass: "list-item__active",
         route: "/phan-tich-tai-chinh",
@@ -113,3 +113,83 @@ export const LIST_GENDER=[
     name : "Khác"
   }
 ]
+
+//dỮ liệu table employee
+export const EMPLOYEE_HEADER = [
+  {
+    Class: "text-align--left sticky_header_left_1",
+    CellClass: "sticky_body_left_1",
+    Caption: "MÃ NHÂN VIÊN",
+    propValue: "EmployeeCode",
+    Width: "130",
+  },
+  {
+    Class: "text-align--left",
+    CellClass: "text-align--left",
+    Caption: "TÊN NHÂN VIÊN",
+    propValue: "EmployeeName",
+    Width: "200",
+  },
+  {
+    Class: "text-align--left",
+    CellClass: "text-align--left",
+    Caption: "GIỚI TÍNH",
+    propValue: "Gender",
+    // dataFormat: (genderEnum) => {
+    //   return GENDER_DATA[genderEnum];
+    // },
+    Width: "100",
+  },
+  {
+    Class: "text-align--center",
+    CellClass: "text-align--center",
+    Caption: "NGÀY SINH",
+    // dataFormat: (date) => {
+    //   return formatDate(date);
+    // },
+    propValue: "DateOfBirth",
+    Width: "150",
+  },
+  {
+    Class: "text-align--left",
+    CellClass: "text-align--left",
+    Caption: "SỐ CMND",
+    propValue: "IdentityNumber",
+    Width: "150",
+  },
+  {
+    Class: "text-align--left",
+    CellClass: "text-align--left",
+    Caption: "CHỨC DANH",
+    propValue: "PositionName",
+    Width: "200",
+  },
+  {
+    Class: "text-align--left",
+    CellClass: "text-align--left",
+    Caption: "TÊN ĐƠN VỊ",
+    propValue: "DepartmentName",
+    Width: "250",
+  },
+  {
+    Class: "text-align--left",
+    CellClass: "text-align--left",
+    Caption: "SỐ TÀI KHOẢN",
+    propValue: "BankAccountNumber",
+    Width: "200",
+  },
+  {
+    Class: "text-align--left",
+    CellClass: "text-align--left",
+    Caption: "TÊN NGÂN HÀNG",
+    propValue: "BankName",
+    Width: "250",
+  },
+  {
+    Class: "text-align--left",
+    CellClass: "text-align--left",
+    Caption: "CHI NHÁNH NGÂN HÀNG",
+    propValue: "BankBranchName",
+    Width: "250",
+  },
+];

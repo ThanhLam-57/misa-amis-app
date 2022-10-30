@@ -32,6 +32,11 @@ export default {
     this.menuItems = MENU_ITEMS;
   },
   methods: {
+    /**
+     * Hàm đổi router
+     * Author: NTLAM 28/10/2022
+     * @param {*} item 
+     */
     changeRouter(item) {
       this.routeActive = item.route;
       this.$router.push({ path: item.route });

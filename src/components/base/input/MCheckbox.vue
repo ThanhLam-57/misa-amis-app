@@ -1,6 +1,5 @@
 <template lang="">
-     <label  class="ms-checkbox">
-    <label
+        <label
         class="checkbox custom-checkbox"
         >
             <input type="checkbox" id="table" hidden />
@@ -10,11 +9,11 @@
     </label>
 
     <div class="checkbox-text pd-l-10">{{text}}</div>
-</label>
+
 </template>
 <script>
 export default {
-    name:"MCeckbox",
+    name:"MCheckbox",
     props:["text"],
     component:{}
 };
