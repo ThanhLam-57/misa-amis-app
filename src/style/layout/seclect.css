@@ -111,24 +111,24 @@
 }
 .combobox__btn {
   width: 16px;
-  height: 16px;
-  font-size: 20px;
-  border-radius: 4px;
-  outline: unset;
-  border: none;
-  position: absolute;
-  background-color: unset;
-  cursor: pointer;
-  background-image: url(../../assets/img/Sprites.64af8f61.svg);
-  background-position: -560px -359px;
+    height: 16px;
+    font-size: 20px;
+    border-radius: 4px;
+    outline: unset;
+    border: none;
+    position: absolute;
+    background-color: unset;
+    cursor: pointer;
+    background-image: url(../../assets/img/Sprites.64af8f61.svg);
+    background-position: -560px -359px;
 }
 .btn-select{
   cursor: pointer;
-  align-items: center;
-  justify-content: center;
-  display: flex;
-  height: 30px;
-  width: 32px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    height: 32px;
+    width: 32px;
 }
 .btn-select:hover{
   background-color: #e0e0e0;

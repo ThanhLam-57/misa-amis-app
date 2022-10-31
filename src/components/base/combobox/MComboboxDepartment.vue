@@ -7,7 +7,7 @@
         <div class="input-wrapper">
             <input 
                 v-model="textVale"
-                propValue="DepartmentName" class="m__input" style="height: 30px;border: none;" type="text"/>
+                propValue="DepartmentName" class="m-input" style="height: 30px;border: none;" type="text"/>
             <div @click="showTable"  id="btn-select__combobox" class="btn-select">
                 <div class="combobox__btn" :class="{rotate:isShowTb}"></div>
             </div>

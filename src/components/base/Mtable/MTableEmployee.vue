@@ -8,7 +8,7 @@
                     format="sticky_header_left"
                     class="text-align--center sticky_header_left"
                   >
-                  <MCheckbox></MCheckbox>
+                  <input v-model="selectAll" type="checkbox">
                   </th>
                   <th
                     v-for="(item, index) in headers"
@@ -27,17 +27,18 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="employee in employees" :key="employee.EmployeeId">
+                <tr v-for="employee in dataSource" :key="employee.EmployeeId">
                   <td
-                  propValue="check"
+                    propValue="check"
                     format="sticky_header_left"
-                    class="text-align--center sticky_body_left"><MCheckbox></MCheckbox></td>
+                    class="text-align--center sticky_body_left">
+                    <input  v-model="selected" :value="employee.EmployeeId" type="checkbox"></td>
                   <td
                     v-for="(item, index) in headers"
                     :class="item.CellClass"
                     :style="{ 'min-width': item.Width + 'px' }"
                     :key="index"
-                  >{{ employee[item.propValue] }}</td>
+                  >{{  getValueTxt(employee,item)}}</td>
                   <td
                     format="stickyRight"
                     propValue="function"
@@ -50,7 +51,7 @@
                       <button @click="showOpttion(employee)" class="icon arrow-up--blueicon hw-16">
                       </button>
                     </div>
-                    <div v-show="isShowOption && itemSelected.EmployeeId == employee.EmployeeId" class="dlg-option">
+                    <div v-show="isShowOption && itemSelected.EmployeeId == employee.EmployeeId"  class="dlg-option"  v-if="this.isShowOption==true" v-click-away="closeOption">
                       <div class="option option-delete">Xoá</div>
                       <div class="option option-stop__use">Ngừng sử dụng</div>
                     </div>
@@ -62,38 +63,62 @@
           </div>
 </template>
 <script>
-import MCheckbox from "../input/MCheckbox.vue";
-import { getData } from "../../../axios/employeeController/employeeController.js";
+import{formatDate} from "../../../script/base.js"
 export default {
   name: "MTableEmployeeList",
-  components: { MCheckbox },
+  components: {  },
   props: {
     headers: {
       Type: Array,
       default: [],
     },
+    dataSource:{
+      Type:Array,
+      default:[]
+    }
   },
-  created() {
-    this.getDataPaging();
+  computed:{
+    /**
+     * Xử lí select checkbox
+     * Author:NTLAM 31/10/2022
+     */
+    selectAll:{
+      get: function(){
+        return this.dataSource  ? this.selected.length == this.dataSource.length : false;
+      },
+      set:function(value){
+        var selected =[];
+        if(value){
+          this.dataSource.forEach(function(employee){
+            selected.push(employee.EmployeeId);
+          })
+        }
+        this.selected = selected;
+        console.log(this.selected.length);
+      }
+    }
   },
   data() {
     return {
       isShowOption :false,
       employees: [],
-      itemSelected: null
+      itemSelected: null,
+      selected:[]
     };
   },
   methods: {
-    getDataPaging() {
-      getData()
-        .then((res) => {
-          this.employees = res.data;
-        })
-        .catch();
-    },
+    /**
+     * Hàm show dialog sửa
+     * Author: NTLAM 29/10/2022
+     */
     showDialog(){
       this.$emit("showDialog")
     },
+    /**
+     * Hàm Show tùy chọn của từng nhân viên
+     * Author: NTLAM 29/10/2022
+     * @param {*} item 
+     */
     showOpttion(item){
       if(this.itemSelected && this.itemSelected.EmployeeId == item.EmployeeId){
         this.itemSelected = null;
@@ -103,10 +128,34 @@ export default {
         this.itemSelected = item;
         this.isShowOption = true;
       }
-      //this.isShowOption = !this.isShowOption;
+    },
+    /**
+     * Author: NTLAM 29/10/2022
+     * Hàm đóng option tùy chọn
+     */
+    closeOption(){
+      this.isShowOption =false;
+      this.itemSelected=null;
+    },
+    /**
+     * Hamf format và lấy ra các trường đưa lên table
+     * Author NTLAM 31/10/2022
+     * @param {*} employee 
+     * @param {*} item 
+     */
+    getValueTxt(employee,item){
+      var data =null;
+      if(item.propValue=="DateOfBirth"){
+        data= formatDate(employee[item.propValue]);
+        return data;
+      }
+      if(item.propValue=="GenderName"){
+        if(employee[item.propValue] == null)
+        return "Khác";
+      }
+    return employee[item.propValue];
     },
   },
-
 };
 </script>
 <style>

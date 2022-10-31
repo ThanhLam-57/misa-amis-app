@@ -19,7 +19,7 @@
 .input-wrapper:active{
     border-color: #73c663;
 }
-.m__input {
+.m-input {
     padding: 0 12px 0 10px;
     font-size: 13px;
     height: 32px;
@@ -32,12 +32,12 @@
     width: 100%;
 }
 
-.m__input::placeholder {
+.m-input::placeholder {
     color: #bbb;
     font-size: 14px;
 }
 
-.m__input:hover {
+.m-input:hover {
     border-color: #73c663;
     cursor: auto;
 }
@@ -52,7 +52,7 @@ input[type=radio]{
     height: 18px;
     width: 18px;
 }
-.m__input:focus {
+.m-input:focus {
     border: 1px solid #50b83c;
     outline: none;
 }
@@ -63,7 +63,7 @@ input[type=radio]{
     position: relative;
     justify-content: center;
 }
-.m__input-icon {
+.m-input-icon {
     background-repeat: no-repeat;
     background-position: right 6px center;
     padding-right: 32px;
@@ -189,7 +189,7 @@ input[type=radio]{
 /* input[type="date"]{
     font-family: Misa font;
 } */
-input[type="checkbox"],
+/* input[type="checkbox"], */
 input[type="radio"] {
     accent-color: #409330 !important;
 }
@@ -233,4 +233,37 @@ input[typy = "date"]{
     100% {
       transform: rotate(360deg);
     }
+  }
+  input[type="checkbox"]:focus-visible {
+    outline-offset: 0;
+  }
+  input[type="checkbox"]:checked {
+    box-shadow: 0 0 0 1px #2ca01c;
+    border-width: 0.2rem;
+    transform: rotate(90deg);
+  }
+  input[type="checkbox"]:checked::before {
+    content: "";
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: -50%;
+    left: -50%;
+    z-index: -1;
+    background: url(../../assets/img/Sprites.64af8f61.svg) no-repeat -1222px -360px;
+    transform: rotate(-90deg);
+  }
+  input[type="checkbox"] {
+    height: 1rem;
+    width: 1rem;
+    margin-right: 0.5rem;
+    margin-top: 0;
+    text-align: center;
+    vertical-align: middle;
+    appearance: none;
+    -webkit-appearance: none;
+    border: 0.2rem solid #fff;
+    background-color: #fff;
+    box-shadow: 0 0 0 1px #bbbbbb;
+    transition: 0.2s;
   }

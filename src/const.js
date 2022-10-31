@@ -134,19 +134,13 @@ export const EMPLOYEE_HEADER = [
     Class: "text-align--left",
     CellClass: "text-align--left",
     Caption: "GIỚI TÍNH",
-    propValue: "Gender",
-    // dataFormat: (genderEnum) => {
-    //   return GENDER_DATA[genderEnum];
-    // },
+    propValue: "GenderName",
     Width: "100",
   },
   {
     Class: "text-align--center",
     CellClass: "text-align--center",
     Caption: "NGÀY SINH",
-    // dataFormat: (date) => {
-    //   return formatDate(date);
-    // },
     propValue: "DateOfBirth",
     Width: "150",
   },
@@ -193,3 +187,9 @@ export const EMPLOYEE_HEADER = [
     Width: "250",
   },
 ];
+// Giá trị mặc định của phân trang
+export const DEFAULT_PARAMS = {
+  pageSize: 20,
+  pageNumber: 1,
+  employeeFilter: "",
+};

@@ -53,7 +53,14 @@ export default {
     updateInput(event){
         this.$emit("update:modelValue",event.target.value);
     }
+  },
+  directives: {
+  focus: {
+    inserted: function (el) {
+      el.focus()
+    }
   }
+}
 };
 </script>
 <style lang="">

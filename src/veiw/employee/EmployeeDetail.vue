@@ -8,10 +8,18 @@
               Thông tin nhân viên
             </div>
             <label class="ms-checkbox">
-              <MCheckbox text="Là khách hàng"></MCheckbox>
+              <input 
+                :value="modelValue"
+                :v-model="textModel"
+                type="checkbox" />
+              <div class="checkbox-text pd-l-10">Là khách hàng</div>
             </label>
-            <label class="ms-checkbox">             
-              <MCheckbox text="Là nhân viên"></MCheckbox>
+            <label class="ms-checkbox">
+              <input 
+                :value="modelValue"
+                :v-model="textModel"
+                type="checkbox" />
+              <div class="checkbox-text pd-l-10">Là nhân viên</div>
             </label>
           </div>
           <div class="dialog-icon">
@@ -24,8 +32,44 @@
             <div class="popup-content__employee1">
               <div class="content__employee1-left">
                 <div class="employee1-left__user">
-                    <MInput style="width: 40%; padding-right: 6px" index="1" label="Mã nhân viên " type="text"/>
-                    <MInput style="width: calc(60% - 6px)" index="1" label="Tên nhân viên" type="text"/>
+                  <div class="m-row" style="width: 40%; padding-right: 6px">
+                      <label class="m-label"
+                        >Mã nhân viên
+                        <span class="input--required">*</span></label
+                      >
+                      <input
+                        tabindex="1"
+                        id="txtEmployeeCode"
+                        propValue="EmployeeCode"
+                        input--error
+                        title="Mã nhân viên"
+                        class="m-input"
+                        type="text"
+                        name="input"
+                        placeholder=""
+                      />
+                      <div class="err-message" hidden>
+                        Thông tin này không được để trống
+                      </div>
+                    </div>
+                    <div class="m-row" style="width: calc(60% - 6px)">
+                      <label class="m-label"
+                        >Tên nhân viên
+                        <span class="input--required">*</span></label
+                      >
+                      <input
+                        tabindex="2"
+                        propValue="EmployeeName"
+                        input--error
+                        class="m-input"
+                        type="text"
+                        name="input"
+                        placeholder=""
+                      />
+                      <div class="err-message" hidden>
+                        Thông tin này không được để trống
+                      </div>
+                    </div>
                 </div>
                 <div class="m-row">
                   <div id="select" class="select" style="position: relative;">
@@ -33,31 +77,154 @@
                   </div>
                   <!-- <div class="err-message" hidden>Thông tin này không được để trống</div> -->
                 </div>
-                  <MInput label="Chức danh" type="text" />
+                <div class="m-row">
+                    <label class="m-label">Chức danh</label>
+                    <input
+                      tabindex="4"
+                      propValue="PositionName"
+                      class="m-input"
+                      type="text"
+                      name="input"
+                      placeholder=""
+                    />
+                  </div>
               </div>
               <div class="content__employee1-right">
                 <div class="employee1-right__user1">
-                    <MInput style="width: 40%; padding-right: 6px" label="Ngày sinh" type="date" />
+                  <div class="m-row" style="width: 40%; padding-right: 6px">
+                      <label class="m-label">Ngày sinh</label>
+                      <input
+                        tabindex="5"
+                        propValue="DateOfBirth"
+                        class="m-input"
+                        type="date"
+                        name="input"
+                      />
+                    </div>
                   <MRadio/>
                 </div>
                 <div class="employee1-left__user">
-                    <MInput title="Số chứng minh nhân dân" style="width: 60%; padding-right: 6px" label="Số CMND" type="text" />
-                    <MInput style="width: 40%" label="Ngày cấp" type="date" />
+                  <div
+                      class="m-row"
+                      title="Số chứng minh nhân dân"
+                      style="width: 60%; padding-right: 6px"
+                    >
+                      <label class="m-label">Số CMND</label>
+                      <input
+                        tabindex="9"
+                        propValue="IdentityNumber"
+                        class="m-input"
+                        type="text"
+                        name="input"
+                        placeholder=""
+                      />
+                    </div>
+                    <div class="m-row" style="width: 40%">
+                      <label class="m-label">Ngày cấp</label>
+                      <input
+                        tabindex="10"
+                        propValue="IdentityDate"
+                        class="m-input"
+                        type="date"
+                        name="input"
+                        placeholder=""
+                      />
+                    </div>
                 </div>
-                  <MInput label="Nơi cấp" type="text" />
+                <div class="m-row">
+                    <label class="m-label">Nơi cấp</label>
+                    <input
+                      tabindex="11"
+                      propValue="IdentityPlace"
+                      class="m-input"
+                      type="text"
+                      name="input"
+                      placeholder=""
+                    />
+                  </div>
               </div>
             </div>
             <div class="popup-content__employee2">
-                <MInput label="Địa chỉ" type="text" />
+              <div class="m-row">
+                  <label class="m-label">Địa chỉ</label>
+                  <input
+                    tabindex="12"
+                    propValue="Address"
+                    class="m-input"
+                    type="text"
+                    name="input"
+                    placeholder=""
+                  />
+                </div>
               <div class="employee1-left__user">
-                  <MInput label="Điện thoại di động" type="text" />
-                  <MInput label="Điện thoại cố định" type="text" />
-                  <MInput label="Email" type="text" />
+                <div class="m-row" title="Điện thoại di động">
+                    <label class="m-label">ĐT di động</label>
+                    <input
+                      tabindex="13"
+                      propValue="PhoneNumber"
+                      class="m-input"
+                      type="text"
+                      name="input"
+                      placeholder=""
+                    />
+                  </div>
+                  <div class="m-row" title="Điện thoại cố định">
+                    <label class="m-label">ĐT cố định</label>
+                    <input
+                      tabindex="14"
+                      class="m-input"
+                      type="text"
+                      name="input"
+                      placeholder=""
+                    />
+                  </div>
+                  <div class="m-row">
+                    <label class="m-label">Email</label>
+                    <input
+                      email
+                      tabindex="15"
+                      propValue="Email"
+                      class="m-input"
+                      type="text"
+                      name="input"
+                      placeholder=""
+                    />
+                  </div>
               </div>
               <div class="employee1-left__user">
-                  <MInput label="Tài khoản ngân hàng" type="text" />
-                  <MInput label="Tên ngân hàng" type="text" />
-                  <MInput label="Chi nhánh" type="text" />
+                <div class="m-row">
+                    <label class="m-label">Tài khoản ngân hàng</label>
+                    <input
+                      propValue="BankAccountNumber"
+                      tabindex="16"
+                      class="m-input"
+                      type="text"
+                      name="input"
+                      placeholder=""
+                    />
+                  </div>
+                  <div class="m-row">
+                    <label class="m-label">Tên ngân hàng</label>
+                    <input
+                      propValue="BankName"
+                      tabindex="17"
+                      class="m-input"
+                      type="text"
+                      name="input"
+                      placeholder=""
+                    />
+                  </div>
+                  <div class="m-row">
+                    <label class="m-label">Chi nhánh</label>
+                    <input
+                      propValue="BankBranchName"
+                      tabindex="18"
+                      class="m-input"
+                      type="text"
+                      name="input"
+                      placeholder=""
+                    />
+                  </div>
               </div>
             </div>
           </div>
@@ -78,29 +245,27 @@
   <MButton/>
 </template>
 <script>
-import MCheckbox from "../../components/base/input/MCheckbox.vue"
-import MRadio from "../../components/base/input/MRadio.vue"
-import MInput from "../../components/base/input/MInput.vue";
-import MButton from "../../components/base/Mbutton/MButton.vue"
-import MComboboxDepartment from "../../components/base/combobox/MComboboxDepartment.vue"
+import MRadio from "../../components/base/input/MRadio.vue";
+import MButton from "../../components/base/Mbutton/MButton.vue";
+import MComboboxDepartment from "../../components/base/combobox/MComboboxDepartment.vue";
 export default {
-  name:"EMployeeDetail",
-  components:{MCheckbox,MRadio,MInput,MButton,MComboboxDepartment},
-  data(){
-    return{
-      isShowTb : false,
-    }
+  name: "EMployeeDetail",
+  components: { MRadio, MButton, MComboboxDepartment },
+  data() {
+    return {
+      isShowTb: false,
+    };
   },
-  methods:{
+  methods: {
     /**
      * Hàm đóng dialog thêm mới nhân viên
      * Author:NTLAM 27/10/2022
      */
-    closeOption(){
+    closeOption() {
       this.$emit("closeDiaLog");
     },
-  }
-}
+  },
+};
 </script>
 <style >
 </style>

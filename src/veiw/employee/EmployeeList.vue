@@ -9,6 +9,7 @@
           ></m-button>
         </div>
         <div class="content-layout">
+          <div class="selectTest">Đã chọn {{}}</div>
           <div class="content-toolbar">
             <div class="row" style="width: 250px">
               <div class="" style="padding-right: 10px">
@@ -23,8 +24,10 @@
           </div>
           <MTableEmployeeList
             :headers="employeeHeader"
+            :dataSource="employees"
           />
-          <m-paging></m-paging>
+          <m-paging
+          :totalRecord="totalRecord"></m-paging>
         </div>
     </div>
 
@@ -36,6 +39,7 @@
     ></EmployeeDetail>
 </template>
 <script>
+import { loadData } from "../../axios/employeeController/employeeController.js";
 import EmployeeDetail from '../../veiw/employee/EmployeeDetail.vue'
 import MPaging from "../../components/base/paging/MPaging.vue";
 import MTableEmployeeList from '../../components/base/Mtable/MTableEmployee.vue'
@@ -48,9 +52,14 @@ export default {
   data(){
     return{
       isShow : false,
-      employeeHeader: EMPLOYEE_HEADER
-
+      employeeHeader: EMPLOYEE_HEADER,
+      employees:[],
+      totalRecord:0,
+      params:""
     }
+  },
+  created() {
+    this.getDataPagings();
   },
   methods:{
     /**
@@ -59,7 +68,19 @@ export default {
      */
     onToggle(){
       this.isShow = !this.isShow;
-    }
+    },
+        /**
+     * Hàm lấy ra dữ liệu
+     * Author:NTLAM 30/10/2022
+     */
+     getDataPagings(){
+      loadData(this.params).then((res) => {
+          this.employees = res.data.Data;
+          this.totalRecord=res.data.TotalRecord;
+          return this.totalRecord;
+        })
+        .catch();
+     }
   }
 };
 </script>

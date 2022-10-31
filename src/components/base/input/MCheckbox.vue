@@ -2,7 +2,10 @@
         <label
         class="checkbox custom-checkbox"
         >
-            <input type="checkbox" id="table" hidden />
+        <input 
+                :value="modelValue"
+                :v-model="textModel"
+                type="checkbox" hidden />
             <div class="wrap-icon__custom">
             <i class="icofont-check"></i>
         </div>
@@ -14,7 +17,16 @@
 <script>
 export default {
     name:"MCheckbox",
-    props:["text"],
+    props:{
+        modelValue: {
+            default:""
+        },
+        textModel:{
+            Type:String,
+            default:""
+        }
+        
+    },
     component:{}
 };
 </script>
