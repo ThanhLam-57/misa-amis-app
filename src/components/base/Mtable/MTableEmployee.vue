@@ -32,7 +32,7 @@
                     propValue="check"
                     format="sticky_header_left"
                     class="text-align--center sticky_body_left">
-                    <input  v-model="selected" :value="employee.EmployeeId" type="checkbox"></td>
+                    <input v-model="selected" :value="employee.EmployeeId" type="checkbox"></td>
                   <td
                     v-for="(item, index) in headers"
                     :class="item.CellClass"
@@ -106,6 +106,14 @@ export default {
       selected:[]
     };
   },
+  watch: {
+    selected: {
+      handler(val){
+        this.$emit("changeSelect", val);
+      },
+      deep: true
+    }
+  },  
   methods: {
     /**
      * Hàm show dialog sửa

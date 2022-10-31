@@ -9,7 +9,7 @@
           ></m-button>
         </div>
         <div class="content-layout">
-          <div class="selectTest">Đã chọn {{}}</div>
+          <div class="selectTest">Đã chọn {{employeeSelected.length}}</div>
           <div class="content-toolbar">
             <div class="row" style="width: 250px">
               <div class="" style="padding-right: 10px">
@@ -25,6 +25,7 @@
           <MTableEmployeeList
             :headers="employeeHeader"
             :dataSource="employees"
+            @changeSelect="changeSelected"
           />
           <m-paging
           :totalRecord="totalRecord"></m-paging>
@@ -55,13 +56,22 @@ export default {
       employeeHeader: EMPLOYEE_HEADER,
       employees:[],
       totalRecord:0,
-      params:""
+      params:"",
+      employeeSelected: []
     }
   },
   created() {
     this.getDataPagings();
   },
   methods:{
+    changeSelected(val){
+      if(val){
+        this.employeeSelected= val;
+      }
+      else{
+        this.employeeSelected = [];
+      }
+    }, 
     /**
      * Hàm show dialog thêm mới nhân viên
      * Author:NTLAM 27/10/2022
