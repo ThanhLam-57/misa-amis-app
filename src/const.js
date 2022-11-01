@@ -93,10 +93,10 @@ export const MENU_ITEMS =[
 ]
 //Số bản ghi trên trang
 export const OPTION_PAGING=[
-    {value: "10", name:"10"},
-    {value: "20", name:"20"},
-    {value: "30", name:"30"},
-    {value: "50", name:"50"},
+    {value: 10, name:"10"},
+    {value: 20, name:"20"},
+    {value: 30, name:"30"},
+    {value: 50, name:"50"},
 ]
 //Dữ liệu giới tính
 export const LIST_GENDER=[

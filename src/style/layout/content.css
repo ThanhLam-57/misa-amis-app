@@ -41,9 +41,12 @@
 .content-toolbar{
     padding: 16px;
     display: flex;
-    justify-content: end;
+    justify-content: space-between;
     align-items: center;
     margin-right: 0px;
+}
+.content-toolbar__right{
+    display: flex;
 }
 .content-table-paging{
     padding: 16px 26px;
