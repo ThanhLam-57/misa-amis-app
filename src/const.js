@@ -200,9 +200,21 @@ export const DEPARTMENT_HEADER=[
     Caption: "Tên đơn vị"
   },
 ]
+export const POISITION_HEADER=[
+  {
+    Width: "30",
+    propValue:"PositionCode",
+    Caption: "Mã chức danh"
+  },
+  {
+    Width: "70",
+    propValue:"PositionName",
+    Caption: "Chức danh"
+  },
+]
 // Giá trị mặc định của phân trang
 export const DEFAULT_PARAMS = {
-  pageSize: 20,
+  pageSize: 10,
   pageNumber: 1,
   employeeFilter: "",
 };

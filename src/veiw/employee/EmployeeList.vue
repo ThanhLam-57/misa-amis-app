@@ -34,7 +34,8 @@
           />
           <m-paging
           :totalRecord="totalRecord"
-          :numberStart="this.pageSize*(this.pageNumber-1)"
+          :numberStart="numberStart"
+          :numberEnd="numberEnd"
           @prePage="getPrePage"
           @nextPage="getNextPage"></m-paging>
         </div>
@@ -54,7 +55,7 @@ import MPaging from "../../components/base/paging/MPaging.vue";
 import MTableEmployeeList from "../../components/base/Mtable/MTableEmployee.vue";
 import MButton from "../../components/base/Mbutton/MButton.vue";
 import MInputIcon from "../../components/base/input/MInputIcon.vue";
-import { EMPLOYEE_HEADER } from "../../const.js";
+import { EMPLOYEE_HEADER,DEFAULT_PARAMS } from "../../const.js";
 export default {
   name: "EmployeeList",
   components: {
@@ -68,12 +69,15 @@ export default {
     return {
       isShow: false,
       employeeHeader: EMPLOYEE_HEADER,
+      defaultPẩm:DEFAULT_PARAMS,
       employees: [],
       totalRecord: 0,
       employeeSelected: [],
       valuePageSize: 10,
       pageNumber: 1,
       filter: "",
+      numberStart:1,
+      numberEnd:10
     };
   },
   created() {
@@ -90,14 +94,45 @@ export default {
     pageNumber() {
       this.getFilter();
       this.getDataPagings();
+      this.getPaging();
     },
     valuePageSize() {
       this.pageNumber = 1;
       this.getFilter();
       this.getDataPagings();
+      this.getPaging();
     },
+
   },
   methods: {
+    /**
+     * hàm cảnh báo xóa 1 nhân viên
+     */
+
+    /**
+     * Hàm cảnh báo xóa nhiều nhân viên
+     */
+
+    /**
+     * Reload data trong bảng
+     */
+
+    /**
+     * Hàm lấy thông số paging
+     * Autthor:NTTLAM 02/11/2022
+     */
+    getPaging(){
+      if(this.pageNumber == 1){
+        this.numberStart=1;
+        this.numberEnd= this.valuePageSize
+      }
+      this.numberStart = this.valuePageSize * (this.pageNumber-1) +1
+      if(this.valuePageSize * this.pageNumber > this.totalRecord){
+        this.numberEnd= this.totalRecord;
+      }else{
+        this.numberEnd = this.valuePageSize*this.pageNumber
+      }
+    },
     /**
      * Hàm lấy chuỗi filter ghép vào API
      * Author:NTLAM 01/11/2022

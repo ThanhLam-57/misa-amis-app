@@ -52,7 +52,7 @@
                       </button>
                     </div>
                     <div v-show="isShowOption && itemSelected.EmployeeId == employee.EmployeeId"  class="dlg-option"  v-if="this.isShowOption==true" v-click-away="closeOption">
-                      <div class="option option-delete">Xoá</div>
+                      <div @click="deleteEmployee" class="option option-delete">Xoá</div>
                       <div class="option option-stop__use">Ngừng sử dụng</div>
                     </div>
                   </td>
@@ -64,6 +64,7 @@
 </template>
 <script>
 import{formatDate} from "../../../script/base.js"
+import{deleteByEmployeeId} from "../../../axios/employeeController/employeeController.js"
 export default {
   name: "MTableEmployeeList",
   components: {  },
@@ -103,7 +104,11 @@ export default {
       isShowOption :false,
       employees: [],
       itemSelected: null,
-      selected:[]
+      selected:[],
+      idDelete:{
+        Type:[String,Number],
+        default:null
+      }
     };
   },
   watch: {
@@ -115,6 +120,16 @@ export default {
     }
   },  
   methods: {
+    /**
+     * Gọi Api xóa nhân viên
+     */
+
+    /**
+     * Bắt sự kiên button xóa
+     */
+     deleteEmployee(){
+      deleteByEmployeeId(this.idDelete)
+     },
     /**
      * Hàm show dialog sửa
      * Author: NTLAM 29/10/2022
@@ -136,12 +151,15 @@ export default {
         this.itemSelected = item;
         this.isShowOption = true;
       }
+            this.idDelete = this.itemSelected.EmployeeId;
     },
     /**
      * Author: NTLAM 29/10/2022
      * Hàm đóng option tùy chọn
      */
     closeOption(){
+      // debugger;
+      // this.idDelete = this.itemSelected.EmployeeId;
       this.isShowOption =false;
       this.itemSelected=null;
     },

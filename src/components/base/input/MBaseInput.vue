@@ -1,13 +1,14 @@
 <template lang="">
     <input
-    :type="type"
-    :value="modelValue"
-    :class="{
-      'm-input': type !== 'checkbox',
-    }"
-    :name="name"
-    :ref="fieldNameTxt"
-  />
+      :type="type"
+      :value="modelValue"
+      @input="changeValue"
+      :class="{
+        'm-input': type !== 'checkbox',
+      }"
+      :name="name"
+      :ref="fieldNameTxt"
+    />
 </template>
 <script>
 export default {
@@ -40,6 +41,19 @@ export default {
         }
     }
   },
+  methods: {
+    changeValue(val){
+      this.$emit("update:modelValue",val.target.value);
+    }
+
+    /**
+     * Hàm truyền dữ liệu từ input lên để xử lý
+     */
+
+    /**
+     * Hàm validate dữ liệu
+     */
+  }
 };
 </script>
 <style lang="">

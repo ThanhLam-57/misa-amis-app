@@ -8,14 +8,14 @@
                     </div>
                   </div>
                   <ul v-click-away="closeOption" class="pageSize-ul" v-if="isShow">
-                    <li v-for="(item, index) in optionPagings" :key="index" @click="activeClass(item),valueActive()" :class="{'cbb_active list': item.value == classActive}">{{item.name}}</li>
+                    <li v-for="(item, index) in option" :key="index" @click="activeClass(item),valueActive()" :class="{'cbb_active list': item.value == classActive}">{{item.name}}</li>
                   </ul>
                 </div>
 </template>
 <script>
 export default {
-  name:"McCombobox",
-  methods:{
+  name: "McCombobox",
+  methods: {
     /**
      * Hàm show option
      * Author:NTLAM 26/10/2022
@@ -27,36 +27,35 @@ export default {
      * Hàm đóng option
      * Author:NTLAM 26/10/2022
      */
-    closeOption(){
-      this.isShow =false;
+    closeOption() {
+      this.isShow = false;
     },
     /**
      * Hàm thêm mới class vào option
      * Author:NTLAM 26/10/2022
-     * @param {*} item 
+     * @param {*} item
      */
-    activeClass(item){
+    activeClass(item) {
       this.classActive = item.value;
     },
-    
-    valueActive(){
-      this.emitter.emit("valueActive",this.classActive)
-    }
+
+    valueActive() {
+      this.emitter.emit("valueActive", this.classActive);
+    },
   },
-  props:{
-    optionPagings:{
-      value:Array,
-      default:[]
+  props: {
+    option: {
+      value: Array,
+      default: [],
     },
   },
   data() {
     return {
-      isShow : false,
-      classActive : 10
-    }
+      isShow: false,
+      classActive: 10,
+    };
   },
-}
+};
 </script>
 <style lang="">
-  
 </style>

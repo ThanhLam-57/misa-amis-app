@@ -38,11 +38,10 @@
                         <span class="input--required">*</span></label
                       >
                       <MBaseInput
-                      type="text"
-                      name="input"
-                      modelValue=""
-                    />
-                      <m-input></m-input>
+                        type="text"
+                        name="input"
+                        v-model:modelValue="employee.EmployeeCode"
+                      />
                       <div class="err-message" hidden>
                         Thông tin này không được để trống
                       </div>
@@ -55,7 +54,7 @@
                       <MBaseInput
                       type="text"
                       name="input"
-                      modelValue=""
+                      v-model:modelValue="employee.EmployeeName"
                     />
                       <div class="err-message" hidden>
                         Thông tin này không được để trống
@@ -72,11 +71,18 @@
                   <!-- <div class="err-message" hidden>Thông tin này không được để trống</div> -->
                 </div>
                 <div class="m-row">
+                  <!-- <div id="select" class="select" style="position: relative;">
+                    <MComboboxDepartment 
+                      :headers="headerPoisition"  
+                      :dataSource="dataPoisition"
+                    label="Chức danh"/>
+                  </div> -->
                     <label class="m-label">Chức danh</label>
-                    <MBaseInput
-                      type="text"
-                      name="input"
-                      modelValue=""
+                    <MComboboxPosition
+                    :option="dataPoisition"
+                    displayField="PositionName"
+                    valueField="PositionId"
+                    @select="selectPosition"
                     />
                   </div>
               </div>
@@ -87,7 +93,7 @@
                       <MBaseInput
                       type="date"
                       name="input"
-                      modelValue=""
+                      v-model:modelValue="employee.DateOfBirth"
                     />
                     </div>
                   <MRadio/>
@@ -102,7 +108,7 @@
                       <MBaseInput
                       type="text"
                       name="input"
-                      modelValue=""
+                      v-model:modelValue="employee.IdentityNumber"
                     />
                     </div>
                     <div class="m-row" style="width: 40%">
@@ -110,7 +116,7 @@
                       <MBaseInput
                       type="date"
                       name="input"
-                      modelValue=""
+                      v-model:modelValue="employee.IdentityDate"
                     />
                     </div>
                 </div>
@@ -119,7 +125,7 @@
                     <MBaseInput
                       type="text"
                       name="input"
-                      modelValue=""
+                      v-model:modelValue="employee.IdentityPlace"
                     />
                   </div>
               </div>
@@ -130,7 +136,7 @@
                   <MBaseInput
                       type="text"
                       name="input"
-                      modelValue=""
+                      v-model:modelValue="employee.Address"
                     />
                 </div>
               <div class="employee1-left__user">
@@ -139,7 +145,7 @@
                     <MBaseInput
                       type="text"
                       name="input"
-                      modelValue=""
+                      v-model:modelValue="employee.TelephoneNumber"
                     />
                   </div>
                   <div class="m-row" title="Điện thoại cố định">
@@ -147,7 +153,7 @@
                     <MBaseInput
                       type="text"
                       name="input"
-                      modelValue=""
+                      v-model:modelValue="employee.PhoneNumber"
                     />
                   </div>
                   <div class="m-row">
@@ -155,7 +161,7 @@
                     <MBaseInput
                       type="text"
                       name="input"
-                      modelValue=""
+                      v-model:modelValue="employee.Email"
                     />
                   </div>
               </div>
@@ -165,7 +171,7 @@
                     <MBaseInput
                       type="text"
                       name="input"
-                      modelValue=""
+                      v-model:modelValue="employee.BankAccountNumber"
                     />
                   </div>
                   <div class="m-row">
@@ -173,7 +179,7 @@
                     <MBaseInput
                       type="text"
                       name="input"
-                      modelValue=""
+                      v-model:modelValue="employee.BankName"
                     />
                   </div>
                   <div class="m-row">
@@ -181,16 +187,8 @@
                     <MBaseInput
                       type="text"
                       name="input"
-                      modelValue=""
+                      v-model:modelValue="employee.BankBranchName"
                     />
-                    <!-- <input
-                      propValue="BankBranchName"
-                      tabindex="18"
-                      class="m-input"
-                      type="text"
-                      name="input"
-                      placeholder=""
-                    /> -->
                   </div>
               </div>
             </div>
@@ -201,7 +199,7 @@
           <div class="mess-footer">
             <MButton title="Hủy" index="1" text="Hủy" class="mess-footer__left" />
             <div class="mess-footer__right">
-              <MButton title="Cất" index="1" text="Hủy" class="mess-footer__mid" />
+              <MButton title="Cất" index="1" text="Cất" class="mess-footer__mid" />
               <MButton title="Cất và thêm" index="2" text="Cất và thêm" class="mess-footer_right" />
             </div>
           </div>
@@ -215,24 +213,64 @@
 import MBaseInput from "../../components/base/input/MBaseInput.vue"
 import MRadio from "../../components/base/input/MRadio.vue";
 import MButton from "../../components/base/Mbutton/MButton.vue";
+import MComboboxPosition from "../../components/base/combobox/MComboboxPosition.vue";
 import MComboboxDepartment from "../../components/base/combobox/MComboboxDepartment.vue";
-import {DEPARTMENT_HEADER} from "../../const.js"
+import {DEPARTMENT_HEADER,POISITION_HEADER } from "../../const.js"
 import {getDepartment} from "../../axios/departmentController/departmentController.js"
+import {getPoisition} from "../../axios/poisitionController/poisitionController.js"
 export default {
   name: "EMployeeDetail",
-  components: { MRadio, MButton, MComboboxDepartment,MBaseInput},
+  components: { MRadio, MButton, MComboboxDepartment,MComboboxPosition,MBaseInput},
   data() {
     return {
       isShowTb: false,
       headersDepartment:DEPARTMENT_HEADER,
-      dataDepartment:[]
+      headerPoisition:POISITION_HEADER,
+      dataDepartment:[],
+      dataPoisition:[],
+      employee: {
+        EmployeeCode: null,
+        EmployeeName:null,
+        DepartmentName:null,
+        PositionName:null,
+        DateOfBirth:null,
+        IdentityNumber:null,
+        IdentityDate:null,
+        IdentityPlace:null,
+        Address:null,
+        TelephoneNumber:null,
+        PhoneNumber:null,
+        Email:null,
+        BankAccountNumber:null,
+        BankName:null,
+        BankBranchName:null,
+      }
     };
   },
+  watch: {
+    employee: {
+      handler(val){
+        debugger
+      },
+      deep: true
+    }
+  },  
   created(){
     this.getDataDepartment();
+    this.getDataPoisition();
     console.log(this.dataDepartment);
   },
   methods: {
+    selectPosition(item){
+      if(item){
+        this.employee.PositionName = item.PositionName;
+        this.employee.PositionId = item.PositionId;
+      }
+      else{
+        this.employee.PositionName = null;
+        this.employee.PositionId = null;
+      }
+    }, 
     /**
      * Hàm đóng dialog thêm mới nhân viên
      * Author:NTLAM 27/10/2022
@@ -246,9 +284,47 @@ export default {
           this.dataDepartment = res.data;
         })
         .catch();
+    },
+
+    getDataPoisition(){
+      getPoisition().then((res)=>{
+        this.dataPoisition=res.data;
+      })
     }
+    /**
+     * Hàm cất và thêm(Cất dữ liệu sau đó clear form để tiếp tục thêm mới)
+     */
+
+    /**
+     * Hàm thực hiện cất dữ liêu
+     */
+
+    /**
+     * Hàm clear form
+     */
+    
+    /**
+     * Hàm thực hiện hủy thêm mới
+     */
+
+    /**
+     * API thực hiện thêm mới nhân viên
+     */
+
+    /**
+     * API thưc hiện sửa nhân viên
+     */
+
+    /**
+     * Hàm thực hiện tắt Popup cảnh báo
+     */
+
+    /**
+     * Hàm tự động lấy mã nhân viên mới
+     */
   },
 };
 </script>
-<style >
+<style  scoped>
+
 </style>

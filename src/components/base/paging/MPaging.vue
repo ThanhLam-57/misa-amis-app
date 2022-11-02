@@ -4,8 +4,8 @@
             <div class="paging-right">
               <div class="option-number__list">
                 Số bản ghi /trang
-                <McCombobox
-                  :optionPagings="optionPaging"
+                <MCombobox
+                  :option="optionPaging"
                 />
               </div>
               <div class="number-record">{{numberStart}} - {{numberEnd}} bản ghi</div>
@@ -26,16 +26,16 @@
 </template>
 <script>
 import  { OPTION_PAGING } from"../../../const.js"
-import McCombobox from "../combobox/MCombobox.vue";
+import MCombobox from "../combobox/MCombobox.vue";
 export default {
   name: "MPaging",
-  components: { McCombobox },
+  components: { MCombobox },
   props:{
     totalRecord:{
       Type:Number,
       default:null
     },
-    numberStart:Number,
+    numberStart:String,
     numberEnd:Number
   },
   data(){
