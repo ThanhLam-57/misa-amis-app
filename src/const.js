@@ -187,6 +187,19 @@ export const EMPLOYEE_HEADER = [
     Width: "250",
   },
 ];
+//Dữ liệu table department
+export const DEPARTMENT_HEADER=[
+  {
+    Width: "30",
+    propValue:"DepartmentCode",
+    Caption: "Mã đơn vị"
+  },
+  {
+    Width: "70",
+    propValue:"DepartmentName",
+    Caption: "Tên đơn vị"
+  },
+]
 // Giá trị mặc định của phân trang
 export const DEFAULT_PARAMS = {
   pageSize: 20,

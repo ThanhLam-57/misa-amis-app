@@ -3,11 +3,23 @@
         <table class="table-select" style=" margin: 0px;z-index: 3;">
             <thead class="table-header" style="position: sticky;">
                 <tr >
-                    <th propValue="DepartmentCode" style="width: 30%;" class="DVid">Mã đơn vị</th>
-                    <th propValue="DepartmentName" style="width: 70%;" class="DVname">Tên Đơn vị</th>
+                    <th
+                        v-for="(item, index) in headers"
+                        :class="item.Class"
+                        :style="{'width': item.Width +'%'}"
+                        :key="index"
+                    >{{item.Caption}}</th>
                 </tr>
             </thead>
             <tbody>
+                <tr v-for="department in dataDepartment" :key="department.DepartmentId">
+                    <td
+                    v-for="(item, index) in headers"
+                    :class="item.Class"
+                    :style="{ 'width': item.Width +'%' }"
+                    :key="index"
+                  >{{  getValueTxt(department,item)}}</td>
+                </tr>
             </tbody>
         </table>
         <div class="table-bot">
@@ -17,11 +29,18 @@
 </template>
 <script>
 export default {
-    name:"MTableDerpartment"
-
-    
-}
+  name: "MTableDerpartment",
+  props: {
+    headers: {
+      Type: Array,
+      default: [],
+    },
+    dataDepartment: {
+      Type: Array,
+      default: [],
+    },
+  },
+};
 </script>
 <style lang="">
-    
 </style>

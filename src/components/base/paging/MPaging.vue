@@ -8,7 +8,7 @@
                   :optionPagings="optionPaging"
                 />
               </div>
-              <div class="number-record">1 - 4 bản ghi</div>
+              <div class="number-record">{{numberStart}} - {{numberEnd}} bản ghi</div>
               <div class="paging-option">
                 <div
                   @click="prePage"
@@ -34,7 +34,9 @@ export default {
     totalRecord:{
       Type:Number,
       default:null
-    }
+    },
+    numberStart:Number,
+    numberEnd:Number
   },
   data(){
     return{

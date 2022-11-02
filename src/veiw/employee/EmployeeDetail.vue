@@ -37,17 +37,12 @@
                         >Mã nhân viên
                         <span class="input--required">*</span></label
                       >
-                      <input
-                        tabindex="1"
-                        id="txtEmployeeCode"
-                        propValue="EmployeeCode"
-                        input--error
-                        title="Mã nhân viên"
-                        class="m-input"
-                        type="text"
-                        name="input"
-                        placeholder=""
-                      />
+                      <MBaseInput
+                      type="text"
+                      name="input"
+                      modelValue=""
+                    />
+                      <m-input></m-input>
                       <div class="err-message" hidden>
                         Thông tin này không được để trống
                       </div>
@@ -57,15 +52,11 @@
                         >Tên nhân viên
                         <span class="input--required">*</span></label
                       >
-                      <input
-                        tabindex="2"
-                        propValue="EmployeeName"
-                        input--error
-                        class="m-input"
-                        type="text"
-                        name="input"
-                        placeholder=""
-                      />
+                      <MBaseInput
+                      type="text"
+                      name="input"
+                      modelValue=""
+                    />
                       <div class="err-message" hidden>
                         Thông tin này không được để trống
                       </div>
@@ -73,19 +64,19 @@
                 </div>
                 <div class="m-row">
                   <div id="select" class="select" style="position: relative;">
-                    <MComboboxDepartment label="Đơn vị"/>
+                    <MComboboxDepartment 
+                      :headers="headersDepartment"  
+                      :dataSource="dataDepartment"
+                    label="Đơn vị"/>
                   </div>
                   <!-- <div class="err-message" hidden>Thông tin này không được để trống</div> -->
                 </div>
                 <div class="m-row">
                     <label class="m-label">Chức danh</label>
-                    <input
-                      tabindex="4"
-                      propValue="PositionName"
-                      class="m-input"
+                    <MBaseInput
                       type="text"
                       name="input"
-                      placeholder=""
+                      modelValue=""
                     />
                   </div>
               </div>
@@ -93,13 +84,11 @@
                 <div class="employee1-right__user1">
                   <div class="m-row" style="width: 40%; padding-right: 6px">
                       <label class="m-label">Ngày sinh</label>
-                      <input
-                        tabindex="5"
-                        propValue="DateOfBirth"
-                        class="m-input"
-                        type="date"
-                        name="input"
-                      />
+                      <MBaseInput
+                      type="date"
+                      name="input"
+                      modelValue=""
+                    />
                     </div>
                   <MRadio/>
                 </div>
@@ -110,36 +99,27 @@
                       style="width: 60%; padding-right: 6px"
                     >
                       <label class="m-label">Số CMND</label>
-                      <input
-                        tabindex="9"
-                        propValue="IdentityNumber"
-                        class="m-input"
-                        type="text"
-                        name="input"
-                        placeholder=""
-                      />
+                      <MBaseInput
+                      type="text"
+                      name="input"
+                      modelValue=""
+                    />
                     </div>
                     <div class="m-row" style="width: 40%">
                       <label class="m-label">Ngày cấp</label>
-                      <input
-                        tabindex="10"
-                        propValue="IdentityDate"
-                        class="m-input"
-                        type="date"
-                        name="input"
-                        placeholder=""
-                      />
+                      <MBaseInput
+                      type="date"
+                      name="input"
+                      modelValue=""
+                    />
                     </div>
                 </div>
                 <div class="m-row">
                     <label class="m-label">Nơi cấp</label>
-                    <input
-                      tabindex="11"
-                      propValue="IdentityPlace"
-                      class="m-input"
+                    <MBaseInput
                       type="text"
                       name="input"
-                      placeholder=""
+                      modelValue=""
                     />
                   </div>
               </div>
@@ -147,83 +127,70 @@
             <div class="popup-content__employee2">
               <div class="m-row">
                   <label class="m-label">Địa chỉ</label>
-                  <input
-                    tabindex="12"
-                    propValue="Address"
-                    class="m-input"
-                    type="text"
-                    name="input"
-                    placeholder=""
-                  />
+                  <MBaseInput
+                      type="text"
+                      name="input"
+                      modelValue=""
+                    />
                 </div>
               <div class="employee1-left__user">
                 <div class="m-row" title="Điện thoại di động">
                     <label class="m-label">ĐT di động</label>
-                    <input
-                      tabindex="13"
-                      propValue="PhoneNumber"
-                      class="m-input"
+                    <MBaseInput
                       type="text"
                       name="input"
-                      placeholder=""
+                      modelValue=""
                     />
                   </div>
                   <div class="m-row" title="Điện thoại cố định">
                     <label class="m-label">ĐT cố định</label>
-                    <input
-                      tabindex="14"
-                      class="m-input"
+                    <MBaseInput
                       type="text"
                       name="input"
-                      placeholder=""
+                      modelValue=""
                     />
                   </div>
                   <div class="m-row">
                     <label class="m-label">Email</label>
-                    <input
-                      email
-                      tabindex="15"
-                      propValue="Email"
-                      class="m-input"
+                    <MBaseInput
                       type="text"
                       name="input"
-                      placeholder=""
+                      modelValue=""
                     />
                   </div>
               </div>
               <div class="employee1-left__user">
                 <div class="m-row">
                     <label class="m-label">Tài khoản ngân hàng</label>
-                    <input
-                      propValue="BankAccountNumber"
-                      tabindex="16"
-                      class="m-input"
+                    <MBaseInput
                       type="text"
                       name="input"
-                      placeholder=""
+                      modelValue=""
                     />
                   </div>
                   <div class="m-row">
                     <label class="m-label">Tên ngân hàng</label>
-                    <input
-                      propValue="BankName"
-                      tabindex="17"
-                      class="m-input"
+                    <MBaseInput
                       type="text"
                       name="input"
-                      placeholder=""
+                      modelValue=""
                     />
                   </div>
                   <div class="m-row">
                     <label class="m-label">Chi nhánh</label>
-                    <input
+                    <MBaseInput
+                      type="text"
+                      name="input"
+                      modelValue=""
+                    />
+                    <!-- <input
                       propValue="BankBranchName"
                       tabindex="18"
                       class="m-input"
                       type="text"
                       name="input"
                       placeholder=""
-                    />
+                    /> -->
                   </div>
               </div>
             </div>
@@ -245,16 +212,25 @@
   <MButton/>
 </template>
 <script>
+import MBaseInput from "../../components/base/input/MBaseInput.vue"
 import MRadio from "../../components/base/input/MRadio.vue";
 import MButton from "../../components/base/Mbutton/MButton.vue";
 import MComboboxDepartment from "../../components/base/combobox/MComboboxDepartment.vue";
+import {DEPARTMENT_HEADER} from "../../const.js"
+import {getDepartment} from "../../axios/departmentController/departmentController.js"
 export default {
   name: "EMployeeDetail",
-  components: { MRadio, MButton, MComboboxDepartment },
+  components: { MRadio, MButton, MComboboxDepartment,MBaseInput},
   data() {
     return {
       isShowTb: false,
+      headersDepartment:DEPARTMENT_HEADER,
+      dataDepartment:[]
     };
+  },
+  created(){
+    this.getDataDepartment();
+    console.log(this.dataDepartment);
   },
   methods: {
     /**
@@ -264,6 +240,13 @@ export default {
     closeOption() {
       this.$emit("closeDiaLog");
     },
+
+    getDataDepartment(){
+      getDepartment().then((res) => {
+          this.dataDepartment = res.data;
+        })
+        .catch();
+    }
   },
 };
 </script>

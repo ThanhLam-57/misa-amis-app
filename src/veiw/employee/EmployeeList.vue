@@ -11,7 +11,7 @@
         <div class="content-layout">
           <div class="content-toolbar">
             <div class="content-toolbar__left">
-              <div class="selectTest">Đã chọn: <b>{{employeeSelected.length}}</b> pageSize: {{valuePageSize}} pageNumber:{{pageNumber}}  {{filter}}</div>
+              <div class="selectTest">Đã chọn: <b>{{employeeSelected.length}}</b></div>
             </div>
             <div class="content-toolbar__right">
             <div class="row" style="width: 250px">
@@ -34,6 +34,7 @@
           />
           <m-paging
           :totalRecord="totalRecord"
+          :numberStart="this.pageSize*(this.pageNumber-1)"
           @prePage="getPrePage"
           @nextPage="getNextPage"></m-paging>
         </div>
@@ -69,11 +70,10 @@ export default {
       employeeHeader: EMPLOYEE_HEADER,
       employees: [],
       totalRecord: 0,
-      params: "",
       employeeSelected: [],
       valuePageSize: 10,
-      pageNumber:1,
-      filter:""
+      pageNumber: 1,
+      filter: "",
     };
   },
   created() {
@@ -85,17 +85,44 @@ export default {
       this.valuePageSize = valueActive;
     });
   },
-  methods: {
-    getFilter() {
-      this.filter="pageSize=" + this.valuePageSize + "&&pageIndex=" + this.pageNumber;
+  watch: {
+    //Xử lý sự kiện lấy thông số đầu vào cho employee Filter
+    pageNumber() {
+      this.getFilter();
+      this.getDataPagings();
     },
-    getPrePage(){
-      if(this.pageNumber>1){
+    valuePageSize() {
+      this.pageNumber = 1;
+      this.getFilter();
+      this.getDataPagings();
+    },
+  },
+  methods: {
+    /**
+     * Hàm lấy chuỗi filter ghép vào API
+     * Author:NTLAM 01/11/2022
+     */
+    getFilter() {
+      this.filter =
+        "pageSize=" + this.valuePageSize + "&pageNumber=" + this.pageNumber;
+    },
+    /**
+     * Hàm bắt sự kiện và xử lý ntm PrePage
+     * Author:MTLAM 01/11/2022
+     */
+    getPrePage() {
+      if (this.pageNumber > 1) {
         this.pageNumber--;
       }
     },
-    getNextPage(){
-      this.pageNumber++;
+        /**
+     * Hàm bắt sự kiện và xử lý ntm NextPage
+     * Author:MTLAM 01/11/2022
+     */
+    getNextPage() {
+      if (this.pageNumber < this.totalRecord / this.valuePageSize + 1) {
+        this.pageNumber++;
+      }
     },
     /**
      * Lấy ra số bản ghi được select
@@ -120,7 +147,8 @@ export default {
      * Author:NTLAM 30/10/2022
      */
     getDataPagings() {
-      loadData(this.params)
+      this.getFilter();
+      loadData(this.filter)
         .then((res) => {
           this.employees = res.data.Data;
           this.totalRecord = res.data.TotalRecord;

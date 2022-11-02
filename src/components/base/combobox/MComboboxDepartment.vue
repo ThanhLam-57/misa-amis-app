@@ -13,7 +13,34 @@
             </div>
         </div>
     </div>
-        <div  id="ttable" class="ttable" v-if="isShowTb">
+    <div id="ttable" class="ttable" v-if="isShowTb">
+        <table class="table-select" style=" margin: 0px;z-index: 3;">
+            <thead class="table-header" style="position: sticky;">
+                <tr >
+                    <th
+                        v-for="(item, index) in headers"
+                        :class="item.Class"
+                        :style="{'width': item.Width +'%'}"
+                        :key="index"
+                    >{{item.Caption}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="department in dataSource" :key="department.DepartmentId">
+                    <td
+                    v-for="(item, index) in headers"
+                    :style="{ 'width': item.Width +'%' }"
+                    :value="department.DepartmentName"
+                    :key="index"
+                  >{{  department[item.propValue]}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="table-bot">
+                Cập nhật cơ cấu tổ chức
+        </div>
+    </div>
+        <!-- <div  id="ttable" class="ttable" v-if="isShowTb">
         <table class="table-select" style=" margin: 0px;z-index: 3;">
             <thead class="table-header" style="position: sticky;">
                 <tr >
@@ -27,34 +54,42 @@
         <div class="table-bot">
                 Cập nhật cơ cấu tổ chức
         </div>
-    </div>
+    </div> -->
     </div>
         
 </template>
 <script>
 export default {
-    name:"MComboboxDepartment",
-    props:{
-        class: String,
-        label:String,
-        index:Number,
+  name: "MComboboxDepartment",
+  props: {
+    class: String,
+    label: String,
+    index: Number,
+    headers: {
+      Type: Array,
+      default: [],
     },
-    data() {
-        return {
-            isShowTb:false,
-            textVale:null
-        }
+    dataSource: {
+      Type: Array,
+      default: [],
     },
-    methods:{
-        showTable(){
-            this.isShowTb = !this.isShowTb;
-        },
-        closeTable(){
-            this.isShowTb =false;
-        }
-    }
-}
+    valueData:''
+  },
+  data() {
+    return {
+      isShowTb: false,
+      textVale: null,
+    };
+  },
+  methods: {
+    showTable() {
+      this.isShowTb = !this.isShowTb;
+    },
+    closeTable() {
+      this.isShowTb = false;
+    },
+  },
+};
 </script>
 <style lang="">
-    
 </style>

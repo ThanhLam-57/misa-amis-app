@@ -1,5 +1,5 @@
 <template lang="">
-  <div class="m-row" :style="style">
+  <!-- <div class="m-row" :style="style">
     <label class="m-label">{{label}} 
           <span v-if="index == 1" class="input--required">*</span>
         </label>
@@ -13,8 +13,8 @@
               m__input: type!=='checkbox'
             }"
             @input="updateInput" />
-        <!-- <div class="err-message">Thông tin này không được để trống</div> -->
-  </div>
+        <div class="err-message">Thông tin này không được để trống</div>
+  </div> -->
 
 </template>
 <script>

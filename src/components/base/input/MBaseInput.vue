@@ -2,14 +2,10 @@
     <input
     :type="type"
     :value="modelValue"
-    @input="handleInput($event)"
     :class="{
       'm-input': type !== 'checkbox',
-      'input--error': !isValidate || !isValidData.value,
     }"
     :name="name"
-    @focusout="checkInvalidInput($event)"
-    :title="title || isValidData.msg"
     :ref="fieldNameTxt"
   />
 </template>
@@ -42,11 +38,6 @@ export default {
             value:true,
             msg:"",
         }
-    }
-  },
-  mounted() {
-    if(this.needMountedFocus) {
-      this.$nextTick(() => this.$refs[this.fieldNameTxt].focus())
     }
   },
 };
