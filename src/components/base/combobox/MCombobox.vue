@@ -15,6 +15,9 @@
 <script>
 export default {
   name: "McCombobox",
+  props:{
+    classActive:Number
+  },
   methods: {
     /**
      * Hàm show option
@@ -42,6 +45,11 @@ export default {
     valueActive() {
       this.emitter.emit("valueActive", this.classActive);
     },
+  },
+  mounted(){
+    this.emitter.on("valueActive",(valuePageSize)=>{
+      this.classActive = valuePageSize;
+    });
   },
   props: {
     option: {

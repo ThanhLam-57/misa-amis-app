@@ -42,7 +42,7 @@
                         name="input"
                         v-model:modelValue="employee.EmployeeCode"
                       />
-                      <div class="err-message" hidden>
+                      <div class="err-message">
                         Thông tin này không được để trống
                       </div>
                     </div>
@@ -56,27 +56,21 @@
                       name="input"
                       v-model:modelValue="employee.EmployeeName"
                     />
-                      <div class="err-message" hidden>
+                      <div class="err-message">
                         Thông tin này không được để trống
                       </div>
                     </div>
                 </div>
-                <div class="m-row">
+                <div class="m-row" style="z-index:2;">
                   <div id="select" class="select" style="position: relative;">
                     <MComboboxDepartment 
                       :headers="headersDepartment"  
                       :dataSource="dataDepartment"
                     label="Đơn vị"/>
                   </div>
-                  <!-- <div class="err-message" hidden>Thông tin này không được để trống</div> -->
+                  <!-- <div class="err-message">Thông tin này không được để trống</div> -->
                 </div>
-                <div class="m-row">
-                  <!-- <div id="select" class="select" style="position: relative;">
-                    <MComboboxDepartment 
-                      :headers="headerPoisition"  
-                      :dataSource="dataPoisition"
-                    label="Chức danh"/>
-                  </div> -->
+                <div class="m-row" style="z-index:1;">
                     <label class="m-label">Chức danh</label>
                     <MComboboxPosition
                     :option="dataPoisition"
@@ -110,6 +104,9 @@
                       name="input"
                       v-model:modelValue="employee.IdentityNumber"
                     />
+                    <div class="err-message">
+                        Thông tin này phải là số
+                      </div>
                     </div>
                     <div class="m-row" style="width: 40%">
                       <label class="m-label">Ngày cấp</label>
@@ -147,6 +144,9 @@
                       name="input"
                       v-model:modelValue="employee.TelephoneNumber"
                     />
+                    <div class="err-message">
+                        Thông tin này phải là số
+                      </div>
                   </div>
                   <div class="m-row" title="Điện thoại cố định">
                     <label class="m-label">ĐT cố định</label>
@@ -155,6 +155,9 @@
                       name="input"
                       v-model:modelValue="employee.PhoneNumber"
                     />
+                    <div class="err-message">
+                        Thông tin này phải là số
+                      </div>
                   </div>
                   <div class="m-row">
                     <label class="m-label">Email</label>
@@ -163,6 +166,9 @@
                       name="input"
                       v-model:modelValue="employee.Email"
                     />
+                    <div class="err-message">
+                        Email không đúng định dạng
+                      </div>
                   </div>
               </div>
               <div class="employee1-left__user">
@@ -173,6 +179,9 @@
                       name="input"
                       v-model:modelValue="employee.BankAccountNumber"
                     />
+                    <div class="err-message">
+                        Thông tin này phải là số
+                      </div>
                   </div>
                   <div class="m-row">
                     <label class="m-label">Tên ngân hàng</label>
@@ -197,7 +206,7 @@
         <div class="mess-line"></div>
         <div class="popup-footer">
           <div class="mess-footer">
-            <MButton title="Hủy" index="1" text="Hủy" class="mess-footer__left" />
+            <MButton @click="closeOption" title="Hủy" index="1" text="Hủy" class="mess-footer__left" />
             <div class="mess-footer__right">
               <MButton title="Cất" index="1" text="Cất" class="mess-footer__mid" />
               <MButton title="Cất và thêm" index="2" text="Cất và thêm" class="mess-footer_right" />
@@ -210,67 +219,76 @@
   <MButton/>
 </template>
 <script>
-import MBaseInput from "../../components/base/input/MBaseInput.vue"
+import MBaseInput from "../../components/base/input/MBaseInput.vue";
 import MRadio from "../../components/base/input/MRadio.vue";
 import MButton from "../../components/base/Mbutton/MButton.vue";
 import MComboboxPosition from "../../components/base/combobox/MComboboxPosition.vue";
 import MComboboxDepartment from "../../components/base/combobox/MComboboxDepartment.vue";
-import {DEPARTMENT_HEADER,POISITION_HEADER } from "../../const.js"
-import {getDepartment} from "../../axios/departmentController/departmentController.js"
-import {getPoisition} from "../../axios/poisitionController/poisitionController.js"
+import { DEPARTMENT_HEADER, POISITION_HEADER } from "../../const.js";
+import { getDepartment } from "../../axios/departmentController/departmentController.js";
+import { getPoisition } from "../../axios/poisitionController/poisitionController.js";
 export default {
   name: "EMployeeDetail",
-  components: { MRadio, MButton, MComboboxDepartment,MComboboxPosition,MBaseInput},
+  components: {
+    MRadio,
+    MButton,
+    MComboboxDepartment,
+    MComboboxPosition,
+    MBaseInput,
+  },
   data() {
     return {
       isShowTb: false,
-      headersDepartment:DEPARTMENT_HEADER,
-      headerPoisition:POISITION_HEADER,
-      dataDepartment:[],
-      dataPoisition:[],
+      headersDepartment: DEPARTMENT_HEADER,
+      headerPoisition: POISITION_HEADER,
+      dataDepartment: [],
+      dataPoisition: [],
       employee: {
         EmployeeCode: null,
-        EmployeeName:null,
-        DepartmentName:null,
-        PositionName:null,
-        DateOfBirth:null,
-        IdentityNumber:null,
-        IdentityDate:null,
-        IdentityPlace:null,
-        Address:null,
-        TelephoneNumber:null,
-        PhoneNumber:null,
-        Email:null,
-        BankAccountNumber:null,
-        BankName:null,
-        BankBranchName:null,
-      }
+        EmployeeName: null,
+        DepartmentName: null,
+        PositionName: null,
+        DateOfBirth: null,
+        IdentityNumber: null,
+        IdentityDate: null,
+        IdentityPlace: null,
+        Address: null,
+        TelephoneNumber: null,
+        PhoneNumber: null,
+        Email: null,
+        BankAccountNumber: null,
+        BankName: null,
+        BankBranchName: null,
+      },
     };
   },
   watch: {
     employee: {
-      handler(val){
-        debugger
+      handler(val) {
+        debugger;
       },
-      deep: true
-    }
-  },  
-  created(){
+      deep: true,
+    },
+  },
+  created() {
     this.getDataDepartment();
     this.getDataPoisition();
     console.log(this.dataDepartment);
   },
   methods: {
-    selectPosition(item){
-      if(item){
+    /**
+     * Hàm thực hiện sự kiện chon Poisition để xử lý bắn vào ô input Poisition
+     * Author: NTLAM (02/11/2022)
+     */
+    selectPosition(item) {
+      if (item) {
         this.employee.PositionName = item.PositionName;
         this.employee.PositionId = item.PositionId;
-      }
-      else{
+      } else {
         this.employee.PositionName = null;
         this.employee.PositionId = null;
       }
-    }, 
+    },
     /**
      * Hàm đóng dialog thêm mới nhân viên
      * Author:NTLAM 27/10/2022
@@ -279,18 +297,22 @@ export default {
       this.$emit("closeDiaLog");
     },
 
-    getDataDepartment(){
-      getDepartment().then((res) => {
+    getDataDepartment() {
+      getDepartment()
+        .then((res) => {
           this.dataDepartment = res.data;
         })
         .catch();
     },
-
-    getDataPoisition(){
-      getPoisition().then((res)=>{
-        this.dataPoisition=res.data;
-      })
-    }
+    /**
+     * Hàm thực hiện gọi data Poisition
+     * Author: NTLAM (02/11/2022)
+     */
+    getDataPoisition() {
+      getPoisition().then((res) => {
+        this.dataPoisition = res.data;
+      });
+    },
     /**
      * Hàm cất và thêm(Cất dữ liệu sau đó clear form để tiếp tục thêm mới)
      */
@@ -302,7 +324,7 @@ export default {
     /**
      * Hàm clear form
      */
-    
+
     /**
      * Hàm thực hiện hủy thêm mới
      */
@@ -326,5 +348,4 @@ export default {
 };
 </script>
 <style  scoped>
-
 </style>

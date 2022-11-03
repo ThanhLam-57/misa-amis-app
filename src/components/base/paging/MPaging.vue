@@ -36,7 +36,7 @@ export default {
       default:null
     },
     numberStart:String,
-    numberEnd:Number
+    numberEnd:Number,
   },
   data(){
     return{

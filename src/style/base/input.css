@@ -1,4 +1,5 @@
 .m-row{
+    position: relative;
     padding-bottom: 24px;
 }
 .m-label {
@@ -73,6 +74,7 @@ input[type=radio]{
     border: 1px solid red !important;
   }
 .err-message{
+    position: absolute;
     overflow: hidden;
     white-space: nowrap;
     color: #E61D1D;

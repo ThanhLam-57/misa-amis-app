@@ -23,7 +23,7 @@
                 />
               </div>
             </div>
-            <div class="icon hw-24 icon-reload" title="Lấy lại dữ liệu"></div>
+            <div @click="reLoadData" class="icon hw-24 icon-reload" title="Lấy lại dữ liệu"></div>
 
             </div>
           </div>
@@ -31,11 +31,13 @@
             :headers="employeeHeader"
             :dataSource="employees"
             @changeSelect="changeSelected"
+            @deleteEmployee="deleteEmployeed"
           />
           <m-paging
           :totalRecord="totalRecord"
           :numberStart="numberStart"
           :numberEnd="numberEnd"
+          :classActive="valuePageSize"
           @prePage="getPrePage"
           @nextPage="getNextPage"></m-paging>
         </div>
@@ -49,13 +51,16 @@
     ></EmployeeDetail>
 </template>
 <script>
-import { loadData } from "../../axios/employeeController/employeeController.js";
+import {
+  loadData,
+  deleteByEmployeeId,
+} from "../../axios/employeeController/employeeController.js";
 import EmployeeDetail from "../../veiw/employee/EmployeeDetail.vue";
 import MPaging from "../../components/base/paging/MPaging.vue";
 import MTableEmployeeList from "../../components/base/Mtable/MTableEmployee.vue";
 import MButton from "../../components/base/Mbutton/MButton.vue";
 import MInputIcon from "../../components/base/input/MInputIcon.vue";
-import { EMPLOYEE_HEADER,DEFAULT_PARAMS } from "../../const.js";
+import { EMPLOYEE_HEADER, DEFAULT_PARAMS } from "../../const.js";
 export default {
   name: "EmployeeList",
   components: {
@@ -69,15 +74,16 @@ export default {
     return {
       isShow: false,
       employeeHeader: EMPLOYEE_HEADER,
-      defaultPẩm:DEFAULT_PARAMS,
+      defaultParams: DEFAULT_PARAMS,
       employees: [],
       totalRecord: 0,
       employeeSelected: [],
       valuePageSize: 10,
       pageNumber: 1,
       filter: "",
-      numberStart:1,
-      numberEnd:10
+      numberStart: 1,
+      numberEnd: 10,
+      idDeleted: null,
     };
   },
   created() {
@@ -102,7 +108,6 @@ export default {
       this.getDataPagings();
       this.getPaging();
     },
-
   },
   methods: {
     /**
@@ -115,23 +120,41 @@ export default {
 
     /**
      * Reload data trong bảng
+     * Author:NTLAM (03/11/2022)
      */
+    reLoadData() {
+      this.valuePageSize = 10;
+      this.pageNumber = 1;
+      this.getDataPagings();
+      //Combobox pageSize  sau khi reLoad chưa hiển thị về mặc định
+    },
 
     /**
      * Hàm lấy thông số paging
      * Autthor:NTTLAM 02/11/2022
      */
-    getPaging(){
-      if(this.pageNumber == 1){
-        this.numberStart=1;
-        this.numberEnd= this.valuePageSize
+    getPaging() {
+      if (this.pageNumber == 1) {
+        this.numberStart = 1;
+        this.numberEnd = this.valuePageSize;
       }
-      this.numberStart = this.valuePageSize * (this.pageNumber-1) +1
-      if(this.valuePageSize * this.pageNumber > this.totalRecord){
-        this.numberEnd= this.totalRecord;
-      }else{
-        this.numberEnd = this.valuePageSize*this.pageNumber
+      this.numberStart = this.valuePageSize * (this.pageNumber - 1) + 1;
+      if (this.valuePageSize * this.pageNumber > this.totalRecord) {
+        this.numberEnd = this.totalRecord;
+      } else {
+        this.numberEnd = this.valuePageSize * this.pageNumber;
       }
+    },
+    /**
+     * Hàm thực hiện xoá dữ liệu(Bắt được EmployeeID từ MTableEmployee)
+     * Author:NTLAM (03/11/2022)
+     */
+    deleteEmployeed(val) {
+      debugger;
+      this.idDeleted = val;
+      deleteByEmployeeId(this.idDeleted);
+      //Khi xoá xong chưa load lại được trang
+      this.getDataPagings();
     },
     /**
      * Hàm lấy chuỗi filter ghép vào API
@@ -150,12 +173,12 @@ export default {
         this.pageNumber--;
       }
     },
-        /**
+    /**
      * Hàm bắt sự kiện và xử lý ntm NextPage
      * Author:MTLAM 01/11/2022
      */
     getNextPage() {
-      if (this.pageNumber < this.totalRecord / this.valuePageSize + 1) {
+      if (this.pageNumber < this.totalRecord / this.valuePageSize) {
         this.pageNumber++;
       }
     },

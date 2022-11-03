@@ -7,7 +7,8 @@
         <div class="input-wrapper">
             <input 
                 v-model="textVale"
-               class="m-input" style="height: 30px;border: none;" type="text"/>
+               class="m-input" style="height: 30px;border: none;" type="text"
+               @click="showTable"/>
             <div @click="showTable"  id="btn-select__combobox" class="btn-select">
                 <div class="combobox__btn" :class="{rotate:isShowTb}"></div>
             </div>
@@ -77,5 +78,11 @@ export default {
   },
 };
 </script>
-<style lang="">
+<style scoped>
+.input-wrapper{
+  height: 30px;
+}
+.btn-select{
+  height: 30px;
+}
 </style>

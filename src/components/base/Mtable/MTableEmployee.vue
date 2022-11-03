@@ -64,7 +64,6 @@
 </template>
 <script>
 import{formatDate} from "../../../script/base.js"
-import{deleteByEmployeeId} from "../../../axios/employeeController/employeeController.js"
 export default {
   name: "MTableEmployeeList",
   components: {  },
@@ -121,14 +120,11 @@ export default {
   },  
   methods: {
     /**
-     * Gọi Api xóa nhân viên
-     */
-
-    /**
-     * Bắt sự kiên button xóa
+     * Bắt sự kiên button xóa bắn ID cần xoá lên EmployeeLisst
      */
      deleteEmployee(){
-      deleteByEmployeeId(this.idDelete)
+      this.$emit("deleteEmployee",this.idDelete)
+      // deleteByEmployeeId(this.idDelete)
      },
     /**
      * Hàm show dialog sửa
@@ -158,8 +154,6 @@ export default {
      * Hàm đóng option tùy chọn
      */
     closeOption(){
-      // debugger;
-      // this.idDelete = this.itemSelected.EmployeeId;
       this.isShowOption =false;
       this.itemSelected=null;
     },
