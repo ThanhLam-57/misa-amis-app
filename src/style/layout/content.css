@@ -1,7 +1,6 @@
 .content{
     background-color: #eceef1;
     padding: 24px 24px 12px 24px ;
-    min-width: 900px;
 }
 .content-header{
     display: flex;
@@ -52,6 +51,10 @@
     padding: 16px 26px;
     display: flex;
     justify-content: space-between;
+}
+.paging-left{
+    display: flex;
+    align-items: center;
 }
 .paging-right{
     display: flex;

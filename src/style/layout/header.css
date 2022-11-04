@@ -3,7 +3,6 @@
     background: #fff;
     align-items: center;
     justify-content: space-between;
-    min-width: 900px;
 }
 .header-left{
     display: flex;

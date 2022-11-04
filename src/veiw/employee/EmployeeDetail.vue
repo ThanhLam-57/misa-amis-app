@@ -64,8 +64,12 @@
                 <div class="m-row" style="z-index:2;">
                   <div id="select" class="select" style="position: relative;">
                     <MComboboxDepartment 
-                      :headers="headersDepartment"  
-                      :dataSource="dataDepartment"
+                    :headers="headersDepartment"
+                    :option="dataDepartment"
+                    displayField="DepartmentName"
+                    valueField="DepartmentId"
+                    displayFieldCode="DepartmentCode"
+                    @select="selectDepartment"
                     label="Đơn vị"/>
                   </div>
                   <!-- <div class="err-message">Thông tin này không được để trống</div> -->
@@ -73,6 +77,7 @@
                 <div class="m-row" style="z-index:1;">
                     <label class="m-label">Chức danh</label>
                     <MComboboxPosition
+                    :modelValue="employee.PositionId"
                     :option="dataPoisition"
                     displayField="PositionName"
                     valueField="PositionId"
@@ -167,7 +172,7 @@
                       v-model:modelValue="employee.Email"
                     />
                     <div class="err-message">
-                        Email không đúng định dạng
+                        Email không đúng định dangj
                       </div>
                   </div>
               </div>
@@ -208,7 +213,7 @@
           <div class="mess-footer">
             <MButton @click="closeOption" title="Hủy" index="1" text="Hủy" class="mess-footer__left" />
             <div class="mess-footer__right">
-              <MButton title="Cất" index="1" text="Cất" class="mess-footer__mid" />
+              <MButton @click="saveDataEmployee" title="Cất" index="1" text="Cất" class="mess-footer__mid" />
               <MButton title="Cất và thêm" index="2" text="Cất và thêm" class="mess-footer_right" />
             </div>
           </div>
@@ -227,6 +232,7 @@ import MComboboxDepartment from "../../components/base/combobox/MComboboxDepartm
 import { DEPARTMENT_HEADER, POISITION_HEADER } from "../../const.js";
 import { getDepartment } from "../../axios/departmentController/departmentController.js";
 import { getPoisition } from "../../axios/poisitionController/poisitionController.js";
+import {postEmployee} from "../../axios/employeeController/employeeController.js"
 export default {
   name: "EMployeeDetail",
   components: {
@@ -243,6 +249,7 @@ export default {
       headerPoisition: POISITION_HEADER,
       dataDepartment: [],
       dataPoisition: [],
+      mode:"add",
       employee: {
         EmployeeCode: null,
         EmployeeName: null,
@@ -258,16 +265,34 @@ export default {
         Email: null,
         BankAccountNumber: null,
         BankName: null,
-        BankBranchName: null,
+        BankBranchName: null
       },
     };
+  },
+  props:{
+    dataDetail:{
+      Type:Object,
+      default:null
+    }
   },
   watch: {
     employee: {
       handler(val) {
-        debugger;
+        // debugger;
       },
       deep: true,
+    },
+    dataDetail:{
+      handler(val){
+        if(val){
+          this.mode = "edit";
+          this.employee=val;
+        }
+        else{
+          this.mode = "add";
+        }
+      },
+      immediate:true
     },
   },
   created() {
@@ -290,13 +315,28 @@ export default {
       }
     },
     /**
+     * Hàm thực hiện sự kiện cho Department để xử lý ô input Department
+     * Author: NTLAM (02/11/2022)
+     */
+    selectDepartment(item) {
+      if (item) {
+        this.employee.DepartmentName = item.DepartmentName;
+        this.employee.DepartmentId = item.DepartmentId;
+      } else {
+        this.employee.DepartmentName = null;
+        this.employee.DepartmentId = null;
+      }
+    },
+    /**
      * Hàm đóng dialog thêm mới nhân viên
      * Author:NTLAM 27/10/2022
      */
     closeOption() {
       this.$emit("closeDiaLog");
     },
-
+    /**
+     * Hàm thực hiện gọi data Department 
+     */
     getDataDepartment() {
       getDepartment()
         .then((res) => {
@@ -316,25 +356,24 @@ export default {
     /**
      * Hàm cất và thêm(Cất dữ liệu sau đó clear form để tiếp tục thêm mới)
      */
-
+     saveDataEmployee(){
+      this.postDataEmployee();
+      this.$emit("closeDiaLog");
+     },
     /**
      * Hàm thực hiện cất dữ liêu
      */
-
+    postDataEmployee(){
+      postEmployee(this.employee).then(res =>{
+        console.log("Post thanh cong")
+      })
+    }
     /**
      * Hàm clear form
      */
 
     /**
-     * Hàm thực hiện hủy thêm mới
-     */
-
-    /**
      * API thực hiện thêm mới nhân viên
-     */
-
-    /**
-     * API thưc hiện sửa nhân viên
      */
 
     /**

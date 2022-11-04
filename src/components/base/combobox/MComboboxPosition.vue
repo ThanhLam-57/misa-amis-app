@@ -91,12 +91,27 @@ export default {
     };
   },
   watch: {
+    /**
+     * Bắt sự kiện thay đổi của optionData khi nhập vào ô input và thực hiện tìm kiếm
+     */
     option: {
       handler(val) {
         this.optionData = val;
       },
       immediate: true,
     },
+    modelValue:{
+      handler(val){
+        debugger;
+        if(val){
+          var item = this.option.find(x => x[this.valueField] == val);
+          if(item){
+            this.valueText = item[this.displayField];
+          }
+        }
+      },
+      immediate:true
+    }
   },
 };
 </script>

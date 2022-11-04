@@ -28,6 +28,7 @@
             </div>
           </div>
           <MTableEmployeeList
+            @showDialog="showEmployeeDetal"
             :headers="employeeHeader"
             :dataSource="employees"
             @changeSelect="changeSelected"
@@ -46,8 +47,8 @@
     <!-- Dialog danh sách nhân viên -->
     <EmployeeDetail
     v-if="isShow"
-    @closeDiaLog="onToggle"
-    @showDialog="onToggle"
+    @closeDiaLog="closeToggle"
+    :dataDetail="dataDetail"
     ></EmployeeDetail>
 </template>
 <script>
@@ -84,13 +85,14 @@ export default {
       numberStart: 1,
       numberEnd: 10,
       idDeleted: null,
+      dataDetail:null
     };
   },
   created() {
     this.getDataPagings();
   },
   mounted() {
-    //Lấy ra value page Size
+    //Lấy ra value page Size nhận sự kiện từ combobox
     this.emitter.on("valueActive", (valueActive) => {
       this.valuePageSize = valueActive;
     });
@@ -198,7 +200,11 @@ export default {
      * Author:NTLAM 27/10/2022
      */
     onToggle() {
-      this.isShow = !this.isShow;
+      this.dataDetail=null;
+      this.isShow = true;
+    },
+    closeToggle(){
+      this.isShow =false;
     },
     /**
      * Hàm lấy ra dữ liệu
@@ -214,6 +220,13 @@ export default {
         })
         .catch();
     },
+    /**
+     * Hàm show employee Detail và thực hiện sửa
+     */
+     showEmployeeDetal(val){
+      this.dataDetail = val;
+      this.isShow = true
+     }
   },
 };
 </script>

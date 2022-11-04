@@ -47,7 +47,7 @@
                     style="min-width: 120px"
                   >
                     <div class="edit-option">
-                      <div @click="showDialog" class="text-edit">Sửa</div>
+                      <div @click="showDialog(employee)" class="text-edit">Sửa</div>
                       <button @click="showOpttion(employee)" class="icon arrow-up--blueicon hw-16">
                       </button>
                     </div>
@@ -130,8 +130,8 @@ export default {
      * Hàm show dialog sửa
      * Author: NTLAM 29/10/2022
      */
-    showDialog(){
-      this.$emit("showDialog")
+    showDialog(employee){
+      this.$emit("showDialog",employee)
     },
     /**
      * Hàm Show tùy chọn của từng nhân viên

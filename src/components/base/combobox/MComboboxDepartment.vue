@@ -6,7 +6,7 @@
     <div class="row" style="width: 100%">
         <div class="input-wrapper">
             <input 
-                v-model="textVale"
+                @input="changeValue" :value="valueText"
                class="m-input" style="height: 30px;border: none;" type="text"
                @click="showTable"/>
             <div @click="showTable"  id="btn-select__combobox" class="btn-select">
@@ -15,28 +15,30 @@
         </div>
     </div>
     <div id="ttable" class="ttable" v-if="isShowTb">
-        <table class="table-select" style=" margin: 0px;z-index: 3;">
-            <thead class="table-header" style="position: sticky;">
-                <tr >
-                    <th
+        <div class="table-select" style=" margin: 0px;z-index: 3;">
+            <div class="table-header" style="position: sticky;">
+                <div class="itemHeader">
+                    <div 
+                    style="padding: 0 16px"
                         v-for="(item, index) in headers"
                         :class="item.Class"
                         :style="{'width': item.Width +'%'}"
                         :key="index"
-                    >{{item.Caption}}</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="department in dataSource" :key="department.DepartmentId">
-                    <td
-                    v-for="(item, index) in headers"
-                    :style="{ 'width': item.Width +'%' }"
-                    :value="department.DepartmentName"
-                    :key="index"
-                  >{{  department[item.propValue]}}</td>
-                </tr>
-            </tbody>
-        </table>
+                    >{{item.Caption}}</div>
+                </div>
+            </div>
+            <div v-if="optionData && optionData.length > 0">
+                <div class="itemBody" v-for="(item, index) in optionData" :key="index" @click="selectItem(item)" :class="{'cbb_active list': item[valueField] == classActive}">
+                    <div
+                    style="padding: 0 16px; width:30%"
+                  >{{  item[displayFieldCode]}}</div>
+                  <div
+                    style="padding: 0 16px; width:70%"
+                  >{{  item[displayField]}}</div>
+                </div>
+            </div>
+            <div class="itemBody" style="padding:0 16px" v-else>Không có dữ liệu</div>
+        </div>
         <div class="table-bot">
                 Cập nhật cơ cấu tổ chức
         </div>
@@ -60,13 +62,42 @@ export default {
       default: [],
     },
     valueData: "",
-    
+    option: {
+      value: Array,
+      default: [],
+    },
+    valueField: {
+      value: String,
+      default: "ID",
+    },
+    displayField: {
+      value: String,
+      default: "Name",
+    },
+    displayFieldCode: {
+      value: String,
+      default: "Name",
+    },
+    modelValue: {
+      value: [String, Number],
+      default: null,
+    },
   },
   data() {
     return {
       isShowTb: false,
-      textVale: null,
+      classActive: null,
+      valueText: null,
+      optionData: [],
     };
+  },
+  watch: {
+    option: {
+      handler(val) {
+        this.optionData = val;
+      },
+      immediate: true,
+    },
   },
   methods: {
     showTable() {
@@ -74,6 +105,22 @@ export default {
     },
     closeTable() {
       this.isShowTb = false;
+    },
+    selectItem(item) {
+      this.valueText = item[this.displayField];
+      this.$emit("select", item);
+      this.isShowTb=false;
+    },
+    changeValue(val) {
+      var textSearch = val.target.value;
+      this.valueText = textSearch;
+      if (textSearch && textSearch.length > 0) {
+        this.optionData = this.option.filter((x) =>
+          x[this.displayField].includes(textSearch)
+        );
+      } else {
+        this.optionData = this.option;
+      }
     },
   },
 };
@@ -84,5 +131,22 @@ export default {
 }
 .btn-select{
   height: 30px;
+}
+.ttable{
+  width: 402px;
+}
+.itemHeader{
+  display: flex;
+  height: 32px;
+  align-items: center;
+  font-weight: 700;
+}
+.itemBody{
+  display: flex;
+  height: 32px;
+  align-items: center;
+}
+.itemBody:hover{
+  background-color: #e5f3ff !important;
 }
 </style>

@@ -41,12 +41,15 @@ export default {
     activeClass(item) {
       this.classActive = item.value;
     },
-
+    /**
+     * Hàm active tuỳ chọn sau khi chọn giá trị
+     */
     valueActive() {
       this.emitter.emit("valueActive", this.classActive);
     },
   },
   mounted(){
+    //Gửi sự kiện activeValue lên EmployeeList
     this.emitter.on("valueActive",(valuePageSize)=>{
       this.classActive = valuePageSize;
     });
