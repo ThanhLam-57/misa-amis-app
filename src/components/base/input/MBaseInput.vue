@@ -5,14 +5,20 @@
       @input="changeValue"
       :class="{
         'm-input': type !== 'checkbox',
+        'validate-error': isValidate
       }"
       :name="name"
       :ref="fieldNameTxt"
     />
+    <div class="err-message" v-if="isValidate">
+      {{errorValidate}}
+    </div>
 </template>
 <script>
+import MBaseComponent from '../../base/MBaseComponent.vue';
 export default {
   name: "BsaeInput",
+  extends:MBaseComponent,
   props: {
     Type: String,
     modelValue: String,
@@ -25,35 +31,32 @@ export default {
       Type: String,
       default: "",
     },
-    needMountedFocus: {
-      Type: Boolean,
-      default: false
+    name: {
+      Type: String,
+      default: "",
+    },
+    rules: {
+      Type: String,
+      default: "",
     }
   },
-  data (){
-    return{
-        isDate: false,
-        title:"",
-        isValidate:true,
-        isValiData:{
-            value:true,
-            msg:"",
-        }
-    }
+  data() {
+    return {
+      isDate: false,
+      title: "",
+    };
   },
   methods: {
-    changeValue(val){
-      this.$emit("update:modelValue",val.target.value);
-    }
-
     /**
+     * Lấy ra giá trị của ô input
      * Hàm truyền dữ liệu từ input lên để xử lý
+     * @param {*} val 
      */
-
-    /**
-     * Hàm validate dữ liệu
-     */
-  }
+    changeValue(val) {
+      this.validate(val.target.value);
+      this.$emit("update:modelValue", val.target.value);
+    },
+  },
 };
 </script>
 <style lang="">

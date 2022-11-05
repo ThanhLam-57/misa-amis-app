@@ -3,6 +3,8 @@
         class="m-input input-search"
         :style="style"
         :type="type"
+        :value="modelValue"
+        @input="changeValue"
         :placeholder="placeholder"
     />
 </template>
@@ -14,8 +16,19 @@ export default {
         style:String,
         label:String,
         index:Number,
-        type:String
+        type:String,
+        modelValue: String,
     },
+    methods:{
+            /**
+     * Lấy ra giá trị của ô input
+     * Hàm truyền dữ liệu từ input lên để xử lý
+     * @param {*} val 
+     */
+    changeValue(val) {   
+      this.$emit("update:modelValue", val.target.value);
+    },
+    }
 }
 </script>
 <style lang="">

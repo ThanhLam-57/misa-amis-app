@@ -1,6 +1,6 @@
 <template lang="">
     <div class="content-table-paging">
-      <div class="paging-left">Tổng số<b> {{totalRecord}} </b> bản ghi</div>
+      <div class="paging-left">Tổng số :<b> {{totalRecord}} </b> bản ghi</div>
             <div class="paging-right">
               <div class="option-number__list">
                 Số bản ghi /trang

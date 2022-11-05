@@ -19,11 +19,12 @@
                 <MInputIcon
                   style="margin-right: 10px;"
                   type="text"
+                  v-model:modelValue="employeeFilter"
                   placeholder="Tìm theo mã, tên nhân viên"
                 />
               </div>
             </div>
-            <div @click="reLoadData" class="icon hw-24 icon-reload" title="Lấy lại dữ liệu"></div>
+            <div @click="reLoadData" class="icon hw-24 icon-reload" title="Load lại dữ liệu"></div>
 
             </div>
           </div>
@@ -80,12 +81,13 @@ export default {
       totalRecord: 0,
       employeeSelected: [],
       valuePageSize: 10,
+      employeeFilter: null,
       pageNumber: 1,
       filter: "",
       numberStart: 1,
       numberEnd: 10,
       idDeleted: null,
-      dataDetail:null
+      dataDetail: null,
     };
   },
   created() {
@@ -99,16 +101,22 @@ export default {
   },
   watch: {
     //Xử lý sự kiện lấy thông số đầu vào cho employee Filter
-    pageNumber() {
+     pageNumber() {
       this.getFilter();
       this.getDataPagings();
-      this.getPaging();
+     this.getPaging();
     },
-    valuePageSize() {
+     valuePageSize() {
       this.pageNumber = 1;
       this.getFilter();
-      this.getDataPagings();
-      this.getPaging();
+       this.getDataPagings();
+     this.getPaging();
+    },
+     employeeFilter() {
+      this.pageNumber=1;
+      this.valuePageSize=10;
+      this.getFilter();
+       this.getDataPagings();
     },
   },
   methods: {
@@ -151,12 +159,11 @@ export default {
      * Hàm thực hiện xoá dữ liệu(Bắt được EmployeeID từ MTableEmployee)
      * Author:NTLAM (03/11/2022)
      */
-    deleteEmployeed(val) {
-      debugger;
+     deleteEmployeed(val) {
       this.idDeleted = val;
-      deleteByEmployeeId(this.idDeleted);
+       deleteByEmployeeId(this.idDeleted);
       //Khi xoá xong chưa load lại được trang
-      this.getDataPagings();
+       this.getDataPagings();
     },
     /**
      * Hàm lấy chuỗi filter ghép vào API
@@ -164,7 +171,10 @@ export default {
      */
     getFilter() {
       this.filter =
-        "pageSize=" + this.valuePageSize + "&pageNumber=" + this.pageNumber;
+      "pageSize=" + this.valuePageSize + "&pageNumber=" + this.pageNumber;
+      if (this.employeeFilter && this.employeeFilter.length > 0) {
+        this.filter =this.filter + "&employeeFilter=" + this.employeeFilter;
+      }
     },
     /**
      * Hàm bắt sự kiện và xử lý ntm PrePage
@@ -200,33 +210,40 @@ export default {
      * Author:NTLAM 27/10/2022
      */
     onToggle() {
-      this.dataDetail=null;
+      this.dataDetail = null;
       this.isShow = true;
     },
-    closeToggle(){
-      this.isShow =false;
+    closeToggle() {
+      this.isShow = false;
     },
     /**
      * Hàm lấy ra dữ liệu
      * Author:NTLAM 30/10/2022
      */
-    getDataPagings() {
+    async getDataPagings() {
       this.getFilter();
       loadData(this.filter)
-        .then((res) => {
-          this.employees = res.data.Data;
-          this.totalRecord = res.data.TotalRecord;
-          return this.totalRecord;
-        })
-        .catch();
+        .then((res)=>{
+        this.employees =  res.data.Data;
+        this.totalRecord = res.data.TotalRecord;
+        return this.totalRecord;
+      })
+      .catch();
+      // try{
+      //   var res = await loadData(this.filter);
+      //   this.employees =  res.data.Data;
+      //   this.totalRecord = res.data.TotalRecord;
+      //   return this.totalRecord;
+      // }
+      // catch(e){}
     },
     /**
      * Hàm show employee Detail và thực hiện sửa
      */
-     showEmployeeDetal(val){
+    showEmployeeDetal(val) {
       this.dataDetail = val;
-      this.isShow = true
-     }
+      this.isShow = true;
+    },
   },
 };
 </script>

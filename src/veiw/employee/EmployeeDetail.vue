@@ -1,8 +1,6 @@
 <template lang="">
-    <div id="dlgEmployeeDetail" class="dialog">
-    <div class="mw-900">
-      <div class="popup">
-        <div class="popup-header">
+  <MPopup>
+    <template #header>
           <div class="popup-title">
             <div id="header-popup-title" class="header-popup-title">
               Thông tin nhân viên
@@ -26,9 +24,9 @@
             <div class="popup-help__icon icon hw-24"  title="Giúp (F1)"></div>
             <div  class="popup-close__icon icon hw-24" @click="closeOption" title="Đóng (ESC)"></div>
           </div>
-        </div>
-        <div class="popup-content">
-          <div class="popup-content__employee">
+    </template>
+    <template #content>
+      <div class="popup-content__employee">
             <div class="popup-content__employee1">
               <div class="content__employee1-left">
                 <div class="employee1-left__user">
@@ -39,12 +37,10 @@
                       >
                       <MBaseInput
                         type="text"
-                        name="input"
+                        name="Mã nhân viên"
+                        rules="Empty"
                         v-model:modelValue="employee.EmployeeCode"
                       />
-                      <div class="err-message">
-                        Thông tin này không được để trống
-                      </div>
                     </div>
                     <div class="m-row" style="width: calc(60% - 6px)">
                       <label class="m-label"
@@ -53,26 +49,26 @@
                       >
                       <MBaseInput
                       type="text"
-                      name="input"
+                      name="Tên nhân viên"
+                      rules="Empty"
                       v-model:modelValue="employee.EmployeeName"
                     />
-                      <div class="err-message">
-                        Thông tin này không được để trống
-                      </div>
                     </div>
                 </div>
                 <div class="m-row" style="z-index:2;">
                   <div id="select" class="select" style="position: relative;">
                     <MComboboxDepartment 
+                    name="Đơn vị"
+                    rules="Empty"
                     :headers="headersDepartment"
                     :option="dataDepartment"
+                    v-model:modelValue="employee.DepartmentId"
                     displayField="DepartmentName"
                     valueField="DepartmentId"
                     displayFieldCode="DepartmentCode"
                     @select="selectDepartment"
                     label="Đơn vị"/>
                   </div>
-                  <!-- <div class="err-message">Thông tin này không được để trống</div> -->
                 </div>
                 <div class="m-row" style="z-index:1;">
                     <label class="m-label">Chức danh</label>
@@ -105,13 +101,11 @@
                     >
                       <label class="m-label">Số CMND</label>
                       <MBaseInput
+                      name="Số CMND"
+                      rules="checkValueNumber"
                       type="text"
-                      name="input"
                       v-model:modelValue="employee.IdentityNumber"
                     />
-                    <div class="err-message">
-                        Thông tin này phải là số
-                      </div>
                     </div>
                     <div class="m-row" style="width: 40%">
                       <label class="m-label">Ngày cấp</label>
@@ -146,34 +140,28 @@
                     <label class="m-label">ĐT di động</label>
                     <MBaseInput
                       type="text"
-                      name="input"
+                      name="Số điện thoại"
+                      rules="checkValueNumber"
                       v-model:modelValue="employee.TelephoneNumber"
                     />
-                    <div class="err-message">
-                        Thông tin này phải là số
-                      </div>
                   </div>
                   <div class="m-row" title="Điện thoại cố định">
                     <label class="m-label">ĐT cố định</label>
                     <MBaseInput
                       type="text"
-                      name="input"
+                      name="Số điện thoại"
+                      rules="checkValueNumber"
                       v-model:modelValue="employee.PhoneNumber"
                     />
-                    <div class="err-message">
-                        Thông tin này phải là số
-                      </div>
                   </div>
                   <div class="m-row">
                     <label class="m-label">Email</label>
                     <MBaseInput
+                      name="Email"
+                      rules="checkValueEmail"
                       type="text"
-                      name="input"
                       v-model:modelValue="employee.Email"
                     />
-                    <div class="err-message">
-                        Email không đúng định dangj
-                      </div>
                   </div>
               </div>
               <div class="employee1-left__user">
@@ -181,12 +169,10 @@
                     <label class="m-label">Tài khoản ngân hàng</label>
                     <MBaseInput
                       type="text"
-                      name="input"
+                      name="Tài khoản ngân hàng"
+                      rules="checkValueNumber"
                       v-model:modelValue="employee.BankAccountNumber"
                     />
-                    <div class="err-message">
-                        Thông tin này phải là số
-                      </div>
                   </div>
                   <div class="m-row">
                     <label class="m-label">Tên ngân hàng</label>
@@ -207,21 +193,17 @@
               </div>
             </div>
           </div>
-        </div>
-        <div class="mess-line"></div>
-        <div class="popup-footer">
-          <div class="mess-footer">
+    </template>
+    <template #footer>
+      <div class="mess-footer">
             <MButton @click="closeOption" title="Hủy" index="1" text="Hủy" class="mess-footer__left" />
             <div class="mess-footer__right">
               <MButton @click="saveDataEmployee" title="Cất" index="1" text="Cất" class="mess-footer__mid" />
               <MButton title="Cất và thêm" index="2" text="Cất và thêm" class="mess-footer_right" />
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <MButton/>
+    </template>
+  </MPopup>
 </template>
 <script>
 import MBaseInput from "../../components/base/input/MBaseInput.vue";
@@ -229,10 +211,11 @@ import MRadio from "../../components/base/input/MRadio.vue";
 import MButton from "../../components/base/Mbutton/MButton.vue";
 import MComboboxPosition from "../../components/base/combobox/MComboboxPosition.vue";
 import MComboboxDepartment from "../../components/base/combobox/MComboboxDepartment.vue";
+import MPopup from "../../components/base/MPopup/MPopup.vue";
 import { DEPARTMENT_HEADER, POISITION_HEADER } from "../../const.js";
 import { getDepartment } from "../../axios/departmentController/departmentController.js";
 import { getPoisition } from "../../axios/poisitionController/poisitionController.js";
-import {postEmployee} from "../../axios/employeeController/employeeController.js"
+import { postEmployee } from "../../axios/employeeController/employeeController.js";
 export default {
   name: "EMployeeDetail",
   components: {
@@ -241,6 +224,7 @@ export default {
     MComboboxDepartment,
     MComboboxPosition,
     MBaseInput,
+    MPopup
   },
   data() {
     return {
@@ -249,7 +233,7 @@ export default {
       headerPoisition: POISITION_HEADER,
       dataDepartment: [],
       dataPoisition: [],
-      mode:"add",
+      mode: "add",
       employee: {
         EmployeeCode: null,
         EmployeeName: null,
@@ -265,38 +249,36 @@ export default {
         Email: null,
         BankAccountNumber: null,
         BankName: null,
-        BankBranchName: null
+        BankBranchName: null,
       },
     };
   },
-  props:{
-    dataDetail:{
-      Type:Object,
-      default:null
-    }
+  props: {
+    dataDetail: {
+      Type: Object,
+      default: null,
+    },
   },
   watch: {
     employee: {
       handler(val) {
-        // debugger;
       },
       deep: true,
     },
-    dataDetail:{
-      handler(val){
-        if(val){
+    dataDetail: {
+      handler(val) {
+        if (val) {
           this.mode = "edit";
-          this.employee=val;
-        }
-        else{
+          this.employee = val;
+        } else {
           this.mode = "add";
         }
       },
-      immediate:true
+      immediate: true,
     },
   },
-  created() {
-    this.getDataDepartment();
+  async created() {
+    await this.getDataDepartment();
     this.getDataPoisition();
     console.log(this.dataDepartment);
   },
@@ -335,14 +317,16 @@ export default {
       this.$emit("closeDiaLog");
     },
     /**
-     * Hàm thực hiện gọi data Department 
+     * Hàm thực hiện gọi data Department
      */
-    getDataDepartment() {
-      getDepartment()
-        .then((res) => {
-          this.dataDepartment = res.data;
-        })
-        .catch();
+    async getDataDepartment() {
+      try{
+        var res = await getDepartment();
+        this.dataDepartment = res.data;
+      }
+      catch(e){
+        
+      }
     },
     /**
      * Hàm thực hiện gọi data Poisition
@@ -356,26 +340,18 @@ export default {
     /**
      * Hàm cất và thêm(Cất dữ liệu sau đó clear form để tiếp tục thêm mới)
      */
-     saveDataEmployee(){
+    saveDataEmployee() {
       this.postDataEmployee();
       this.$emit("closeDiaLog");
-     },
+    },
     /**
      * Hàm thực hiện cất dữ liêu
      */
-    postDataEmployee(){
-      postEmployee(this.employee).then(res =>{
-        console.log("Post thanh cong")
-      })
-    }
-    /**
-     * Hàm clear form
-     */
-
-    /**
-     * API thực hiện thêm mới nhân viên
-     */
-
+    postDataEmployee() {
+      postEmployee(this.employee).then((res) => {
+        console.log("Post thanh cong");
+      });
+    },
     /**
      * Hàm thực hiện tắt Popup cảnh báo
      */

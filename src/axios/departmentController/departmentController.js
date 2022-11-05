@@ -1,5 +1,5 @@
 import axios from "axios";
 
-export function getDepartment(){
-    return axios.get("https://amis.manhnv.net/api/v1/Departments");
+export async function getDepartment(){
+    return await axios.get("https://amis.manhnv.net/api/v1/Departments");
 }

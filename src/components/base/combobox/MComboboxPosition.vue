@@ -1,15 +1,15 @@
 <template lang="">
-    <div v-click-away="closeOption" @click="showOption" class="select" style="position: relative">
+    <div v-click-away="closeOption" class="select" style="position: relative">
         <div class="combobox">
-          <input @input="changeValue" :value="valueText" class="m-input"/>
+          <input @input="changeValue" :value="valueText" class="m-input" @click="openOption"/>
 
-          <div class="btn-select">
+          <div @click="showOption" class="btn-select">
               <div class="combobox__btn" :class="{rotate:isShow}"></div>
           </div>
         </div>
         <div class="menu-option"  v-if="isShow">
           <div v-if="optionData && optionData.length > 0">
-            <div class="itemOption" v-for="(item, index) in optionData" :key="index" @click="selectItem(item)" :class="{'cbb_active list': item[valueField] == classActive}">
+            <div class="itemOption" v-for="(item, index) in optionData" :key="index" @click="selectItem(item)" :class="{'cbb_active list': item[valueField] == modelValue}">
               {{item[displayField]}}
             </div>
           </div>
@@ -30,6 +30,9 @@ export default {
     showOption() {
       this.isShow = !this.isShow;
     },
+    openOption(){
+      this.isShow= true
+    },
     /**
      * Hàm đóng option
      * Author:NTLAM 26/10/2022
@@ -45,6 +48,7 @@ export default {
     selectItem(item) {
       this.valueText = item[this.displayField];
       this.$emit("select", item);
+      this.isShow=false
     },
 
     /**
@@ -102,7 +106,7 @@ export default {
     },
     modelValue:{
       handler(val){
-        debugger;
+        // debugger;
         if(val){
           var item = this.option.find(x => x[this.valueField] == val);
           if(item){

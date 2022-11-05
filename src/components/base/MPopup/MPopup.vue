@@ -1,18 +1,19 @@
 <template lang="">
-    <div id="mess-err" class="dialog" hidden>
-      <div class="mw-444">
+    <div class="dialog">
+      <div class="mw-900">
         <div class="message">
-          <div class="mess-content">
-            <div class="icon hw-48 mess-err-icon"></div>
-            <div class="mess-content__text">
-              Chưa điền đủ thông tin, vui lòng kiểm tra lại
+          <div class="popup">
+            <div class="popup-header">
+              <slot name="header"></slot>
             </div>
-          </div>
-          <div class="mess-line"></div>
-          <div class="mess-footer__alone">
-            <div id="btn-accept" class="mess-footer_right">
-              <button class="btn btnSave">Đồng ý</button>
+            <div class="popup-content">
+              <slot name="content"></slot>
             </div>
+            <div class="mess-line"></div>
+            <div class="popup-footer">
+              <slot name="footer"></slot>
+            </div>
+
           </div>
         </div>
       </div>
