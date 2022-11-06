@@ -123,7 +123,7 @@ export default {
      * Bắt sự kiên button xóa bắn ID cần xoá lên EmployeeLisst
      */
      deleteEmployee(){
-      this.$emit("deleteEmployee",this.idDelete)
+      this.$emit("deleteEmployee",this.itemSelected)
       // deleteByEmployeeId(this.idDelete)
      },
     /**
@@ -131,6 +131,7 @@ export default {
      * Author: NTLAM 29/10/2022
      */
     showDialog(employee){
+      // debugger
       this.$emit("showDialog",employee)
     },
     /**

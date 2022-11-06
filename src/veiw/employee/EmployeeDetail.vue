@@ -1,6 +1,6 @@
 <template lang="">
-  <MPopup>
-    <template #header>
+  <MPopup :componentWidth="900">
+    <template #header >
           <div class="popup-title">
             <div id="header-popup-title" class="header-popup-title">
               Thông tin nhân viên
@@ -270,6 +270,7 @@ export default {
         if (val) {
           this.mode = "edit";
           this.employee = val;
+          // this.enployee.DateOfBirth  = formatDate(val.DateOfBirth);
         } else {
           this.mode = "add";
         }

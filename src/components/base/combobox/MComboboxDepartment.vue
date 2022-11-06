@@ -7,7 +7,7 @@
         <div class="input-wrapper"
           :class="{'validate-error': isValidate}">
             <input 
-                @input="changeValue" :value="valueText"
+                @input="changeValue" @blur="onBlur" :value="valueText"
                class="m-input" style="height: 30px;border: none;" type="text"
                @click="openTable"/>
             <div @click="showTable"  id="btn-select__combobox" class="btn-select">
@@ -157,6 +157,12 @@ export default {
         this.optionData = this.option;
       }
     },
+    /**
+     * Hàm xửử lý khi blur
+     */
+     onBlur(val){
+      this.validate(val.target.value);
+    }
   },
 };
 </script>

@@ -1,6 +1,6 @@
 <template lang="">
     <div class="content-table-paging">
-      <div class="paging-left">Tổng số :<b> {{totalRecord}} </b> bản ghi</div>
+      <div class="paging-left">Tổng số :<b> {{totalRecord}} </b><span class="m-l-4">bản ghi</span></div>
             <div class="paging-right">
               <div class="option-number__list">
                 Số bản ghi /trang
@@ -57,4 +57,7 @@ export default {
 };
 </script>
 <style scoped>
+.m-l-4{
+  margin-left: 4px ;
+}
 </style>

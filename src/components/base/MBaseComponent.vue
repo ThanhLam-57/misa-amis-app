@@ -27,14 +27,14 @@ export default {
             }
           }
           if (rule == "checkValueNumber") {
-            if (this.isNumeric(val) == false) {
+            if (val && this.isNumeric(val) == false) {
               this.isValidate = true;
               this.errorValidate = this.name + " phải là số";
               return;
             }
           }
           if (rule == "checkValueEmail") {
-            if(this.checkEmailFormat(val) == null){
+            if(val && this.checkEmailFormat(val) == null){
                 this.isValidate = true;
                 this.errorValidate = this.name + " không đúng định dạng";
             }

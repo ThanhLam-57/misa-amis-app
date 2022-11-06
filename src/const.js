@@ -218,3 +218,11 @@ export const DEFAULT_PARAMS = {
   pageNumber: 1,
   employeeFilter: "",
 };
+
+// loại popup cảnh báo
+export const DIALOG_TYPE = {
+  ALERT: "alert",
+  WARNING: "warning",
+  ASK_OPTION: "askOption",
+  ASK_CANCELABLE: "ask",
+};

@@ -9,6 +9,7 @@
       }"
       :name="name"
       :ref="fieldNameTxt"
+      @blur="onBlur"
     />
     <div class="err-message" v-if="isValidate">
       {{errorValidate}}
@@ -20,7 +21,7 @@ export default {
   name: "BsaeInput",
   extends:MBaseComponent,
   props: {
-    Type: String,
+    type: String,
     modelValue: String,
     name: String,
     isRequire: {
@@ -56,6 +57,12 @@ export default {
       this.validate(val.target.value);
       this.$emit("update:modelValue", val.target.value);
     },
+    /**
+     * Hàm xửử lý khi blur
+     */
+     onBlur(val){
+      this.validate(val.target.value);
+    }
   },
 };
 </script>

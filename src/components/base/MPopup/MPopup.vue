@@ -1,8 +1,10 @@
 <template lang="">
     <div class="dialog">
-      <div class="mw-900">
-        <div class="message">
-          <div class="popup">
+          <div class="popup" :style='{
+        "min-width": componentWidth + "px",
+        "height": componentHeight ? (componentHeight + "px") : "auto",
+        "padding": componentPadding + "px",
+    }'>
             <div class="popup-header">
               <slot name="header"></slot>
             </div>
@@ -14,16 +16,22 @@
               <slot name="footer"></slot>
             </div>
 
-          </div>
         </div>
-      </div>
     </div>
 </template>
 <script>
 export default {
-    
-}
+  props: {
+    componentWidth: {
+      Type: [Number, String],
+      default: 100,
+    },
+    componentHeight: {
+      Type: [Number, String],
+      default: null,
+    },
+  },
+};
 </script>
 <style lang="">
-    
 </style>

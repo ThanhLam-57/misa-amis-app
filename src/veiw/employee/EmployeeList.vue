@@ -33,7 +33,7 @@
             :headers="employeeHeader"
             :dataSource="employees"
             @changeSelect="changeSelected"
-            @deleteEmployee="deleteEmployeed"
+            @deleteEmployee="optionDetele"
           />
           <m-paging
           :totalRecord="totalRecord"
@@ -51,8 +51,17 @@
     @closeDiaLog="closeToggle"
     :dataDetail="dataDetail"
     ></EmployeeDetail>
+    <!-- Popup cảnh báo -->
+    <MWarning
+    v-if="isShowWarningDelete"
+    :text="warningText"
+    :dialogType="DIALOG_TYPE.ASK_CANCELABLE"
+    @no-warning="cancelDelete"
+    @yes-warning="deleteEmployeed"
+    ></MWarning>
 </template>
 <script>
+import MWarning from "../../components/base/MPopup/MWarning.vue"
 import {
   loadData,
   deleteByEmployeeId,
@@ -62,7 +71,8 @@ import MPaging from "../../components/base/paging/MPaging.vue";
 import MTableEmployeeList from "../../components/base/Mtable/MTableEmployee.vue";
 import MButton from "../../components/base/Mbutton/MButton.vue";
 import MInputIcon from "../../components/base/input/MInputIcon.vue";
-import { EMPLOYEE_HEADER, DEFAULT_PARAMS } from "../../const.js";
+import { EMPLOYEE_HEADER, DEFAULT_PARAMS, DIALOG_TYPE } from "../../const.js";
+import {formatDateValue,formatDate}  from '../../script/base.js';
 export default {
   name: "EmployeeList",
   components: {
@@ -71,6 +81,7 @@ export default {
     MButton,
     EmployeeDetail,
     MInputIcon,
+    MWarning
   },
   data() {
     return {
@@ -86,8 +97,11 @@ export default {
       filter: "",
       numberStart: 1,
       numberEnd: 10,
-      idDeleted: null,
+      EmpDeleted: null,
       dataDetail: null,
+      DIALOG_TYPE: DIALOG_TYPE,
+      warningText:"abc",
+      isShowWarningDelete:false
     };
   },
   created() {
@@ -123,7 +137,27 @@ export default {
     /**
      * hàm cảnh báo xóa 1 nhân viên
      */
-
+    optionDetele(val){
+      this.EmpDeleted = val;
+      this.isShowWarningDelete = true
+      this.warningText="Bạn có thực sự muốn xoá nhân viên <" + this.EmpDeleted.EmployeeCode +"> không ?"
+    },
+    /**
+     * Hàm hủy xóa
+     */
+     cancelDelete(){
+      this.isShowWarningDelete=false
+     },
+    /**
+     * Hàm thực hiện xoá dữ liệu(Bắt được EmployeeID từ MTableEmployee)
+     * Author:NTLAM (03/11/2022)
+     */
+     deleteEmployeed() {
+       deleteByEmployeeId(this.EmpDeleted.EmployeeId).then((res)=>{
+        this.getDataPagings();
+        this.isShowWarningDelete=false
+       });
+    },
     /**
      * Hàm cảnh báo xóa nhiều nhân viên
      */
@@ -154,16 +188,6 @@ export default {
       } else {
         this.numberEnd = this.valuePageSize * this.pageNumber;
       }
-    },
-    /**
-     * Hàm thực hiện xoá dữ liệu(Bắt được EmployeeID từ MTableEmployee)
-     * Author:NTLAM (03/11/2022)
-     */
-     deleteEmployeed(val) {
-      this.idDeleted = val;
-       deleteByEmployeeId(this.idDeleted);
-      //Khi xoá xong chưa load lại được trang
-       this.getDataPagings();
     },
     /**
      * Hàm lấy chuỗi filter ghép vào API
@@ -220,7 +244,7 @@ export default {
      * Hàm lấy ra dữ liệu
      * Author:NTLAM 30/10/2022
      */
-    async getDataPagings() {
+    getDataPagings() {
       this.getFilter();
       loadData(this.filter)
         .then((res)=>{
@@ -229,16 +253,9 @@ export default {
         return this.totalRecord;
       })
       .catch();
-      // try{
-      //   var res = await loadData(this.filter);
-      //   this.employees =  res.data.Data;
-      //   this.totalRecord = res.data.TotalRecord;
-      //   return this.totalRecord;
-      // }
-      // catch(e){}
     },
     /**
-     * Hàm show employee Detail và thực hiện sửa
+     * Sau khi bấn sửa truyền dữ liệu xuống cpn EmployeeDetal
      */
     showEmployeeDetal(val) {
       this.dataDetail = val;
