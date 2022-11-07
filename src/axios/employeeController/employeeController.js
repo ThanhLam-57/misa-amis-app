@@ -16,3 +16,6 @@ export function deleteByEmployeeId(params){
 export function postEmployee(param){
     return axios.post("https://amis.manhnv.net/api/v1/Employees",param)
 }
+export function putEmployee(empId,param){
+    return axios.put("https://amis.manhnv.net/api/v1/Employees/"+ empId,param)
+}

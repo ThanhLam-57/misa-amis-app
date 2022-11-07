@@ -94,7 +94,7 @@ export default {
           })
         }
         this.selected = selected;
-        console.log(this.selected.length);
+        // console.log(this.selected.length);
       }
     }
   },

@@ -258,6 +258,7 @@ export default {
      * Sau khi bấn sửa truyền dữ liệu xuống cpn EmployeeDetal
      */
     showEmployeeDetal(val) {
+      // debugger
       this.dataDetail = val;
       this.isShow = true;
     },

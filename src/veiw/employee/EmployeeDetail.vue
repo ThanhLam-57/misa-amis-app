@@ -215,7 +215,8 @@ import MPopup from "../../components/base/MPopup/MPopup.vue";
 import { DEPARTMENT_HEADER, POISITION_HEADER } from "../../const.js";
 import { getDepartment } from "../../axios/departmentController/departmentController.js";
 import { getPoisition } from "../../axios/poisitionController/poisitionController.js";
-import { postEmployee } from "../../axios/employeeController/employeeController.js";
+import { postEmployee, putEmployee } from "../../axios/employeeController/employeeController.js";
+import {formatDate,formatDateValue} from "../../script/base.js"
 export default {
   name: "EMployeeDetail",
   components: {
@@ -267,10 +268,15 @@ export default {
     },
     dataDetail: {
       handler(val) {
+      debugger
+        // debugger
         if (val) {
           this.mode = "edit";
           this.employee = val;
-          // this.enployee.DateOfBirth  = formatDate(val.DateOfBirth);
+          // if(val.DateOfBirth){
+          //   this.employee.DateOfBirth  = formatDateValue(val.DateOfBirth);
+          // }
+          // this.putDataEmployee()
         } else {
           this.mode = "add";
         }
@@ -281,7 +287,7 @@ export default {
   async created() {
     await this.getDataDepartment();
     this.getDataPoisition();
-    console.log(this.dataDepartment);
+    // console.log(this.dataDepartment);
   },
   methods: {
     /**
@@ -353,6 +359,14 @@ export default {
         console.log("Post thanh cong");
       });
     },
+    /**
+     * Hàm thực hiện sửa dữ liệu
+     */
+     putDataEmployee(){
+      putEmployee(this.employeeID,this.employee).then((res)=>{
+
+      });
+     }
     /**
      * Hàm thực hiện tắt Popup cảnh báo
      */
