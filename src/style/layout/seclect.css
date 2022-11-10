@@ -201,6 +201,7 @@
   background-color: #ebedf0;
 }
 .cbb_active{
+  border-radius: 4px;
   background-color: #2ca01c;
   color: white;
 }

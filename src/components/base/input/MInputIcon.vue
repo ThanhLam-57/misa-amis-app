@@ -13,11 +13,18 @@ export default {
     name:"MInputIcon",
     props:{
         class: String,
-        style:String,
+        style: {
+            type :String,
+            default:""
+        },
         label:String,
         index:Number,
         type:String,
         modelValue: String,
+        placeholder:{
+            type:String,
+            default:""
+        }
     },
     methods:{
             /**
@@ -31,6 +38,8 @@ export default {
     }
 }
 </script>
-<style lang="">
-    
+<style scoped>
+ .m-input{
+    margin-right: 10px;
+   } 
 </style>

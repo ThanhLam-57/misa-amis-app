@@ -53,7 +53,7 @@
                     </div>
                     <div v-show="isShowOption && itemSelected.EmployeeId == employee.EmployeeId"  class="dlg-option"  v-if="this.isShowOption==true" v-click-away="closeOption">
                       <div @click="deleteEmployee" class="option option-delete">Xoá</div>
-                      <div class="option option-stop__use">Ngừng sử dụng</div>
+                      <div class="option option-stop__use">Nhân bản</div>
                     </div>
                   </td>
                 </tr>
@@ -94,7 +94,6 @@ export default {
           })
         }
         this.selected = selected;
-        // console.log(this.selected.length);
       }
     }
   },
@@ -147,8 +146,8 @@ export default {
       else{
         this.itemSelected = item;
         this.isShowOption = true;
+        this.idDelete = this.itemSelected.EmployeeId;
       }
-            this.idDelete = this.itemSelected.EmployeeId;
     },
     /**
      * Author: NTLAM 29/10/2022
@@ -182,5 +181,8 @@ export default {
 <style>
 .index-td-selection{
   z-index: 1;
+}
+.this-td{
+  background-color: beige !important;
 }
 </style>

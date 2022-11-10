@@ -61,3 +61,19 @@
 .mess-ask-icon{
     background-position: -826px -456px;
 }
+.icon-succses{
+    background-position: -990px -462px;
+    width: 36px;
+    height: 36px;
+    margin-top: 2px;
+    cursor: pointer;
+    position: relative;
+}
+.icon-close {
+    background-position: -147px -147px;
+    width: 24px;
+    height: 24px;
+    margin-top: 2px;
+    cursor: pointer;
+    position: relative;
+}

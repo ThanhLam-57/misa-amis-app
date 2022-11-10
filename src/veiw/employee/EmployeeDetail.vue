@@ -196,10 +196,10 @@
     </template>
     <template #footer>
       <div class="mess-footer">
-            <MButton @click="closeOption" title="Hủy" index="1" text="Hủy" class="mess-footer__left" />
+            <MButton @click="closeOption" title="Hủy" text="Hủy" class="mess-footer__left" />
             <div class="mess-footer__right">
               <MButton @click="saveDataEmployee" title="Cất" index="1" text="Cất" class="mess-footer__mid" />
-              <MButton title="Cất và thêm" index="2" text="Cất và thêm" class="mess-footer_right" />
+              <MButton @click="onlySaveDataEmployee" title="Cất và thêm" index="2" text="Cất và thêm" class="mess-footer_right" />
             </div>
           </div>
     </template>
@@ -216,7 +216,6 @@ import { DEPARTMENT_HEADER, POISITION_HEADER } from "../../const.js";
 import { getDepartment } from "../../axios/departmentController/departmentController.js";
 import { getPoisition } from "../../axios/poisitionController/poisitionController.js";
 import { postEmployee, putEmployee } from "../../axios/employeeController/employeeController.js";
-import {formatDate,formatDateValue} from "../../script/base.js"
 export default {
   name: "EMployeeDetail",
   components: {
@@ -268,15 +267,9 @@ export default {
     },
     dataDetail: {
       handler(val) {
-      debugger
-        // debugger
         if (val) {
           this.mode = "edit";
           this.employee = val;
-          // if(val.DateOfBirth){
-          //   this.employee.DateOfBirth  = formatDateValue(val.DateOfBirth);
-          // }
-          // this.putDataEmployee()
         } else {
           this.mode = "add";
         }
@@ -287,7 +280,6 @@ export default {
   async created() {
     await this.getDataDepartment();
     this.getDataPoisition();
-    // console.log(this.dataDepartment);
   },
   methods: {
     /**
@@ -345,18 +337,32 @@ export default {
       });
     },
     /**
-     * Hàm cất và thêm(Cất dữ liệu sau đó clear form để tiếp tục thêm mới)
+     * Hàm cất dữ liệu và đóng form
+     * Author:NTLAM 07/11/2022
      */
     saveDataEmployee() {
       this.postDataEmployee();
-      this.$emit("closeDiaLog");
+      this.$emit("closeDiaLogAddSucceed");
     },
     /**
+     * Sự kiện cất và thêm
+     * Author:NTLAM 05/11/2022
+     */
+     onlySaveDataEmployee(){
+      this.postDataEmployee();
+      this.$emit("onlyAddSucceed")
+     },
+    /**
      * Hàm thực hiện cất dữ liêu
+     * Author:NTLAM 05/11/2022
      */
     postDataEmployee() {
       postEmployee(this.employee).then((res) => {
         console.log("Post thanh cong");
+      }).catch((err)=>{
+        debugger
+        this.$emit("showToasErr")
+        return err.request.responseText;
       });
     },
     /**
