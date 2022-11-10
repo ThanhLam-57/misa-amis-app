@@ -46,6 +46,7 @@ export default {
   methods:{
     /**
      * Hàm thực hiện prePage và nextPage và gửi sự kiện lên EMployeelisst
+     * Author: NTLAM (01/11/2022)
      */
     prePage(){
       this.$emit("prePage");

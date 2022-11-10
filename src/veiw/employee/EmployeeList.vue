@@ -11,7 +11,10 @@
         <div class="content-layout">
           <div class="content-toolbar">
             <div class="content-toolbar__left">
-              <div v-if="employeeSelected.length>0" class="selectTest">Đã chọn: <b>{{employeeSelected.length}}</b></div>
+              <div  v-if="employeeSelected.length>0">
+                <div  class="selectValue">Đã chọn: <b>{{employeeSelected.length}}</b></div>
+              <div class="text">Xoá</div>
+              </div>
             </div>
             <div class="content-toolbar__right">
             <div class="row" style="width: 250px">
@@ -35,6 +38,9 @@
             @changeSelect="changeSelected"
             @deleteEmployee="optionDetele"
           />
+          <!-- <div class="mes-table" v-if="totalRecord == 0">
+              Không có dữ liệu
+          </div> -->
           <m-paging
           :totalRecord="totalRecord"
           :numberStart="numberStart"
@@ -50,7 +56,6 @@
     v-if="isShow"
     @closeDiaLog="closeToggle"
     @closeDiaLogAddSucceed="closeDiaLogAddSucceed"
-    @onlyAddSucceed="onlyAddSucceed"
     @showToasErr="showToasAddErr"
     :dataDetail="dataDetail"
     ></EmployeeDetail>
@@ -71,12 +76,12 @@
      <TheLoading v-if="showLoading"></TheLoading>
 </template>
 <script>
-import MWarning from "../../components/base/MPopup/MWarning.vue"
+import MWarning from "../../components/base/MPopup/MWarning.vue";
 import {
   loadData,
   deleteByEmployeeId,
 } from "../../axios/employeeController/employeeController.js";
-import TheLoading from "../../components/base/TheLoading.vue"
+import TheLoading from "../../components/base/TheLoading.vue";
 import EmployeeDetail from "../../veiw/employee/EmployeeDetail.vue";
 import MPaging from "../../components/base/paging/MPaging.vue";
 import MTableEmployeeList from "../../components/base/Mtable/MTableEmployee.vue";
@@ -93,11 +98,12 @@ export default {
     EmployeeDetail,
     MInputIcon,
     MWarning,
-    MToas,TheLoading
+    MToas,
+    TheLoading,
   },
   data() {
     return {
-      showLoading:false,
+      showLoading: false,
       isShow: false,
       employeeHeader: EMPLOYEE_HEADER,
       defaultParams: DEFAULT_PARAMS,
@@ -113,10 +119,10 @@ export default {
       EmpDeleted: null,
       dataDetail: null,
       DIALOG_TYPE: DIALOG_TYPE,
-      warningText:"abc",
-      isShowWarningDelete:false,
-      isShowToas:false,
-      toastAct:null,
+      warningText: "abc",
+      isShowWarningDelete: false,
+      isShowToas: false,
+      toastAct: null,
     };
   },
   created() {
@@ -129,67 +135,81 @@ export default {
     });
   },
   watch: {
-    //Xử lý sự kiện lấy thông số đầu vào cho employee Filter
-     pageNumber() {
+    /**
+     * Xử lý sự kiện lấy thông số đầu vào cho employee Filter
+     * Author:NTLAM (03/11/2022)
+     */
+
+    //Get page number
+    pageNumber() {
       this.getFilter();
       this.getDataPagings();
-     this.getPaging();
+      this.getPaging();
     },
-     valuePageSize() {
+
+    //Get page size
+    valuePageSize() {
       this.pageNumber = 1;
       this.getFilter();
-       this.getDataPagings();
-     this.getPaging();
-    },
-    employeeFilter() {
-     this.pageNumber=1;
-     this.valuePageSize=10;
-     this.getFilter();
       this.getDataPagings();
-   },
+      this.getPaging();
+    },
   },
   methods: {
+    //Get flter đưa vào xử lý APT get emlpyee filter
+    employeeFilter() {
+      this.pageNumber = 1;
+      this.valuePageSize = 10;
+      this.getFilter();
+      this.getDataPagings();
+    },
     /**
      * Sự kiện đóng toast
+     * Author:NTLAM (03/11/2022)
      */
-     closeOpenToast(){
-      this.isShowToas= false;
-     },
+    closeOpenToast() {
+      this.isShowToas = false;
+    },
 
     /**
      * hàm cảnh báo xóa 1 nhân viên
+     * Author:NTLAM (03/11/2022)
      */
-    optionDetele(val){
+    optionDetele(val) {
       this.EmpDeleted = val;
-      this.isShowWarningDelete = true
-      this.warningText="Bạn có thực sự muốn xoá nhân viên <" + this.EmpDeleted.EmployeeCode +"> không ?"
+      this.isShowWarningDelete = true;
+      this.warningText =
+        "Bạn có thực sự muốn xoá nhân viên <" +
+        this.EmpDeleted.EmployeeCode +
+        "> không ?";
     },
 
     /**
      * Hàm hủy xóa
+     * Author:NTLAM (03/11/2022)
      */
-     cancelDelete(){
-      this.isShowWarningDelete=false
-     },
+    cancelDelete() {
+      this.isShowWarningDelete = false;
+    },
 
     /**
      * Hàm thực hiện xoá dữ liệu(Bắt được EmployeeID từ MTableEmployee)
      * Author:NTLAM (03/11/2022)
      */
-     deleteEmployeed() {
-       deleteByEmployeeId(this.EmpDeleted.EmployeeId).then((res)=>{
-        this.pageNumber=1;
-        this.getDataPagings();
-        this.isShowWarningDelete=false
-        this.toastAct="xoá"
-        this.isShowToas= true;
-        //Hàm xử lý Toast xoá
-        setTimeout(() => {
-                 this.isShowToas = false;
-             }, 3000);
-       }).catch((err)=>{
-
-       });
+    deleteEmployeed() {
+      deleteByEmployeeId(this.EmpDeleted.EmployeeId)
+        .then((res) => {
+          this.pageNumber = 1;
+          this.getDataPagings();
+          this.isShowWarningDelete = false;
+          this.toastAct = "xoá";
+          this.isShowToas = true;
+          //Hàm xử lý Toast xoá
+          setTimeout(() => {
+            this.isShowToas = false;
+          }, 3000);
+        })
+        .catch((err) => {});
     },
 
     /**
@@ -229,9 +249,9 @@ export default {
      */
     getFilter() {
       this.filter =
-      "pageSize=" + this.valuePageSize + "&pageNumber=" + this.pageNumber;
+        "pageSize=" + this.valuePageSize + "&pageNumber=" + this.pageNumber;
       if (this.employeeFilter && this.employeeFilter.length > 0) {
-        this.filter =this.filter + "&employeeFilter=" + this.employeeFilter;
+        this.filter = this.filter + "&employeeFilter=" + this.employeeFilter;
       }
     },
 
@@ -273,45 +293,70 @@ export default {
       this.dataDetail = null;
       this.isShow = true;
     },
-    //Khi chọn btn close
+    /**
+     * Hàm sự liện click btn close Employee Detail
+     * Author:NTLAM 27/10/2022
+     */
     closeToggle() {
       this.isShow = false;
     },
-    //Khi thêm mới thành công và đóng
-    closeDiaLogAddSucceed(){
+    /**
+     * Hàm xử lý khi thêm mới thành công và đóng
+     * Author: NTLAM (27/10/2022)
+     */
+    closeDiaLogAddSucceed(data) {
+      // debugger
+      console.log(data);
       this.getDataPagings();
-      this.isShow = false;
-      this.toastAct="thêm"
-      this.isShowToas= true;
-        //Hàm xử lý Toast thêm
-        setTimeout(() => {
-                 this.isShowToas = false;
-             }, 4000);
+      if (data == 1) {
+        this.isShow = false;
+      }
+      this.toastAct = "thêm";
+      this.isShowToas = true;
+      //Hàm xử lý Toast thêm
+      setTimeout(() => {
+        this.isShowToas = false;
+      }, 4000);
+    },
+    /**
+     * Hamf xử lý cất và thêm
+     * Author: NTLAM 09/11/2022
+     */
+    onlyAddSucceed() {
+      this.getDataPagings();
+      this.isShow = true;
+      this.toastAct = "thêm";
+      setTimeout(() => {
+        this.isShowToas = false;
+      }, 4000);
     },
     /**
      * Hàm showToast thêm mới bị lỗi
      */
-     showToasAddErr(){
-
-     },
+    showToasAddErr() {},
     /**
      * Hàm lấy ra dữ liệu
      * Author:NTLAM 30/10/2022
      */
     getDataPagings() {
-      this.showLoading=true
+      this.showLoading = true;
+      // debugger
+      // console.log(this.employeeFilter )
       this.getFilter();
       loadData(this.filter)
-        .then((res)=>{
-        this.employees =  res.data.Data;
-        this.totalRecord = res.data.TotalRecord;
-        this.showLoading=false
-        return this.totalRecord;
-      })
-      .catch(
-        this.showLoading=false
-      );
-
+        .then((res) => {
+          this.employees = res.data.Data;
+          if (this.totalRecord != null) {
+            this.totalRecord = res.data.TotalRecord;
+          } else {
+            this.totalRecord = 0;
+          }
+          this.showLoading = false;
+          return this.totalRecord;
+        })
+        .catch
+        // this.showLoading=false
+        ();
     },
     /**
      * Sau khi bấn sửa truyền dữ liệu xuống cpn EmployeeDetal
@@ -323,5 +368,8 @@ export default {
   },
 };
 </script>
-<style lang="">
+<style scoped>
+.selectValue {
+  font-size: 14px;
+}
 </style>

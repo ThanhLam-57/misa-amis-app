@@ -10,6 +10,7 @@
 export default {};
 </script>
 <style scoped>
+
 .popup-loading{
   background-color: none;
     width: 152px;
@@ -19,11 +20,11 @@ export default {};
     transform: translate(-50%, -50%);
 }
 .loader {
-  border: 16px solid #f3f3f3;
+  border: 5px solid #f3f3f3;
   border-radius: 50%;
-  border-top: 16px solid #50b83c;
-  width: 120px;
-  height: 120px;
+  border-top: 5px solid #50b83c;
+  width: 50px;
+  height: 50px;
   -webkit-animation: spin 2s linear infinite;
   animation: spin 2s linear infinite;
 }

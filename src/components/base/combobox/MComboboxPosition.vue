@@ -120,6 +120,9 @@ export default {
 };
 </script>
   <style scoped>
+  .cbb_active{
+    border-radius: 0%;
+  }
 .select {
   border: 1px solid #babec5;
   border-radius: 2px;
@@ -155,7 +158,8 @@ export default {
   align-items: center;
 }
 .itemOption:hover {
-  background-color: #e5f3ff !important;
+    color: #2ca01c;
+    background-color: #ebedf0;
 }
 .btn-select{
   height: 30px;

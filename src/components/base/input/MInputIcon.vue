@@ -41,5 +41,6 @@ export default {
 <style scoped>
  .m-input{
     margin-right: 10px;
+    height: 36px;
    } 
 </style>

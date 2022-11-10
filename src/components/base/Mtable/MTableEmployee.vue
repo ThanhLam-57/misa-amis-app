@@ -26,7 +26,7 @@
                   </th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody >
                 <tr v-for="employee in dataSource" :key="employee.EmployeeId">
                   <td
                     propValue="check"
@@ -57,93 +57,99 @@
                     </div>
                   </td>
                 </tr>
-
+                <div class="mes-table" v-if="dataSource.length == 0">
+                  Không có dữ liệu
+                </div>
               </tbody>
             </table>
           </div>
 </template>
 <script>
-import{formatDate} from "../../../script/base.js"
+import { formatDate } from "../../../script/base.js";
 export default {
   name: "MTableEmployeeList",
-  components: {  },
+  components: {},
   props: {
     headers: {
       Type: Array,
       default: [],
     },
-    dataSource:{
-      Type:Array,
-      default:[]
-    }
+    dataSource: {
+      Type: Array,
+      default: [],
+    },
   },
-  computed:{
+  computed: {
     /**
      * Xử lí select checkbox
      * Author:NTLAM 31/10/2022
      */
-    selectAll:{
-      get: function(){
-        return this.dataSource  ? this.selected.length == this.dataSource.length : false;
+    selectAll: {
+      get: function () {
+        return this.dataSource
+          ? this.selected.length == this.dataSource.length
+          : false;
       },
-      set:function(value){
-        var selected =[];
-        if(value){
-          this.dataSource.forEach(function(employee){
+      set: function (value) {
+        var selected = [];
+        if (value) {
+          this.dataSource.forEach(function (employee) {
             selected.push(employee.EmployeeId);
-          })
+          });
         }
         this.selected = selected;
-      }
-    }
+      },
+    },
   },
   data() {
     return {
-      isShowOption :false,
+      isShowOption: false,
       employees: [],
       itemSelected: null,
-      selected:[],
-      idDelete:{
-        Type:[String,Number],
-        default:null
-      }
+      selected: [],
+      idDelete: {
+        Type: [String, Number],
+        default: null,
+      },
     };
   },
   watch: {
     selected: {
-      handler(val){
+      handler(val) {
         this.$emit("changeSelect", val);
       },
-      deep: true
-    }
-  },  
+      deep: true,
+    },
+  },
   methods: {
     /**
      * Bắt sự kiên button xóa bắn ID cần xoá lên EmployeeLisst
      */
-     deleteEmployee(){
-      this.$emit("deleteEmployee",this.itemSelected)
+    deleteEmployee() {
+      this.$emit("deleteEmployee", this.itemSelected);
       // deleteByEmployeeId(this.idDelete)
-     },
+    },
     /**
      * Hàm show dialog sửa
      * Author: NTLAM 29/10/2022
      */
-    showDialog(employee){
+    showDialog(employee) {
       // debugger
-      this.$emit("showDialog",employee)
+      this.$emit("showDialog", employee);
     },
     /**
      * Hàm Show tùy chọn của từng nhân viên
      * Author: NTLAM 29/10/2022
-     * @param {*} item 
+     * @param {*} item
      */
-    showOpttion(item){
-      if(this.itemSelected && this.itemSelected.EmployeeId == item.EmployeeId){
+    showOpttion(item) {
+      if (
+        this.itemSelected &&
+        this.itemSelected.EmployeeId == item.EmployeeId
+      ) {
         this.itemSelected = null;
         this.isShowOption = false;
-      }
-      else{
+      } else {
         this.itemSelected = item;
         this.isShowOption = true;
         this.idDelete = this.itemSelected.EmployeeId;
@@ -153,36 +159,49 @@ export default {
      * Author: NTLAM 29/10/2022
      * Hàm đóng option tùy chọn
      */
-    closeOption(){
-      this.isShowOption =false;
-      this.itemSelected=null;
+    closeOption() {
+      this.isShowOption = false;
+      this.itemSelected = null;
     },
     /**
      * Hamf format và lấy ra các trường đưa lên table
      * Author NTLAM 31/10/2022
-     * @param {*} employee 
-     * @param {*} item 
+     * @param {*} employee
+     * @param {*} item
      */
-    getValueTxt(employee,item){
-      var data =null;
-      if(item.propValue=="DateOfBirth"){
-        data= formatDate(employee[item.propValue]);
+    getValueTxt(employee, item) {
+      var data = null;
+      if (item.propValue == "DateOfBirth") {
+        data = formatDate(employee[item.propValue]);
         return data;
       }
-      if(item.propValue=="GenderName"){
-        if(employee[item.propValue] == null)
-        return "Khác";
+      if (item.propValue == "GenderName") {
+        if (employee[item.propValue] == null) return "Khác";
       }
-    return employee[item.propValue];
+      return employee[item.propValue];
     },
   },
 };
 </script>
 <style>
-.index-td-selection{
+.index-td-selection {
   z-index: 1;
 }
-.this-td{
-  background-color: beige !important;
+.selectedTd {
+  background-color: #dcf1d8 !important;
+}
+.mes-table {
+  justify-content: center;
+  /* height: 300px; */
+  align-items: center;
+  display: flex;
+  font-size: 14px;
+  font-weight: 700;
+
+
+  position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(calc(-50%  100px), -50%);
 }
 </style>

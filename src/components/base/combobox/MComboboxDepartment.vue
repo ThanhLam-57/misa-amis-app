@@ -130,21 +130,43 @@ export default {
     }
   },
   methods: {
+    /**
+     * Hàm thực hiện đóng mở combobox Department
+     * Author :NTLAM (02/10/2022)
+     */
     showTable() {
       this.isShowTb = !this.isShowTb;
     },
+    /**
+     * Hàm thực hiện đóng combobox Department
+     * Author :NTLAM (02/10/2022)
+     */
     openTable(){
       this.isShowTb = true;
     },
+        /**
+     * Hàm thực hiện mở combobox Department
+     * Author :NTLAM (02/10/2022)
+     */
     closeTable() {
       this.isShowTb = false;
     },
+    /**
+     * Hàm thực hiện chọn item trong combobox
+     * Author :NTLAM (02/10/2022)
+     * @param {*} item 
+     */
     selectItem(item) {
       this.valueText = item[this.displayField];
       this.$emit("select", item);
       this.isShowTb=false;
       this.isValidate=false;
     },
+    /**
+     * Hàm thực hiện đưa value từ combobox lên input
+     * Author :NTLAM (02/10/2022)
+     * @param {} val 
+     */
     changeValue(val) {
       this.validate(val.target.value);
       var textSearch = val.target.value;
@@ -164,6 +186,13 @@ export default {
       this.validate(val.target.value);
     }
   },
+  // watch :{
+  //   valueTextProp:  ()=>{
+  //     if(valueTextProp==null){
+  //       this.valueText="";
+  //     }
+  //   }
+  // }
 };
 </script>
 <style scoped>
@@ -188,6 +217,10 @@ export default {
   align-items: center;
 }
 .itemBody:hover{
-  background-color: #e5f3ff !important;
+    color: #2ca01c;
+    background-color: #ebedf0;
 }
+.cbb_active{
+    border-radius: 0%;
+  }
 </style>

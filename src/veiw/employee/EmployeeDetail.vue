@@ -196,12 +196,22 @@
     </template>
     <template #footer>
       <div class="mess-footer">
-            <MButton @click="closeOption" title="Hủy" text="Hủy" class="mess-footer__left" />
+            <MButton @click="closeOption" title="Hủy"  index="1" text="Hủy" class="mess-footer__left" />
             <div class="mess-footer__right">
-              <MButton @click="saveDataEmployee" title="Cất" index="1" text="Cất" class="mess-footer__mid" />
-              <MButton @click="onlySaveDataEmployee" title="Cất và thêm" index="2" text="Cất và thêm" class="mess-footer_right" />
+              <MButton @click="postDataEmployee(1)"  title="Cất" index="1" text="Cất" class="mess-footer__mid" />
+              <MButton @click="postDataEmployee(2)" title="Cất và thêm" index="2" text="Cất và thêm" class="mess-footer_right" />
             </div>
           </div>
+          <!-- saveDataEmployee(value){
+            gọi hàm thêm
+            .then(res= {
+              if(value ==1){
+                đóng form
+                loadlaij
+                
+              }
+            })
+          } -->
     </template>
   </MPopup>
 </template>
@@ -228,12 +238,14 @@ export default {
   },
   data() {
     return {
+      optionSavevalue:null,
       isShowTb: false,
       headersDepartment: DEPARTMENT_HEADER,
       headerPoisition: POISITION_HEADER,
       dataDepartment: [],
       dataPoisition: [],
       mode: "add",
+      valueText:null,
       employee: {
         EmployeeCode: null,
         EmployeeName: null,
@@ -337,30 +349,16 @@ export default {
       });
     },
     /**
-     * Hàm cất dữ liệu và đóng form
-     * Author:NTLAM 07/11/2022
-     */
-    saveDataEmployee() {
-      this.postDataEmployee();
-      this.$emit("closeDiaLogAddSucceed");
-    },
-    /**
-     * Sự kiện cất và thêm
-     * Author:NTLAM 05/11/2022
-     */
-     onlySaveDataEmployee(){
-      this.postDataEmployee();
-      this.$emit("onlyAddSucceed")
-     },
     /**
      * Hàm thực hiện cất dữ liêu
      * Author:NTLAM 05/11/2022
      */
-    postDataEmployee() {
+    postDataEmployee(e) {
       postEmployee(this.employee).then((res) => {
         console.log("Post thanh cong");
-      }).catch((err)=>{
+        this.$emit("closeDiaLogAddSucceed", e);
         debugger
+      }).catch((err)=>{
         this.$emit("showToasErr")
         return err.request.responseText;
       });
