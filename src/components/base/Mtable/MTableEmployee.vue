@@ -134,7 +134,6 @@ export default {
      * Author: NTLAM 29/10/2022
      */
     showDialog(employee) {
-      // debugger
       this.$emit("showDialog", employee);
     },
     /**

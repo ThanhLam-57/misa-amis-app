@@ -40,7 +40,7 @@ export function formatDate(date) {
         // lấy ra năm:
         let year = date.getFullYear();
   
-        return `${year}/${month}/${dateValue}`;
+        return `${year}-${month}-${dateValue}`;
       } else {
         return "";
       }

@@ -11,9 +11,10 @@
         <div class="content-layout">
           <div class="content-toolbar">
             <div class="content-toolbar__left">
-              <div  v-if="employeeSelected.length>0">
-                <div  class="selectValue">Đã chọn: <b>{{employeeSelected.length}}</b></div>
-              <div class="text">Xoá</div>
+              <div class="handle-option"  v-if="employeeSelected.length>0">
+                <div class="selectValue">Đã chọn: <b>{{employeeSelected.length}}</b></div>
+                <div style="padding-left:10px;" class="text">Bỏ chọn</div>
+                <MbuttonIcon actionButton="Xoá"></MbuttonIcon>
               </div>
             </div>
             <div class="content-toolbar__right">
@@ -82,6 +83,7 @@ import {
   deleteByEmployeeId,
 } from "../../axios/employeeController/employeeController.js";
 import TheLoading from "../../components/base/TheLoading.vue";
+import MbuttonIcon from "../../components/base/Mbutton/MbuttonIcon.vue";
 import EmployeeDetail from "../../veiw/employee/EmployeeDetail.vue";
 import MPaging from "../../components/base/paging/MPaging.vue";
 import MTableEmployeeList from "../../components/base/Mtable/MTableEmployee.vue";
@@ -100,6 +102,7 @@ export default {
     MWarning,
     MToas,
     TheLoading,
+    MbuttonIcon
   },
   data() {
     return {
@@ -157,7 +160,7 @@ export default {
   },
   methods: {
     //Get flter đưa vào xử lý APT get emlpyee filter
-    employeeFilter() {
+    getEmployeeFilter() {
       this.pageNumber = 1;
       this.valuePageSize = 10;
       this.getFilter();
@@ -305,8 +308,7 @@ export default {
      * Author: NTLAM (27/10/2022)
      */
     closeDiaLogAddSucceed(data) {
-      // debugger
-      console.log(data);
+      debugger
       this.getDataPagings();
       if (data == 1) {
         this.isShow = false;
@@ -340,8 +342,6 @@ export default {
      */
     getDataPagings() {
       this.showLoading = true;
-      // debugger
-      // console.log(this.employeeFilter )
       this.getFilter();
       loadData(this.filter)
         .then((res) => {
@@ -370,6 +370,12 @@ export default {
 </script>
 <style scoped>
 .selectValue {
+  font-size: 14px;
+  width: 80px;
+}
+.handle-option{
+  align-items: center;
+  display: flex;
   font-size: 14px;
 }
 </style>

@@ -40,7 +40,6 @@ export default {
             }
           }
         });
-      // console.log(this.checkEmailFormat());
     },
     /**
      * Funtion check có phải là chuối số không

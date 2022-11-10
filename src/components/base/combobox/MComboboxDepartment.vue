@@ -51,7 +51,7 @@
         
 </template>
 <script>
-import MBaseComponent from '../MBaseComponent.vue';
+import MBaseComponent from "../MBaseComponent.vue";
 export default {
   extends: MBaseComponent,
   name: "MComboboxDepartment",
@@ -108,26 +108,34 @@ export default {
     option: {
       handler(val) {
         this.optionData = val;
-        if(val){
-          var item = this.option.find(x => x[this.valueField] == this.modelValue);
-          if(item){
+        if (val) {
+          var item = this.option.find(
+            (x) => x[this.valueField] == this.modelValue
+          );
+          if (item) {
             this.valueText = item[this.displayField];
           }
         }
       },
       immediate: true,
     },
-    modelValue:{
-      handler(val){
-        if(val){
-          var item = this.option.find(x => x[this.valueField] == val);
-          if(item){
+    modelValue: {
+      handler(val) {
+        if (val) {
+          var item = this.option.find((x) => x[this.valueField] == val);
+          if (item) {
             this.valueText = item[this.displayField];
           }
+          else{
+            this.valueText = null;
+          }
+        }
+        else{
+          this.valueText = null;
         }
       },
-      immediate:true
-    }
+      immediate: true,
+    },
   },
   methods: {
     /**
@@ -141,10 +149,10 @@ export default {
      * Hàm thực hiện đóng combobox Department
      * Author :NTLAM (02/10/2022)
      */
-    openTable(){
+    openTable() {
       this.isShowTb = true;
     },
-        /**
+    /**
      * Hàm thực hiện mở combobox Department
      * Author :NTLAM (02/10/2022)
      */
@@ -154,18 +162,18 @@ export default {
     /**
      * Hàm thực hiện chọn item trong combobox
      * Author :NTLAM (02/10/2022)
-     * @param {*} item 
+     * @param {*} item
      */
     selectItem(item) {
       this.valueText = item[this.displayField];
       this.$emit("select", item);
-      this.isShowTb=false;
-      this.isValidate=false;
+      this.isShowTb = false;
+      this.isValidate = false;
     },
     /**
      * Hàm thực hiện đưa value từ combobox lên input
      * Author :NTLAM (02/10/2022)
-     * @param {} val 
+     * @param {} val
      */
     changeValue(val) {
       this.validate(val.target.value);
@@ -173,7 +181,7 @@ export default {
       this.valueText = textSearch;
       if (textSearch && textSearch.length > 0) {
         this.optionData = this.option.filter((x) =>
-        x[this.displayField].includes(textSearch)
+          x[this.displayField].includes(textSearch)
         );
       } else {
         this.optionData = this.option;
@@ -182,9 +190,9 @@ export default {
     /**
      * Hàm xửử lý khi blur
      */
-     onBlur(val){
+    onBlur(val) {
       this.validate(val.target.value);
-    }
+    },
   },
   // watch :{
   //   valueTextProp:  ()=>{
@@ -196,31 +204,31 @@ export default {
 };
 </script>
 <style scoped>
-.input-wrapper{
+.input-wrapper {
   height: 30px;
 }
-.btn-select{
+.btn-select {
   height: 30px;
 }
-.ttable{
+.ttable {
   width: 402px;
 }
-.itemHeader{
+.itemHeader {
   display: flex;
   height: 32px;
   align-items: center;
   font-weight: 700;
 }
-.itemBody{
+.itemBody {
   display: flex;
   height: 32px;
   align-items: center;
 }
-.itemBody:hover{
-    color: #2ca01c;
-    background-color: #ebedf0;
+.itemBody:hover {
+  color: #2ca01c;
+  background-color: #ebedf0;
 }
-.cbb_active{
-    border-radius: 0%;
-  }
+.cbb_active {
+  border-radius: 0%;
+}
 </style>

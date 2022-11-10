@@ -26,193 +26,200 @@
           </div>
     </template>
     <template #content>
-      <div class="popup-content__employee">
-            <div class="popup-content__employee1">
-              <div class="content__employee1-left">
-                <div class="employee1-left__user">
-                  <div class="m-row" style="width: 40%; padding-right: 6px">
-                      <label class="m-label"
-                        >Mã nhân viên
-                        <span class="input--required">*</span></label
-                      >
-                      <MBaseInput
-                        type="text"
-                        name="Mã nhân viên"
-                        rules="Empty"
-                        v-model:modelValue="employee.EmployeeCode"
-                      />
-                    </div>
-                    <div class="m-row" style="width: calc(60% - 6px)">
-                      <label class="m-label"
-                        >Tên nhân viên
-                        <span class="input--required">*</span></label
-                      >
-                      <MBaseInput
-                      type="text"
-                      name="Tên nhân viên"
-                      rules="Empty"
-                      v-model:modelValue="employee.EmployeeName"
-                    />
-                    </div>
-                </div>
-                <div class="m-row" style="z-index:2;">
-                  <div id="select" class="select" style="position: relative;">
-                    <MComboboxDepartment 
-                    name="Đơn vị"
-                    rules="Empty"
-                    :headers="headersDepartment"
-                    :option="dataDepartment"
-                    v-model:modelValue="employee.DepartmentId"
-                    displayField="DepartmentName"
-                    valueField="DepartmentId"
-                    displayFieldCode="DepartmentCode"
-                    @select="selectDepartment"
-                    label="Đơn vị"/>
-                  </div>
-                </div>
-                <div class="m-row" style="z-index:1;">
-                    <label class="m-label">Chức danh</label>
-                    <MComboboxPosition
-                    :modelValue="employee.PositionId"
-                    :option="dataPoisition"
-                    displayField="PositionName"
-                    valueField="PositionId"
-                    @select="selectPosition"
-                    />
-                  </div>
-              </div>
-              <div class="content__employee1-right">
-                <div class="employee1-right__user1">
-                  <div class="m-row" style="width: 40%; padding-right: 6px">
-                      <label class="m-label">Ngày sinh</label>
-                      <MBaseInput
-                      type="date"
-                      name="input"
-                      v-model:modelValue="employee.DateOfBirth"
-                    />
-                    </div>
-                  <MRadio/>
-                </div>
-                <div class="employee1-left__user">
-                  <div
-                      class="m-row"
-                      title="Số chứng minh nhân dân"
-                      style="width: 60%; padding-right: 6px"
-                    >
-                      <label class="m-label">Số CMND</label>
-                      <MBaseInput
-                      name="Số CMND"
-                      rules="checkValueNumber"
-                      type="text"
-                      v-model:modelValue="employee.IdentityNumber"
-                    />
-                    </div>
-                    <div class="m-row" style="width: 40%">
-                      <label class="m-label">Ngày cấp</label>
-                      <MBaseInput
-                      type="date"
-                      name="input"
-                      v-model:modelValue="employee.IdentityDate"
-                    />
-                    </div>
-                </div>
-                <div class="m-row">
-                    <label class="m-label">Nơi cấp</label>
-                    <MBaseInput
-                      type="text"
-                      name="input"
-                      v-model:modelValue="employee.IdentityPlace"
-                    />
-                  </div>
-              </div>
-            </div>
-            <div class="popup-content__employee2">
-              <div class="m-row">
-                  <label class="m-label">Địa chỉ</label>
-                  <MBaseInput
-                      type="text"
-                      name="input"
-                      v-model:modelValue="employee.Address"
-                    />
-                </div>
-              <div class="employee1-left__user">
-                <div class="m-row" title="Điện thoại di động">
-                    <label class="m-label">ĐT di động</label>
-                    <MBaseInput
-                      type="text"
-                      name="Số điện thoại"
-                      rules="checkValueNumber"
-                      v-model:modelValue="employee.TelephoneNumber"
-                    />
-                  </div>
-                  <div class="m-row" title="Điện thoại cố định">
-                    <label class="m-label">ĐT cố định</label>
-                    <MBaseInput
-                      type="text"
-                      name="Số điện thoại"
-                      rules="checkValueNumber"
-                      v-model:modelValue="employee.PhoneNumber"
-                    />
-                  </div>
-                  <div class="m-row">
-                    <label class="m-label">Email</label>
-                    <MBaseInput
-                      name="Email"
-                      rules="checkValueEmail"
-                      type="text"
-                      v-model:modelValue="employee.Email"
-                    />
-                  </div>
-              </div>
-              <div class="employee1-left__user">
-                <div class="m-row">
-                    <label class="m-label">Tài khoản ngân hàng</label>
-                    <MBaseInput
-                      type="text"
-                      name="Tài khoản ngân hàng"
-                      rules="checkValueNumber"
-                      v-model:modelValue="employee.BankAccountNumber"
-                    />
-                  </div>
-                  <div class="m-row">
-                    <label class="m-label">Tên ngân hàng</label>
-                    <MBaseInput
-                      type="text"
-                      name="input"
-                      v-model:modelValue="employee.BankName"
-                    />
-                  </div>
-                  <div class="m-row">
-                    <label class="m-label">Chi nhánh</label>
-                    <MBaseInput
-                      type="text"
-                      name="input"
-                      v-model:modelValue="employee.BankBranchName"
-                    />
-                  </div>
-              </div>
-            </div>
+  <div class="popup-content__employee">
+    <div class="popup-content__employee1">
+      <div class="content__employee1-left">
+        <div class="employee1-left__user">
+          <div class="m-row" style="width: 40%; padding-right: 6px">
+            <label class="m-label"
+              >Mã nhân viên <span class="input--required">*</span></label
+            >
+            <MBaseInput
+              type="text"
+              name="Mã nhân viên"
+              rules="Empty"
+              v-model:modelValue="employee.EmployeeCode"
+            />
           </div>
-    </template>
+          <div class="m-row" style="width: calc(60% - 6px)">
+            <label class="m-label"
+              >Tên nhân viên <span class="input--required">*</span></label
+            >
+            <MBaseInput
+              type="text"
+              name="Tên nhân viên"
+              rules="Empty"
+              v-model:modelValue="employee.EmployeeName"
+            />
+          </div>
+        </div>
+        <div class="m-row" style="z-index: 2">
+          <div id="select" class="select" style="position: relative">
+            <MComboboxDepartment
+              name="Đơn vị"
+              rules="Empty"
+              :headers="headersDepartment"
+              :option="dataDepartment"
+              v-model:modelValue="employee.DepartmentId"
+              displayField="DepartmentName"
+              valueField="DepartmentId"
+              displayFieldCode="DepartmentCode"
+              @select="selectDepartment"
+              label="Đơn vị"
+            />
+          </div>
+        </div>
+        <div class="m-row" style="z-index: 1">
+          <label class="m-label">Chức danh</label>
+          <MComboboxPosition
+            :modelValue="employee.PositionId"
+            :option="dataPoisition"
+            displayField="PositionName"
+            valueField="PositionId"
+            @select="selectPosition"
+          />
+        </div>
+      </div>
+      <div class="content__employee1-right">
+        <div class="employee1-right__user1">
+          <div class="m-row" style="width: 40%; padding-right: 6px">
+            <label class="m-label">Ngày sinh</label>
+            <MBaseInput
+              type="date"
+              name="input"
+              v-model:modelValue="employee.DateOfBirth"
+            />
+          </div>
+          <MRadio />
+        </div>
+        <div class="employee1-left__user">
+          <div
+            class="m-row"
+            title="Số chứng minh nhân dân"
+            style="width: 60%; padding-right: 6px"
+          >
+            <label class="m-label">Số CMND</label>
+            <MBaseInput
+              name="Số CMND"
+              rules="checkValueNumber"
+              type="text"
+              v-model:modelValue="employee.IdentityNumber"
+            />
+          </div>
+          <div class="m-row" style="width: 40%">
+            <label class="m-label">Ngày cấp</label>
+            <MBaseInput
+              type="date"
+              name="input"
+              v-model:modelValue="employee.IdentityDate"
+            />
+          </div>
+        </div>
+        <div class="m-row">
+          <label class="m-label">Nơi cấp</label>
+          <MBaseInput
+            type="text"
+            name="input"
+            v-model:modelValue="employee.IdentityPlace"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="popup-content__employee2">
+      <div class="m-row">
+        <label class="m-label">Địa chỉ</label>
+        <MBaseInput
+          type="text"
+          name="input"
+          v-model:modelValue="employee.Address"
+        />
+      </div>
+      <div class="employee1-left__user">
+        <div class="m-row" title="Điện thoại di động">
+          <label class="m-label">ĐT di động</label>
+          <MBaseInput
+            type="text"
+            name="Số điện thoại"
+            rules="checkValueNumber"
+            v-model:modelValue="employee.TelephoneNumber"
+          />
+        </div>
+        <div class="m-row" title="Điện thoại cố định">
+          <label class="m-label">ĐT cố định</label>
+          <MBaseInput
+            type="text"
+            name="Số điện thoại"
+            rules="checkValueNumber"
+            v-model:modelValue="employee.PhoneNumber"
+          />
+        </div>
+        <div class="m-row">
+          <label class="m-label">Email</label>
+          <MBaseInput
+            name="Email"
+            rules="checkValueEmail"
+            type="text"
+            v-model:modelValue="employee.Email"
+          />
+        </div>
+      </div>
+      <div class="employee1-left__user">
+        <div class="m-row">
+          <label class="m-label">Tài khoản ngân hàng</label>
+          <MBaseInput
+            type="text"
+            name="Tài khoản ngân hàng"
+            rules="checkValueNumber"
+            v-model:modelValue="employee.BankAccountNumber"
+          />
+        </div>
+        <div class="m-row">
+          <label class="m-label">Tên ngân hàng</label>
+          <MBaseInput
+            type="text"
+            name="input"
+            v-model:modelValue="employee.BankName"
+          />
+        </div>
+        <div class="m-row">
+          <label class="m-label">Chi nhánh</label>
+          <MBaseInput
+            type="text"
+            name="input"
+            v-model:modelValue="employee.BankBranchName"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
     <template #footer>
-      <div class="mess-footer">
-            <MButton @click="closeOption" title="Hủy"  index="1" text="Hủy" class="mess-footer__left" />
-            <div class="mess-footer__right">
-              <MButton @click="postDataEmployee(1)"  title="Cất" index="1" text="Cất" class="mess-footer__mid" />
-              <MButton @click="postDataEmployee(2)" title="Cất và thêm" index="2" text="Cất và thêm" class="mess-footer_right" />
-            </div>
-          </div>
-          <!-- saveDataEmployee(value){
-            gọi hàm thêm
-            .then(res= {
-              if(value ==1){
-                đóng form
-                loadlaij
-                
-              }
-            })
-          } -->
-    </template>
+  <div class="mess-footer">
+    <MButton
+      @click="closeOption"
+      title="Hủy"
+      index="1"
+      text="Hủy"
+      class="mess-footer__left"
+    />
+    <div class="mess-footer__right">
+      <MButton
+        @click="postDataEmployee(1)"
+        title="Cất"
+        index="1"
+        text="Cất"
+        class="mess-footer__mid"
+      />
+      <MButton
+        @click="postDataEmployee(2,false)"
+        title="Cất và thêm"
+        index="2"
+        text="Cất và thêm"
+        class="mess-footer_right"
+      />
+    </div>
+  </div>
+</template>
   </MPopup>
 </template>
 <script>
@@ -225,7 +232,11 @@ import MPopup from "../../components/base/MPopup/MPopup.vue";
 import { DEPARTMENT_HEADER, POISITION_HEADER } from "../../const.js";
 import { getDepartment } from "../../axios/departmentController/departmentController.js";
 import { getPoisition } from "../../axios/poisitionController/poisitionController.js";
-import { postEmployee, putEmployee } from "../../axios/employeeController/employeeController.js";
+import {
+  postEmployee,
+  putEmployee,
+} from "../../axios/employeeController/employeeController.js";
+import{formatDateValue} from "../../script/base.js"
 export default {
   name: "EMployeeDetail",
   components: {
@@ -234,22 +245,24 @@ export default {
     MComboboxDepartment,
     MComboboxPosition,
     MBaseInput,
-    MPopup
+    MPopup,
   },
   data() {
     return {
-      optionSavevalue:null,
+      optionSavevalue: null,
       isShowTb: false,
       headersDepartment: DEPARTMENT_HEADER,
       headerPoisition: POISITION_HEADER,
       dataDepartment: [],
       dataPoisition: [],
       mode: "add",
-      valueText:null,
-      employee: {
+      valueText: null,
+      employeeCreate: {
         EmployeeCode: null,
         EmployeeName: null,
+        DepartmentId:null,
         DepartmentName: null,
+        PositionId:null,
         PositionName: null,
         DateOfBirth: null,
         IdentityNumber: null,
@@ -263,6 +276,7 @@ export default {
         BankName: null,
         BankBranchName: null,
       },
+      employee: null
     };
   },
   props: {
@@ -273,8 +287,7 @@ export default {
   },
   watch: {
     employee: {
-      handler(val) {
-      },
+      handler(val) {},
       deep: true,
     },
     dataDetail: {
@@ -282,8 +295,11 @@ export default {
         if (val) {
           this.mode = "edit";
           this.employee = val;
+          this.employee.DateOfBirth = formatDateValue(this.employee.DateOfBirth)
+          this.employee.IdentityDate = formatDateValue(this.employee.IdentityDate)
         } else {
           this.mode = "add";
+          this.employee = {...this.employeeCreate};
         }
       },
       immediate: true,
@@ -331,13 +347,10 @@ export default {
      * Hàm thực hiện gọi data Department
      */
     async getDataDepartment() {
-      try{
+      try {
         var res = await getDepartment();
         this.dataDepartment = res.data;
-      }
-      catch(e){
-        
-      }
+      } catch (e) {}
     },
     /**
      * Hàm thực hiện gọi data Poisition
@@ -353,24 +366,40 @@ export default {
      * Hàm thực hiện cất dữ liêu
      * Author:NTLAM 05/11/2022
      */
-    postDataEmployee(e) {
-      postEmployee(this.employee).then((res) => {
-        console.log("Post thanh cong");
-        this.$emit("closeDiaLogAddSucceed", e);
-        debugger
-      }).catch((err)=>{
-        this.$emit("showToasErr")
-        return err.request.responseText;
-      });
+    postDataEmployee(closeForm = true) {
+      if(this.mode == "add"){
+        postEmployee(this.employee)
+          .then((res) => {
+            if(closeForm){
+              debugger
+              this.$emit("closeDiaLogAddSucceed", e);
+              debugger
+            }
+            else{
+              this.employee = {...this.employeeCreate};
+            }
+          })
+          .catch((err) => {
+            this.$emit("showToasErr");
+            // return err.request.responseText;
+          });
+      }
+      else {
+        putEmployee(this.employee.EmployeeId,this.employee)
+          .then((res) => {
+            if(closeForm){
+              this.$emit("closeDiaLogAddSucceed", e);
+            }
+            else{
+              this.employee = {...this.employeeCreate};
+            }
+          })
+          .catch((err) => {
+            this.$emit("showToasErr");
+            // return err.request.responseText;
+          });
+      }
     },
-    /**
-     * Hàm thực hiện sửa dữ liệu
-     */
-     putDataEmployee(){
-      putEmployee(this.employeeID,this.employee).then((res)=>{
-
-      });
-     }
     /**
      * Hàm thực hiện tắt Popup cảnh báo
      */

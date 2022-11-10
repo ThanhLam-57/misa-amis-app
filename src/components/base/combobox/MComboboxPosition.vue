@@ -106,12 +106,17 @@ export default {
     },
     modelValue:{
       handler(val){
-        // debugger;
         if(val){
           var item = this.option.find(x => x[this.valueField] == val);
           if(item){
             this.valueText = item[this.displayField];
           }
+          else{
+            this.valueText = null;
+          }
+        }
+        else{
+          this.valueText = null;
         }
       },
       immediate:true
