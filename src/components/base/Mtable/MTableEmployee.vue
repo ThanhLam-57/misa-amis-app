@@ -13,6 +13,7 @@
                   <th
                     v-for="(item, index) in headers"
                     :class="item.Class"
+                    :title="item.Title"
                     :style="{ 'min-width': item.Width + 'px' }"
                     :key="index"
                   >{{ item.Caption }}</th>

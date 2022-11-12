@@ -147,6 +147,7 @@ export const EMPLOYEE_HEADER = [
   {
     Class: "text-align--left",
     CellClass: "text-align--left",
+    Title:"Số chứng minh nhân dân",
     Caption: "SỐ CMND",
     propValue: "IdentityNumber",
     Width: "150",
@@ -226,3 +227,44 @@ export const DIALOG_TYPE = {
   ASK_OPTION: "askOption",
   ASK_CANCELABLE: "ask",
 };
+
+//Giá trị của toast khi thêm hoặc sửa
+export const MESS_TOAST ={
+  ADD_SUCCSES:{
+    classIcon: "icon-succses",
+    classColor:"color-succses",
+    headerMess:"Thêm mới thành công",
+    toastAct: "Bạn đã thêm mới thành công nhân viên"
+
+  },
+  ADD_FAIL:{
+    classIcon: "icon-fail",
+    headerMess:"Thêm mới thất bại",
+    classColor:"color-fail",
+    toastAct: "Bạn đã thêm mới thất bại nhân viên"
+  },
+  EDIT_SUCCSES:{
+    classIcon: "icon-succses",
+    headerMess:"Sửa thành công",
+    classColor:"color-succses",
+    toastAct: "Bạn đã sửa thành công nhân viên"
+  },
+  EDIT_FAIL:{
+    classIcon: "icon-fail",
+    headerMess:"Sửa thất bại",
+    classColor:"color-fail",
+    toastAct: "Bạn đã sửa thất bại nhân viên"
+  },
+  DELETE_SUCCSES:{
+    classIcon: "icon-succses",
+    headerMess:"Xoá thành công",
+    classColor:"color-succses",
+    toastAct: "Bạn đã xoá thành công nhân viên"
+  },
+  DELETE_FAIL:{
+    classIcon: "icon-fail",
+    headerMess:"Xoá không thành công",
+    classColor:"color-fail",
+    toastAct: "Bạn đã xoá không thành công nhân viên"
+  }
+}

@@ -8,7 +8,6 @@
         'validate-error': isValidate
       }"
       :name="name"
-      :ref="fieldNameTxt"
       @blur="onBlur"
     />
     <div class="err-message" v-if="isValidate">

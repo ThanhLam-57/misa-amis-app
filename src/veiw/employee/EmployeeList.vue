@@ -13,7 +13,7 @@
             <div class="content-toolbar__left">
               <div class="handle-option"  v-if="employeeSelected.length>0">
                 <div class="selectValue">Đã chọn: <b>{{employeeSelected.length}}</b></div>
-                <div style="padding-left:10px;" class="text">Bỏ chọn</div>
+                <div class="textOption">Bỏ chọn</div>
                 <MbuttonIcon actionButton="Xoá"></MbuttonIcon>
               </div>
             </div>
@@ -57,7 +57,7 @@
     v-if="isShow"
     @closeDiaLog="closeToggle"
     @closeDiaLogAddSucceed="closeDiaLogAddSucceed"
-    @showToasErr="showToasAddErr"
+    @showToasErr="showToasErr"
     :dataDetail="dataDetail"
     ></EmployeeDetail>
     <!-- Popup cảnh báo -->
@@ -71,7 +71,10 @@
     <!-- Toast mess delete -->
      <MToas
       v-if="isShowToas"
-      :toastAct="toastAct"
+      :headerMess="messToast.headerMess"
+      :toastAct="messToast.toastAct"
+      :classIcon="messToast.classIcon"
+      :classColor="messToast.classColor"
       @closeOpenToast="closeOpenToast"
      ></MToas>
      <TheLoading v-if="showLoading"></TheLoading>
@@ -90,7 +93,7 @@ import MTableEmployeeList from "../../components/base/Mtable/MTableEmployee.vue"
 import MButton from "../../components/base/Mbutton/MButton.vue";
 import MInputIcon from "../../components/base/input/MInputIcon.vue";
 import MToas from "../../components/base/MToas.vue";
-import { EMPLOYEE_HEADER, DEFAULT_PARAMS, DIALOG_TYPE } from "../../const.js";
+import { EMPLOYEE_HEADER, DEFAULT_PARAMS, DIALOG_TYPE, MESS_TOAST } from "../../const.js";
 export default {
   name: "EmployeeList",
   components: {
@@ -102,7 +105,7 @@ export default {
     MWarning,
     MToas,
     TheLoading,
-    MbuttonIcon
+    MbuttonIcon,
   },
   data() {
     return {
@@ -125,7 +128,13 @@ export default {
       warningText: "abc",
       isShowWarningDelete: false,
       isShowToas: false,
-      toastAct: null,
+      MESS_TOAST:MESS_TOAST,
+      messToast:{
+        toastAct: null,
+        headerMess: null,
+        classIcon:null,
+        classColor:null,
+      }
     };
   },
   created() {
@@ -159,7 +168,7 @@ export default {
     },
   },
   methods: {
-    //Get flter đưa vào xử lý APT get emlpyee filter
+    //Get flter đưa vào xử lý API get emlpyee filter
     getEmployeeFilter() {
       this.pageNumber = 1;
       this.valuePageSize = 10;
@@ -205,14 +214,13 @@ export default {
           this.pageNumber = 1;
           this.getDataPagings();
           this.isShowWarningDelete = false;
-          this.toastAct = "xoá";
-          this.isShowToas = true;
-          //Hàm xử lý Toast xoá
-          setTimeout(() => {
-            this.isShowToas = false;
-          }, 3000);
+          this.messToast=this.MESS_TOAST.DELETE_SUCCSES,
+          this.showToastMess()
         })
-        .catch((err) => {});
+        .catch((err) => {
+          this.messToast=this.MESS_TOAST.DELETE_FAIL,
+          this.showToastMess()
+        });
     },
 
     /**
@@ -304,38 +312,49 @@ export default {
       this.isShow = false;
     },
     /**
-     * Hàm xử lý khi thêm mới thành công và đóng
+     * Hàm xử lý khi thêm mới/sửa thành công
      * Author: NTLAM (27/10/2022)
      */
-    closeDiaLogAddSucceed(data) {
+    closeDiaLogAddSucceed(closeForm,mode) {
       debugger
       this.getDataPagings();
-      if (data == 1) {
+      mode
+      if (closeForm == true && mode =="edit") {
         this.isShow = false;
+        this.messToast= this.MESS_TOAST.EDIT_SUCCSES;
+        this.showToastMess()
       }
-      this.toastAct = "thêm";
-      this.isShowToas = true;
-      //Hàm xử lý Toast thêm
-      setTimeout(() => {
-        this.isShowToas = false;
-      }, 4000);
+      else if(closeForm == false && mode =="edit"){
+        this.messToast= this.MESS_TOAST.EDIT_SUCCSES;
+        this.showToastMess()
+      }
+      else if(closeForm == true && mode =="add"){
+        this.isShow = false;
+        this.messToast= this.MESS_TOAST.ADD_SUCCSES;
+        this.showToastMess()
+      }
+      else if(closeForm == false && mode =="add"){
+        this.messToast= this.MESS_TOAST.ADD_SUCCSES;
+        this.showToastMess()
+      }
     },
     /**
-     * Hamf xử lý cất và thêm
-     * Author: NTLAM 09/11/2022
+     * Hàm xử lý khi thêm/sửa thất bại
+     * Author:NTLAM(27/10/2022)
+     * @param {*} mode 
      */
-    onlyAddSucceed() {
-      this.getDataPagings();
-      this.isShow = true;
-      this.toastAct = "thêm";
-      setTimeout(() => {
-        this.isShowToas = false;
-      }, 4000);
+    showToasErr(mode){
+      if(mode=="add"){
+        // debugger
+        this.isShow=true;
+        this.messToast= this.MESS_TOAST.ADD_FAIL;
+        this.showToastMess()
+      }else{
+        this.isShow=true;
+        this.messToast= this.MESS_TOAST.EDIT_FAIL;
+        this.showToastMess()
+      }
     },
-    /**
-     * Hàm showToast thêm mới bị lỗi
-     */
-    showToasAddErr() {},
     /**
      * Hàm lấy ra dữ liệu
      * Author:NTLAM 30/10/2022
@@ -358,12 +377,25 @@ export default {
         // this.showLoading=false
         ();
     },
+
     /**
-     * Sau khi bấn sửa truyền dữ liệu xuống cpn EmployeeDetal
+     * Ham sau khi bấn sửa truyền dữ liệu xuống cpn EmployeeDetal
+     * Author: NTLAM (27/10/2022)
      */
     showEmployeeDetal(val) {
       this.dataDetail = val;
       this.isShow = true;
+    },
+
+    /**
+     * Hàm show Toast
+     * Author:NTLAM(27/10/2022)
+     */
+    showToastMess(){
+      this.isShowToas=true;
+        setTimeout(() => {
+        this.isShowToas = false;
+      }, 4000);
     },
   },
 };
@@ -373,9 +405,14 @@ export default {
   font-size: 14px;
   width: 80px;
 }
-.handle-option{
+.handle-option {
   align-items: center;
   display: flex;
   font-size: 14px;
+}
+.textOption{
+  cursor: pointer;
+  margin-left: 8px;
+  color: red;
 }
 </style>

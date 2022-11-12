@@ -90,7 +90,36 @@
               v-model:modelValue="employee.DateOfBirth"
             />
           </div>
-          <MRadio />
+          <div class="m-row" style="padding-left: 10px">
+            <label class="m-label">Giới tính</label>
+            <div class="option-gen">
+              <div class="gen">
+                <input
+                  type="radio"
+                  id="Nam"
+                  value="Nam"
+                  v-model="employee.GenderName"
+                />
+                <label class="label-gen" for="Nam">Nam</label>
+
+                <input
+                  type="radio"
+                  id="Nữ"
+                  value="Nữ"
+                  v-model="employee.GenderName"
+                />
+                <label class="label-gen" for="Nữ">Nữ</label>
+
+                <input
+                  type="radio"
+                  id="Khác"
+                  value="Khác"
+                  v-model="employee.GenderName"
+                />
+                <label class="label-gen" for="Khác">Khác</label>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="employee1-left__user">
           <div
@@ -204,14 +233,15 @@
     />
     <div class="mess-footer__right">
       <MButton
-        @click="postDataEmployee(1)"
+        @click="postDataEmployee(true)"
         title="Cất"
         index="1"
         text="Cất"
         class="mess-footer__mid"
+        type="submit"
       />
       <MButton
-        @click="postDataEmployee(2,false)"
+        @click="postDataEmployee(false)"
         title="Cất và thêm"
         index="2"
         text="Cất và thêm"
@@ -236,7 +266,7 @@ import {
   postEmployee,
   putEmployee,
 } from "../../axios/employeeController/employeeController.js";
-import{formatDateValue} from "../../script/base.js"
+import { formatDateValue } from "../../script/base.js";
 export default {
   name: "EMployeeDetail",
   components: {
@@ -260,9 +290,9 @@ export default {
       employeeCreate: {
         EmployeeCode: null,
         EmployeeName: null,
-        DepartmentId:null,
+        DepartmentId: null,
         DepartmentName: null,
-        PositionId:null,
+        PositionId: null,
         PositionName: null,
         DateOfBirth: null,
         IdentityNumber: null,
@@ -275,14 +305,26 @@ export default {
         BankAccountNumber: null,
         BankName: null,
         BankBranchName: null,
+        Gender: 0,
+        GenderName: null,
       },
-      employee: null
+      employee: null,
     };
   },
   props: {
     dataDetail: {
       Type: Object,
       default: null,
+    },
+  },
+  computed: {
+    checkValueFiel: function () {
+      return this.employee.every(
+        (employee) =>
+          employee.EmployeeCode != null &&
+          employee.EmployeeCode != undefined &&
+          employee.EmployeeCode != ""
+      );
     },
   },
   watch: {
@@ -295,11 +337,15 @@ export default {
         if (val) {
           this.mode = "edit";
           this.employee = val;
-          this.employee.DateOfBirth = formatDateValue(this.employee.DateOfBirth)
-          this.employee.IdentityDate = formatDateValue(this.employee.IdentityDate)
+          this.employee.DateOfBirth = formatDateValue(
+            this.employee.DateOfBirth
+          );
+          this.employee.IdentityDate = formatDateValue(
+            this.employee.IdentityDate
+          );
         } else {
           this.mode = "add";
-          this.employee = {...this.employeeCreate};
+          this.employee = { ...this.employeeCreate };
         }
       },
       immediate: true,
@@ -310,6 +356,24 @@ export default {
     this.getDataPoisition();
   },
   methods: {
+    // execute(e) {
+    //   const form = e.target;
+    //   const formData = new FormData(form);
+
+    //   if (this.inputFunction) {
+    //     this.inputFunction(formData);
+    //   }
+    // },
+    // async register(formData) {
+    //   const username = formData.get("Username");
+    //   const email = formData.get("Email");
+    //   const password = formData.get("Password");
+
+    //   console.log("register()", {
+    //     username,
+    //     email,
+    //     password,
+    //   });},
     /**
      * Hàm thực hiện sự kiện chon Poisition để xử lý bắn vào ô input Poisition
      * Author: NTLAM (02/11/2022)
@@ -366,43 +430,39 @@ export default {
      * Hàm thực hiện cất dữ liêu
      * Author:NTLAM 05/11/2022
      */
-    postDataEmployee(closeForm = true) {
-      if(this.mode == "add"){
+    postDataEmployee(closeForm) {
+      // debugger
+      if (this.mode == "add") {
         postEmployee(this.employee)
           .then((res) => {
-            if(closeForm){
-              debugger
-              this.$emit("closeDiaLogAddSucceed", e);
-              debugger
-            }
-            else{
-              this.employee = {...this.employeeCreate};
+            debugger;
+            if (closeForm == true) {
+              this.$emit("closeDiaLogAddSucceed", closeForm, this.mode);
+            } else {
+              this.employee = { ...this.employeeCreate };
+              this.$emit("closeDiaLogAddSucceed", closeForm, this.mode);
             }
           })
           .catch((err) => {
-            this.$emit("showToasErr");
-            // return err.request.responseText;
+            this.$emit("showToasErr", this.mode);
           });
-      }
-      else {
-        putEmployee(this.employee.EmployeeId,this.employee)
+      } else {
+        putEmployee(this.employee.EmployeeId, this.employee)
           .then((res) => {
-            if(closeForm){
-              this.$emit("closeDiaLogAddSucceed", e);
-            }
-            else{
-              this.employee = {...this.employeeCreate};
+            debugger;
+            if (closeForm == true) {
+              this.$emit("closeDiaLogAddSucceed", closeForm, this.mode);
+            } else {
+              this.employee = { ...this.employeeCreate };
+              this.$emit("closeDiaLogAddSucceed", closeForm, this.mode);
+              this.mode = "add";
             }
           })
           .catch((err) => {
-            this.$emit("showToasErr");
-            // return err.request.responseText;
+            this.$emit("showToasErr", this.mode);
           });
       }
     },
-    /**
-     * Hàm thực hiện tắt Popup cảnh báo
-     */
 
     /**
      * Hàm tự động lấy mã nhân viên mới

@@ -1,11 +1,11 @@
 <template>
   <div class="m-toast">
-    <div class="m-toast-main">
+    <div class="m-toast-main" :class="classColor">
       <div class="left-toast">
-        <div class="icon icon-succses ml-16 mr-16"></div>
+        <div class="icon ml-16 mr-16" :class="classIcon"></div>
         <div class="toast-content">
-          <b for="" class="title-toast">Thành công!</b>
-          <label for="">Bạn đã {{ toastAct }} thành công nhân viên</label>
+          <b for="" class="title-toast">{{ headerMess }}</b>
+          <label for="">{{ toastAct }} </label>
         </div>
       </div>
       <div class="icon icon-close mr-8" @click="closeOpenToast()"></div>
@@ -14,7 +14,7 @@
 </template>
 <script>
 export default {
-  props: ["toastAct"],
+  props: ["toastAct", "headerMess","classIcon","classColor"],
   methods: {
     /**
      * Thực hiện đóng Toast
@@ -41,9 +41,14 @@ export default {
   width: 400px;
   height: 80px;
   background-color: #eef8ec;
-  border-left: 5px solid #50b83c;
   border-radius: 4px;
   animation: toastLeft ease 0.3s, toastOut linear 1s 3s forwards;
+}
+.color-succses{
+  border-left: 5px solid #50b83c;
+}
+.color-fail{
+  border-left: 5px solid red;
 }
 .left-toast {
   display: flex;

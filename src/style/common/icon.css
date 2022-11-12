@@ -69,6 +69,14 @@
     cursor: pointer;
     position: relative;
 }
+.icon-fail{
+    background-position: -752px -462px;
+    width: 36px;
+    height: 36px;
+    margin-top: 2px;
+    cursor: pointer;
+    position: relative;
+}
 .icon-close {
     background-position: -147px -147px;
     width: 24px;
