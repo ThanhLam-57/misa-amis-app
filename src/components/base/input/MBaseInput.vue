@@ -17,7 +17,7 @@
 <script>
 import MBaseComponent from '../../base/MBaseComponent.vue';
 export default {
-  name: "BsaeInput",
+  name: "MBaseInput",
   extends:MBaseComponent,
   props: {
     type: String,

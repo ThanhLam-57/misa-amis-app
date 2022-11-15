@@ -211,7 +211,10 @@ export default {
     deleteEmployeed() {
       deleteByEmployeeId(this.EmpDeleted.EmployeeId)
         .then((res) => {
-          this.pageNumber = 1;
+          //Xử lí khi xoá bản ghi duy nhất ở trng cuối cùng
+          if((this.pageNumber - 1) * this.valuePageSize == this.totalRecord - 1){
+            this.pageNumber = this.pageNumber - 1;
+          }
           this.getDataPagings();
           this.isShowWarningDelete = false;
           this.messToast=this.MESS_TOAST.DELETE_SUCCSES,
@@ -316,7 +319,6 @@ export default {
      * Author: NTLAM (27/10/2022)
      */
     closeDiaLogAddSucceed(closeForm,mode) {
-      debugger
       this.getDataPagings();
       mode
       if (closeForm == true && mode =="edit") {
@@ -362,14 +364,21 @@ export default {
     getDataPagings() {
       this.showLoading = true;
       this.getFilter();
+      debugger
+      this.pageNumber
       loadData(this.filter)
         .then((res) => {
           this.employees = res.data.Data;
           if (this.totalRecord != null) {
             this.totalRecord = res.data.TotalRecord;
-          } else {
-            this.totalRecord = 0;
-          }
+            // if(this.totalRecord == undefined){
+            //   this.pageNumber = this.pageNumber -1;
+            //   this.getFilter();
+            // }
+          } 
+          // else {
+          //   this.totalRecord = 0;
+          // }
           this.showLoading = false;
           return this.totalRecord;
         })

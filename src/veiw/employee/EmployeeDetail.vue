@@ -26,7 +26,7 @@
           </div>
     </template>
     <template #content>
-  <div class="popup-content__employee">
+  <div class="popup-content__employee" ref="validate">
     <div class="popup-content__employee1">
       <div class="content__employee1-left">
         <div class="employee1-left__user">
@@ -267,8 +267,11 @@ import {
   putEmployee,
 } from "../../axios/employeeController/employeeController.js";
 import { formatDateValue } from "../../script/base.js";
+import Base from "@/veiw/base/Base.vue"
+
 export default {
   name: "EMployeeDetail",
+  extends: Base,
   components: {
     MRadio,
     MButton,
@@ -431,7 +434,7 @@ export default {
      * Author:NTLAM 05/11/2022
      */
     postDataEmployee(closeForm) {
-      // debugger
+      this.validate();
       if (this.mode == "add") {
         postEmployee(this.employee)
           .then((res) => {

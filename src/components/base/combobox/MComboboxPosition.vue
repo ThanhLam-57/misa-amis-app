@@ -20,7 +20,7 @@
   <script>
 import MBaseInputVue from "../../base/input/MBaseInput.vue";
 export default {
-  name: "McComboboxPosition",
+  name: "MComboboxPosition",
   components: { MBaseInputVue },
   methods: {
     /**
