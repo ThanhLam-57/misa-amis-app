@@ -3,7 +3,7 @@
     <template #header >
           <div class="popup-title">
             <div id="header-popup-title" class="header-popup-title">
-              Thông tin nhân viên
+              {{popupHeader}}
             </div>
             <label class="ms-checkbox">
               <input 
@@ -259,7 +259,7 @@ import MButton from "../../components/base/Mbutton/MButton.vue";
 import MComboboxPosition from "../../components/base/combobox/MComboboxPosition.vue";
 import MComboboxDepartment from "../../components/base/combobox/MComboboxDepartment.vue";
 import MPopup from "../../components/base/MPopup/MPopup.vue";
-import { DEPARTMENT_HEADER, POISITION_HEADER } from "../../const.js";
+import { DEPARTMENT_HEADER, POISITION_HEADER,} from "../../const.js";
 import { getDepartment } from "../../axios/departmentController/departmentController.js";
 import { getPoisition } from "../../axios/poisitionController/poisitionController.js";
 import {
@@ -319,6 +319,10 @@ export default {
       Type: Object,
       default: null,
     },
+    popupHeader:{
+      Type:String,
+      default:""
+    }
   },
   computed: {
     checkValueFiel: function () {
@@ -359,24 +363,6 @@ export default {
     this.getDataPoisition();
   },
   methods: {
-    // execute(e) {
-    //   const form = e.target;
-    //   const formData = new FormData(form);
-
-    //   if (this.inputFunction) {
-    //     this.inputFunction(formData);
-    //   }
-    // },
-    // async register(formData) {
-    //   const username = formData.get("Username");
-    //   const email = formData.get("Email");
-    //   const password = formData.get("Password");
-
-    //   console.log("register()", {
-    //     username,
-    //     email,
-    //     password,
-    //   });},
     /**
      * Hàm thực hiện sự kiện chon Poisition để xử lý bắn vào ô input Poisition
      * Author: NTLAM (02/11/2022)

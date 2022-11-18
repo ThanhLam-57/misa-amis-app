@@ -188,6 +188,12 @@ export const EMPLOYEE_HEADER = [
     Width: "250",
   },
 ];
+
+//Dữ liệu header Detail
+export const HEADER_DETAIL ={
+  PopupAddEmployee:"Thông tin nhân viên",
+  PopupEditEmployee:"Sửa thông tin nhân viên"
+}
 //Dữ liệu table department
 export const DEPARTMENT_HEADER=[
   {

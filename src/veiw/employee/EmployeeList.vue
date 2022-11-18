@@ -59,6 +59,7 @@
     @closeDiaLogAddSucceed="closeDiaLogAddSucceed"
     @showToasErr="showToasErr"
     :dataDetail="dataDetail"
+    :popupHeader="popupHeader"
     ></EmployeeDetail>
     <!-- Popup cảnh báo -->
     <MWarning
@@ -93,7 +94,7 @@ import MTableEmployeeList from "../../components/base/Mtable/MTableEmployee.vue"
 import MButton from "../../components/base/Mbutton/MButton.vue";
 import MInputIcon from "../../components/base/input/MInputIcon.vue";
 import MToas from "../../components/base/MToas.vue";
-import { EMPLOYEE_HEADER, DEFAULT_PARAMS, DIALOG_TYPE, MESS_TOAST } from "../../const.js";
+import { EMPLOYEE_HEADER, DEFAULT_PARAMS, DIALOG_TYPE, MESS_TOAST,HEADER_DETAIL } from "../../const.js";
 export default {
   name: "EmployeeList",
   components: {
@@ -109,6 +110,7 @@ export default {
   },
   data() {
     return {
+      popupHeader:HEADER_DETAIL.PopupAddEmployee,
       showLoading: false,
       isShow: false,
       employeeHeader: EMPLOYEE_HEADER,
@@ -238,7 +240,6 @@ export default {
       this.valuePageSize = 10;
       this.pageNumber = 1;
       this.getDataPagings();
-      //Combobox pageSize  sau khi reLoad chưa hiển thị về mặc định
     },
 
     /**
@@ -320,7 +321,6 @@ export default {
      */
     closeDiaLogAddSucceed(closeForm,mode) {
       this.getDataPagings();
-      mode
       if (closeForm == true && mode =="edit") {
         this.isShow = false;
         this.messToast= this.MESS_TOAST.EDIT_SUCCSES;
@@ -371,14 +371,7 @@ export default {
           this.employees = res.data.Data;
           if (this.totalRecord != null) {
             this.totalRecord = res.data.TotalRecord;
-            // if(this.totalRecord == undefined){
-            //   this.pageNumber = this.pageNumber -1;
-            //   this.getFilter();
-            // }
           } 
-          // else {
-          //   this.totalRecord = 0;
-          // }
           this.showLoading = false;
           return this.totalRecord;
         })
@@ -392,6 +385,7 @@ export default {
      * Author: NTLAM (27/10/2022)
      */
     showEmployeeDetal(val) {
+      this.popupHeader = HEADER_DETAIL.PopupEditEmployee;
       this.dataDetail = val;
       this.isShow = true;
     },
