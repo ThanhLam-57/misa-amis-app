@@ -36,8 +36,9 @@
             >
             <MBaseInput
               type="text"
-              name="Mã nhân viên"
+              name="EmployeeCode"
               rules="Empty"
+              ref="EmployeeCode"
               v-model:modelValue="employee.EmployeeCode"
             />
           </div>
@@ -60,9 +61,9 @@
               rules="Empty"
               :headers="headersDepartment"
               :option="dataDepartment"
-              v-model:modelValue="employee.DepartmentId"
+              v-model:modelValue="employee.DepartmentID"
               displayField="DepartmentName"
-              valueField="DepartmentId"
+              valueField="DepartmentID"
               displayFieldCode="DepartmentCode"
               @select="selectDepartment"
               label="Đơn vị"
@@ -72,10 +73,10 @@
         <div class="m-row" style="z-index: 1">
           <label class="m-label">Chức danh</label>
           <MComboboxPosition
-            :modelValue="employee.PositionId"
+            v-model="employee.PositionID"
             :option="dataPoisition"
             displayField="PositionName"
-            valueField="PositionId"
+            valueField="PositionID"
             @select="selectPosition"
           />
         </div>
@@ -96,27 +97,27 @@
               <div class="gen">
                 <input
                   type="radio"
-                  id="Nam"
-                  value="Nam"
-                  v-model="employee.GenderName"
+                  id="1"
+                  value="1"
+                  v-model="employee.Gender"
                 />
-                <label class="label-gen" for="Nam">Nam</label>
+                <label class="label-gen" for="1">Nam</label>
 
                 <input
                   type="radio"
-                  id="Nữ"
-                  value="Nữ"
-                  v-model="employee.GenderName"
+                  id="0"
+                  value="0"
+                  v-model="employee.Gender"
                 />
-                <label class="label-gen" for="Nữ">Nữ</label>
+                <label class="label-gen" for="0">Nữ</label>
 
                 <input
                   type="radio"
-                  id="Khác"
-                  value="Khác"
-                  v-model="employee.GenderName"
+                  id="2"
+                  value="2"
+                  v-model="employee.Gender"
                 />
-                <label class="label-gen" for="Khác">Khác</label>
+                <label class="label-gen" for="2">Khác</label>
               </div>
             </div>
           </div>
@@ -140,7 +141,7 @@
             <MBaseInput
               type="date"
               name="input"
-              v-model:modelValue="employee.IdentityDate"
+              v-model:modelValue="employee.IdentityIssuedDate"
             />
           </div>
         </div>
@@ -149,7 +150,7 @@
           <MBaseInput
             type="text"
             name="input"
-            v-model:modelValue="employee.IdentityPlace"
+            v-model:modelValue="employee.IdentityIssuedPlace"
           />
         </div>
       </div>
@@ -265,6 +266,7 @@ import { getPoisition } from "../../axios/poisitionController/poisitionControlle
 import {
   postEmployee,
   putEmployee,
+  getNewCode
 } from "../../axios/employeeController/employeeController.js";
 import { formatDateValue } from "../../script/base.js";
 import Base from "@/veiw/base/Base.vue"
@@ -293,14 +295,14 @@ export default {
       employeeCreate: {
         EmployeeCode: null,
         EmployeeName: null,
-        DepartmentId: null,
+        DepartmentID: null,
         DepartmentName: null,
-        PositionId: null,
+        PositionID: null,
         PositionName: null,
         DateOfBirth: null,
         IdentityNumber: null,
-        IdentityDate: null,
-        IdentityPlace: null,
+        IdentityIssuedDate: null,
+        IdentityIssuedPlace: null,
         Address: null,
         TelephoneNumber: null,
         PhoneNumber: null,
@@ -347,8 +349,8 @@ export default {
           this.employee.DateOfBirth = formatDateValue(
             this.employee.DateOfBirth
           );
-          this.employee.IdentityDate = formatDateValue(
-            this.employee.IdentityDate
+          this.employee.IdentityIssuedDate = formatDateValue(
+            this.employee.IdentityIssuedDate
           );
         } else {
           this.mode = "add";
@@ -359,8 +361,14 @@ export default {
     },
   },
   async created() {
+    //Tự động lấy mã Code nhân viên
+    this.getNewCodeEmployee();
     await this.getDataDepartment();
     this.getDataPoisition();
+    //Auto focus vào ô Mã nhân viên
+    setTimeout(x=>{
+      this.$refs.EmployeeCode.handleFocus();
+    },100)
   },
   methods: {
     /**
@@ -370,10 +378,10 @@ export default {
     selectPosition(item) {
       if (item) {
         this.employee.PositionName = item.PositionName;
-        this.employee.PositionId = item.PositionId;
+        this.employee.PositionID = item.PositionID;
       } else {
         this.employee.PositionName = null;
-        this.employee.PositionId = null;
+        this.employee.PositionID = null;
       }
     },
     /**
@@ -382,11 +390,12 @@ export default {
      */
     selectDepartment(item) {
       if (item) {
+        debugger
         this.employee.DepartmentName = item.DepartmentName;
-        this.employee.DepartmentId = item.DepartmentId;
+        this.employee.DepartmentID = item.DepartmentID;
       } else {
         this.employee.DepartmentName = null;
-        this.employee.DepartmentId = null;
+        this.employee.DepartmentID = null;
       }
     },
     /**
@@ -415,6 +424,14 @@ export default {
       });
     },
     /**
+     * Hàm thực hiện lấy mã nhân viên tự động
+     * Author:NTLAM (15/11/2022)
+     */
+    getNewCodeEmployee(){
+      getNewCode().then((res)=>{
+        this.employee.EmployeeCode = res.data;
+      })
+    },
     /**
      * Hàm thực hiện cất dữ liêu
      * Author:NTLAM 05/11/2022
@@ -424,7 +441,6 @@ export default {
       if (this.mode == "add") {
         postEmployee(this.employee)
           .then((res) => {
-            debugger;
             if (closeForm == true) {
               this.$emit("closeDiaLogAddSucceed", closeForm, this.mode);
             } else {
@@ -436,9 +452,8 @@ export default {
             this.$emit("showToasErr", this.mode);
           });
       } else {
-        putEmployee(this.employee.EmployeeId, this.employee)
+        putEmployee(this.employee.EmployeeID, this.employee)
           .then((res) => {
-            debugger;
             if (closeForm == true) {
               this.$emit("closeDiaLogAddSucceed", closeForm, this.mode);
             } else {
@@ -452,10 +467,6 @@ export default {
           });
       }
     },
-
-    /**
-     * Hàm tự động lấy mã nhân viên mới
-     */
   },
 };
 </script>

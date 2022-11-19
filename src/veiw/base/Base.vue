@@ -1,8 +1,12 @@
 <script>
 export default {
+    data:{
+        inputFalse:null
+    },
     name: "Base",
     methods: {
         validate(){
+            this.inputFalse = null;
             var isValidate = true;
             if(this.$refs.validate){
                 
@@ -21,10 +25,17 @@ export default {
                     if(component.type && component.type.name && components.includes(component.type.name)){
                         if(!this.validateComponent(component)){
                             isValidate = false;
+                            if(!this.inputFalse){
+                                this.inputFalse = input;
+                            }
                         };
                     }
                 });
             }
+            setTimeout(() =>{
+                debugger
+                this.inputFalse.focus();
+            },100)
             return isValidate;
         },
         validateComponent(component) {
@@ -38,8 +49,8 @@ export default {
                 return true;
             }
             var lstRule = props.rules.split(",");
-            lstRule &&
-                lstRule.forEach((rule) => {
+            for(var i = 0; i < lstRule.length ; i++){
+                var rule = lstRule[i];
                 if (rule == "Empty") {
                     if (!val || val.trim() == "") {
                         data.isValidate = true;
@@ -61,7 +72,8 @@ export default {
                         return false;
                     }
                 }
-            });
+            }
+           
             return true;
         },
         /**

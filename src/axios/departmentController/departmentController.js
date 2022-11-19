@@ -1,5 +1,5 @@
 import axios from "axios";
 
 export async function getDepartment(){
-    return await axios.get("https://amis.manhnv.net/api/v1/Departments");
+    return await axios.get("http://localhost:26967/api/Departments/get-all");
 }

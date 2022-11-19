@@ -8,6 +8,7 @@
         'validate-error': isValidate
       }"
       :name="name"
+      ref="name"
       @blur="onBlur"
     />
     <div class="err-message" v-if="isValidate">
@@ -61,6 +62,9 @@ export default {
      */
      onBlur(val){
       this.validate(val.target.value);
+    },
+    handleFocus(){
+      this.$refs.name.focus();
     }
   },
 };

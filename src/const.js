@@ -134,7 +134,7 @@ export const EMPLOYEE_HEADER = [
     Class: "text-align--left",
     CellClass: "text-align--left",
     Caption: "GIỚI TÍNH",
-    propValue: "GenderName",
+    propValue: "Gender",
     Width: "100",
   },
   {

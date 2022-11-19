@@ -28,12 +28,12 @@
                 </tr>
               </thead>
               <tbody >
-                <tr v-for="employee in dataSource" :key="employee.EmployeeId">
+                <tr v-for="employee in dataSource" :key="employee.EmployeeID">
                   <td
                     propValue="check"
                     format="sticky_header_left"
                     class="text-align--center sticky_body_left">
-                    <input v-model="selected" :value="employee.EmployeeId" type="checkbox"></td>
+                    <input v-model="selected" :value="employee.EmployeeID" type="checkbox"></td>
                   <td
                     v-for="(item, index) in headers"
                     :class="item.CellClass"
@@ -44,7 +44,7 @@
                     format="stickyRight"
                     propValue="function"
                     class="text-align--center sticky_body_right"
-                    :class="{'index-td-selection' : isShowOption && itemSelected.EmployeeId == employee.EmployeeId}"
+                    :class="{'index-td-selection' : isShowOption && itemSelected.EmployeeID == employee.EmployeeID}"
                     style="min-width: 120px"
                   >
                     <div class="edit-option">
@@ -52,7 +52,7 @@
                       <button @click="showOpttion(employee)" class="icon arrow-up--blueicon hw-16">
                       </button>
                     </div>
-                    <div v-show="isShowOption && itemSelected.EmployeeId == employee.EmployeeId"  class="dlg-option"  v-if="this.isShowOption==true" v-click-away="closeOption">
+                    <div v-show="isShowOption && itemSelected.EmployeeID == employee.EmployeeID"  class="dlg-option"  v-if="this.isShowOption==true" v-click-away="closeOption">
                       <div @click="deleteEmployee" class="option option-delete">Xoá</div>
                       <div class="option option-stop__use">Nhân bản</div>
                     </div>
@@ -95,7 +95,7 @@ export default {
         var selected = [];
         if (value) {
           this.dataSource.forEach(function (employee) {
-            selected.push(employee.EmployeeId);
+            selected.push(employee.EmployeeID);
           });
         }
         this.selected = selected;
@@ -117,12 +117,20 @@ export default {
   watch: {
     selected: {
       handler(val) {
-        this.$emit("changeSelect", val);
+        this.$emit("changeSelect", val);       
       },
       deep: true,
     },
   },
   methods: {
+    /**
+     * Bắt sự kiện bỏ chọn tất cả check bõ từ EmployeeLIst
+     * Author:NTLAM (15/11/2022)
+     */
+    unSelectAll(){
+      debugger
+      this.selected = [];
+    },
     /**
      * Bắt sự kiên button xóa bắn ID cần xoá lên EmployeeLisst
      */
@@ -145,14 +153,14 @@ export default {
     showOpttion(item) {
       if (
         this.itemSelected &&
-        this.itemSelected.EmployeeId == item.EmployeeId
+        this.itemSelected.EmployeeID == item.EmployeeID
       ) {
         this.itemSelected = null;
         this.isShowOption = false;
       } else {
         this.itemSelected = item;
         this.isShowOption = true;
-        this.idDelete = this.itemSelected.EmployeeId;
+        this.idDelete = this.itemSelected.EmployeeID;
       }
     },
     /**
@@ -177,6 +185,17 @@ export default {
       }
       if (item.propValue == "GenderName") {
         if (employee[item.propValue] == null) return "Khác";
+      }
+      if (item.propValue == "Gender"){
+        if(employee[item.propValue] == 1){
+          return "Nữ";
+        }
+        else if(employee[item.propValue]==0){
+          return "Nam";
+        }
+        else if(employee[item.propValue]==2){
+          return "Khác";
+        }
       }
       return employee[item.propValue];
     },

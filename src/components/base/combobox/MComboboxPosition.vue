@@ -101,11 +101,20 @@ export default {
     option: {
       handler(val) {
         this.optionData = val;
+        if (val) {
+          var item = this.option.find(
+            (x) => x[this.valueField] == this.modelValue
+          );
+          if (item) {
+            this.valueText = item[this.displayField];
+          }
+        }
       },
       immediate: true,
     },
     modelValue:{
       handler(val){
+        debugger
         if(val){
           var item = this.option.find(x => x[this.valueField] == val);
           if(item){

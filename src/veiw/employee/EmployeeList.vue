@@ -13,8 +13,8 @@
             <div class="content-toolbar__left">
               <div class="handle-option"  v-if="employeeSelected.length>0">
                 <div class="selectValue">Đã chọn: <b>{{employeeSelected.length}}</b></div>
-                <div class="textOption">Bỏ chọn</div>
-                <MbuttonIcon actionButton="Xoá"></MbuttonIcon>
+                <div class="textOption" @click="unSelected">Bỏ chọn</div>
+                <MbuttonIcon @click="deleteMultipleEmployee" actionButton="Xoá"></MbuttonIcon>
               </div>
             </div>
             <div class="content-toolbar__right">
@@ -33,9 +33,11 @@
             </div>
           </div>
           <MTableEmployeeList
+            ref="unSelect"
             @showDialog="showEmployeeDetal"
             :headers="employeeHeader"
             :dataSource="employees"
+            :selectedtoParent="employeeSelected"
             @changeSelect="changeSelected"
             @deleteEmployee="optionDetele"
           />
@@ -85,6 +87,7 @@ import MWarning from "../../components/base/MPopup/MWarning.vue";
 import {
   loadData,
   deleteByEmployeeId,
+  deleteMultiple
 } from "../../axios/employeeController/employeeController.js";
 import TheLoading from "../../components/base/TheLoading.vue";
 import MbuttonIcon from "../../components/base/Mbutton/MbuttonIcon.vue";
@@ -211,7 +214,7 @@ export default {
      * Author:NTLAM (03/11/2022)
      */
     deleteEmployeed() {
-      deleteByEmployeeId(this.EmpDeleted.EmployeeId)
+      deleteByEmployeeId(this.EmpDeleted.EmployeeID)
         .then((res) => {
           //Xử lí khi xoá bản ghi duy nhất ở trng cuối cùng
           if((this.pageNumber - 1) * this.valuePageSize == this.totalRecord - 1){
@@ -296,6 +299,7 @@ export default {
     changeSelected(val) {
       if (val) {
         this.employeeSelected = val;
+        debugger
       } else {
         this.employeeSelected = [];
       }
@@ -347,7 +351,6 @@ export default {
      */
     showToasErr(mode){
       if(mode=="add"){
-        // debugger
         this.isShow=true;
         this.messToast= this.MESS_TOAST.ADD_FAIL;
         this.showToastMess()
@@ -364,13 +367,12 @@ export default {
     getDataPagings() {
       this.showLoading = true;
       this.getFilter();
-      debugger
       this.pageNumber
       loadData(this.filter)
         .then((res) => {
           this.employees = res.data.Data;
           if (this.totalRecord != null) {
-            this.totalRecord = res.data.TotalRecord;
+            this.totalRecord = res.data.TotalCount;
           } 
           this.showLoading = false;
           return this.totalRecord;
@@ -379,7 +381,15 @@ export default {
         // this.showLoading=false
         ();
     },
-
+    deleteMultipleEmployee(){
+      debugger
+      deleteMultiple(this.employeeSelected.join()).then((res)=>{
+        console.log("xoá thành công"); 
+      })
+      .catch(
+         console.log("ko ok") 
+      );
+    },
     /**
      * Ham sau khi bấn sửa truyền dữ liệu xuống cpn EmployeeDetal
      * Author: NTLAM (27/10/2022)
@@ -400,6 +410,13 @@ export default {
         this.isShowToas = false;
       }, 4000);
     },
+    /**
+     * Sự kiện bỏ chọn tất cả select box
+     * Author:NTLAM (15/11/2022)
+     */
+    unSelected(){
+      this.$refs.unSelect.unSelectAll();
+    }
   },
 };
 </script>

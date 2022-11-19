@@ -194,13 +194,6 @@ export default {
       this.validate(val.target.value);
     },
   },
-  // watch :{
-  //   valueTextProp:  ()=>{
-  //     if(valueTextProp==null){
-  //       this.valueText="";
-  //     }
-  //   }
-  // }
 };
 </script>
 <style scoped>
