@@ -33,8 +33,9 @@ export default {
                 });
             }
             setTimeout(() =>{
-                debugger
-                this.inputFalse.focus();
+                if(this.inputFalse){
+                    this.inputFalse.focus();
+                }
             },100)
             return isValidate;
         },

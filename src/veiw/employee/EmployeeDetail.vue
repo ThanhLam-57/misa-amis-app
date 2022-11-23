@@ -234,7 +234,7 @@
     />
     <div class="mess-footer__right">
       <MButton
-        @click="postDataEmployee(true)"
+        @click="insertOrUpdateEmployee(true)"
         title="Cất"
         index="1"
         text="Cất"
@@ -242,7 +242,7 @@
         type="submit"
       />
       <MButton
-        @click="postDataEmployee(false)"
+        @click="insertOrUpdateEmployee(false)"
         title="Cất và thêm"
         index="2"
         text="Cất và thêm"
@@ -266,7 +266,8 @@ import { getPoisition } from "../../axios/poisitionController/poisitionControlle
 import {
   postEmployee,
   putEmployee,
-  getNewCode
+  getNewCode,
+  insertOrUpdate
 } from "../../axios/employeeController/employeeController.js";
 import { formatDateValue } from "../../script/base.js";
 import Base from "@/veiw/base/Base.vue"
@@ -292,6 +293,7 @@ export default {
       dataPoisition: [],
       mode: "add",
       valueText: null,
+      errorMessage:null,
       employeeCreate: {
         EmployeeCode: null,
         EmployeeName: null,
@@ -310,10 +312,11 @@ export default {
         BankAccountNumber: null,
         BankName: null,
         BankBranchName: null,
-        Gender: 0,
+        Gender: 1,
         GenderName: null,
       },
       employee: null,
+      messErr:null
     };
   },
   props: {
@@ -344,8 +347,16 @@ export default {
     dataDetail: {
       handler(val) {
         if (val) {
-          this.mode = "edit";
-          this.employee = val;
+          this.employee = {...val};
+          if(val["IsDuplicate"]){
+            this.mode = "add";
+            this.employee.EmployeeID = null;
+            //Tự động lấy mã Code nhân viên
+            this.getNewCodeEmployee();
+          }
+          else{
+            this.mode = "edit";
+          }
           this.employee.DateOfBirth = formatDateValue(
             this.employee.DateOfBirth
           );
@@ -355,14 +366,14 @@ export default {
         } else {
           this.mode = "add";
           this.employee = { ...this.employeeCreate };
+          //Tự động lấy mã Code nhân viên
+          this.getNewCodeEmployee();
         }
       },
       immediate: true,
     },
   },
   async created() {
-    //Tự động lấy mã Code nhân viên
-    this.getNewCodeEmployee();
     await this.getDataDepartment();
     this.getDataPoisition();
     //Auto focus vào ô Mã nhân viên
@@ -390,7 +401,6 @@ export default {
      */
     selectDepartment(item) {
       if (item) {
-        debugger
         this.employee.DepartmentName = item.DepartmentName;
         this.employee.DepartmentID = item.DepartmentID;
       } else {
@@ -436,10 +446,13 @@ export default {
      * Hàm thực hiện cất dữ liêu
      * Author:NTLAM 05/11/2022
      */
-    postDataEmployee(closeForm) {
-      this.validate();
+     insertOrUpdateEmployee(closeForm){
+      if(!this.validate()){
+        return
+      };
+      var empID = ""
       if (this.mode == "add") {
-        postEmployee(this.employee)
+        insertOrUpdate(empID,this.employee)
           .then((res) => {
             if (closeForm == true) {
               this.$emit("closeDiaLogAddSucceed", closeForm, this.mode);
@@ -449,10 +462,15 @@ export default {
             }
           })
           .catch((err) => {
-            this.$emit("showToasErr", this.mode);
+            debugger
+            this.errorMessage = err.response.data.errorMessage;
+            this.$emit("showToasErr", this.mode, this.errorMessage);
+            return err.response.data.errorMessage;
           });
-      } else {
-        putEmployee(this.employee.EmployeeID, this.employee)
+          debugger
+      } if (this.mode == "edit") {
+        this.empID = "?recordID=" + this.employee.EmployeeID;
+        insertOrUpdate(this.empID, this.employee)
           .then((res) => {
             if (closeForm == true) {
               this.$emit("closeDiaLogAddSucceed", closeForm, this.mode);
@@ -463,10 +481,48 @@ export default {
             }
           })
           .catch((err) => {
-            this.$emit("showToasErr", this.mode);
+            this.errorMessage = err.response.data.errorMessage;
+            this.$emit("showToasErr", this.mode,this.errorMessage);
+            return err.response.data.errorMessage;
           });
       }
-    },
+     },
+    /**
+     * Hàm thực hiện cất dữ liêu
+     * Author:NTLAM 05/11/2022
+     */
+    // postDataEmployee(closeForm) {
+    //   this.validate();
+    //   if (this.mode == "add") {
+    //     postEmployee(this.employee)
+    //       .then((res) => {
+    //         if (closeForm == true) {
+    //           this.$emit("closeDiaLogAddSucceed", closeForm, this.mode);
+    //         } else {
+    //           this.employee = { ...this.employeeCreate };
+    //           this.$emit("closeDiaLogAddSucceed", closeForm, this.mode);
+    //         }
+    //       })
+    //       .catch((err) => {
+    //         this.messErr = err.response.data.ErrorMessage;
+    //         this.$emit("showToasErr", this.mode);
+    //       });
+    //   } else {
+    //     putEmployee(this.employee.EmployeeID, this.employee)
+    //       .then((res) => {
+    //         if (closeForm == true) {
+    //           this.$emit("closeDiaLogAddSucceed", closeForm, this.mode);
+    //         } else {
+    //           this.employee = { ...this.employeeCreate };
+    //           this.$emit("closeDiaLogAddSucceed", closeForm, this.mode);
+    //           this.mode = "add";
+    //         }
+    //       })
+    //       .catch((err) => {
+    //         this.$emit("showToasErr", this.mode);
+    //       });
+    //   }
+    // },
   },
 };
 </script>

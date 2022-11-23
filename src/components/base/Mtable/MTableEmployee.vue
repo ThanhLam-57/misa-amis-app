@@ -28,7 +28,7 @@
                 </tr>
               </thead>
               <tbody >
-                <tr v-for="employee in dataSource" :key="employee.EmployeeID">
+                <tr v-for="employee in dataSource" :key="employee.EmployeeID" @dblclick="showDialog(employee)">
                   <td
                     propValue="check"
                     format="sticky_header_left"
@@ -54,7 +54,7 @@
                     </div>
                     <div v-show="isShowOption && itemSelected.EmployeeID == employee.EmployeeID"  class="dlg-option"  v-if="this.isShowOption==true" v-click-away="closeOption">
                       <div @click="deleteEmployee" class="option option-delete">Xoá</div>
-                      <div class="option option-stop__use">Nhân bản</div>
+                      <div @click="duplicateEmployee" class="option option-stop__use">Nhân bản</div>
                     </div>
                   </td>
                 </tr>
@@ -128,7 +128,6 @@ export default {
      * Author:NTLAM (15/11/2022)
      */
     unSelectAll(){
-      debugger
       this.selected = [];
     },
     /**
@@ -137,6 +136,9 @@ export default {
     deleteEmployee() {
       this.$emit("deleteEmployee", this.itemSelected);
       // deleteByEmployeeId(this.idDelete)
+    },
+    duplicateEmployee(){
+      this.$emit("duplicateEmployee", this.itemSelected);
     },
     /**
      * Hàm show dialog sửa

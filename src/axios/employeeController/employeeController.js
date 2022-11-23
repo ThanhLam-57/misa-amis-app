@@ -1,27 +1,29 @@
 import axios from "axios";
+import {API_URL} from "../../resource .js"
 
 export  function getData(){
-    return axios.get("https://amis.manhnv.net/api/v1/Employees");
+    return axios.get(API_URL.FILTER_EMPLOYEE);
 }
 
 export  function loadData(params){
-    return axios.get("http://localhost:26967/api/Employees/filter?" + params);
+    return axios.get(API_URL.FILTER_EMPLOYEE + params);
 }
-
-
 export function deleteByEmployeeId(params){
-    return axios.delete("http://localhost:26967/api/Employees/" + params)
+    return axios.delete(API_URL.DELETE_EMPLOYEE_BY_ID + params)
 }
 
 export function postEmployee(param){
-    return axios.post("http://localhost:26967/api/Employees",param)
+    return axios.post(API_URL.INSER_EMPLOYEE,param)
 }
 export function putEmployee(empId,param){
-    return axios.put("http://localhost:26967/api/Employees/"+ empId,param)
+    return axios.put(API_URL.UPDATE_EMPLOYEE+ empId,param)
 }
 export function getNewCode(){
-    return axios.get("http://localhost:26967/api/Employees/new-code")
+    return axios.get(API_URL.GET_NEWCODE)
 }
 export function deleteMultiple(params){
-    return axios.post("http://localhost:26967/api/Employees/DeleteBatch",params)
+    return axios.post(API_URL.DELETE_MULTIPLE,params)
+}
+export function insertOrUpdate(empId,params){
+    return axios.post(API_URL.INSERT_OR_UPDATE+empId,params)
 }

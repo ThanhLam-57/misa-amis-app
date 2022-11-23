@@ -114,7 +114,6 @@ export default {
     },
     modelValue:{
       handler(val){
-        debugger
         if(val){
           var item = this.option.find(x => x[this.valueField] == val);
           if(item){

@@ -15,7 +15,7 @@
             <div class="mess-footer" v-if="showDialogOnType.ask">
                 <div class="mess-footer__left btn btnCancel" @click="onNo"> Không </div>
                 <div class="mess-footer_right">
-                    <button class="btn btnSave" @click="onYes">Có</button>
+                    <button class="btn btnSave btnDelete" @click="onYes">Có</button>
                 </div>
             </div>
             <div class="mess-footer__alone" v-if="showDialogOnType.err | showDialogOnType.warning">
@@ -88,7 +88,7 @@ export default {
      * Kích hoạt sự kiện đồng ý
      * Author: NTLAM (05/11/2022)
      */
-    okOke(){
+     onOke(){
       this.$emit("oke-warning")
     },
     /**
@@ -104,5 +104,11 @@ export default {
 <style scoped>
 .message{
   width: 396px;
+}
+.btnDelete{
+  background-color: #EB3333;
+}
+.btnDelete:hover{
+  background-color: #F06666;
 }
 </style>

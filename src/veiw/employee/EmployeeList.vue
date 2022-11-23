@@ -14,7 +14,7 @@
               <div class="handle-option"  v-if="employeeSelected.length>0">
                 <div class="selectValue">Đã chọn: <b>{{employeeSelected.length}}</b></div>
                 <div class="textOption" @click="unSelected">Bỏ chọn</div>
-                <MbuttonIcon @click="deleteMultipleEmployee" actionButton="Xoá"></MbuttonIcon>
+                <MbuttonIcon class="btnDelete" @click="optionDeteleMultiple" actionButton="Xoá"></MbuttonIcon>
               </div>
             </div>
             <div class="content-toolbar__right">
@@ -23,7 +23,7 @@
                 <MInputIcon
                   type="text"
                   v-model:modelValue="employeeFilter"
-                  v-on:keyup.enter="getDataPagings"
+                  v-on:keyup.enter="getDataPagingSearch"
                   placeholder="Tìm theo mã, tên nhân viên"
                 />
               </div>
@@ -35,6 +35,7 @@
           <MTableEmployeeList
             ref="unSelect"
             @showDialog="showEmployeeDetal"
+            @duplicateEmployee="onToggleDuplicate"
             :headers="employeeHeader"
             :dataSource="employees"
             :selectedtoParent="employeeSelected"
@@ -70,6 +71,13 @@
     :dialogType="DIALOG_TYPE.ASK_CANCELABLE"
     @no-warning="cancelDelete"
     @yes-warning="deleteEmployeed"
+    ></MWarning>
+
+    <MWarning
+    v-if="isShowMessDuplicate"
+    :text="duplicateMess"
+    :dialogType="DIALOG_TYPE.WARNING"
+    @oke-warning="okeWarningDuplicate"
     ></MWarning>
     <!-- Toast mess delete -->
      <MToas
@@ -113,6 +121,7 @@ export default {
   },
   data() {
     return {
+      dialogType:null,
       popupHeader:HEADER_DETAIL.PopupAddEmployee,
       showLoading: false,
       isShow: false,
@@ -130,8 +139,10 @@ export default {
       EmpDeleted: null,
       dataDetail: null,
       DIALOG_TYPE: DIALOG_TYPE,
-      warningText: "abc",
+      warningText: "",
+      duplicateMess:"",
       isShowWarningDelete: false,
+      isShowMessDuplicate:false,
       isShowToas: false,
       MESS_TOAST:MESS_TOAST,
       messToast:{
@@ -139,7 +150,8 @@ export default {
         headerMess: null,
         classIcon:null,
         classColor:null,
-      }
+      },
+      stringEmpID:""
     };
   },
   created() {
@@ -200,7 +212,10 @@ export default {
         this.EmpDeleted.EmployeeCode +
         "> không ?";
     },
-
+    optionDeteleMultiple(){
+      this.isShowWarningDelete = true;
+      this.warningText = "Bạn có muốn xoá danh sách nhân viên"
+    },
     /**
      * Hàm hủy xóa
      * Author:NTLAM (03/11/2022)
@@ -208,39 +223,61 @@ export default {
     cancelDelete() {
       this.isShowWarningDelete = false;
     },
-
     /**
-     * Hàm thực hiện xoá dữ liệu(Bắt được EmployeeID từ MTableEmployee)
+     * Hàm thực hiện đóng popup thông báo 
+     * Sau khi đóng forcus input vào input lỗi
+     * Author:NTLAM(10/11/2022)
+     */
+    okeWarningDuplicate(){
+      this.isShowMessDuplicate = false;
+      //Sau khi đóng forcus input vào input lỗi
+    },
+    /**
+     * Hàm thực hiện xoá dữ liệu(Bắt được EmployeeID từ MTableEmployee) hoặc xoá theo danh sách ID
      * Author:NTLAM (03/11/2022)
      */
     deleteEmployeed() {
-      deleteByEmployeeId(this.EmpDeleted.EmployeeID)
-        .then((res) => {
-          //Xử lí khi xoá bản ghi duy nhất ở trng cuối cùng
-          if((this.pageNumber - 1) * this.valuePageSize == this.totalRecord - 1){
-            this.pageNumber = this.pageNumber - 1;
-          }
-          this.getDataPagings();
-          this.isShowWarningDelete = false;
-          this.messToast=this.MESS_TOAST.DELETE_SUCCSES,
-          this.showToastMess()
-        })
-        .catch((err) => {
-          this.messToast=this.MESS_TOAST.DELETE_FAIL,
-          this.showToastMess()
-        });
+      debugger
+      this.EmpDeleted;
+      //kiểm tra xem có nhân viên được chọn từ table không
+      if(this.EmpDeleted != null){
+        deleteByEmployeeId(this.EmpDeleted.EmployeeID)
+          .then((res) => {
+            //Xử lí khi xoá bản ghi duy nhất ở trng cuối cùng
+            if(this.pageNumber>1&&(this.pageNumber - 1) * this.valuePageSize == this.totalRecord - 1){
+              this.pageNumber = this.pageNumber - 1;
+            }
+            this.getDataPagings();
+            this.isShowWarningDelete = false;
+            this.messToast=this.MESS_TOAST.DELETE_SUCCSES,
+            this.showToastMess()
+          })
+          .catch((err) => {
+            this.messToast=this.MESS_TOAST.DELETE_FAIL,
+            this.showToastMess()
+          }); 
+          //Sau khi gọi API xoá thì chuyển về nul để reset 
+          this.EmpDeleted= null;      
+      }
+      //Kiểm tra list empID xem có không
+      if(this.employeeSelected.length>0){
+        //nếu có thì thực hiện API xáo nhiểu
+        this.deleteMultipleEmployee();
+      }
     },
-
     /**
-     * Hàm cảnh báo xóa nhiều nhân viên
+     * Hàm thực hiện lấy dữ liệu khi search
+     * Author:NTLAM(19/11/2022)
      */
-
+     getDataPagingSearch(){
+      this.pageNumber = 1;
+      this.getDataPagings();
+     },
     /**
      * Reload data trong bảng
      * Author:NTLAM (03/11/2022)
      */
     reLoadData() {
-      this.valuePageSize = 10;
       this.pageNumber = 1;
       this.getDataPagings();
     },
@@ -294,12 +331,11 @@ export default {
     },
     /**
      * Lấy ra số bản ghi được select
-     * Author:NTLAM 32/10/2022
+     * Author:NTLAM 22/10/2022
      */
     changeSelected(val) {
       if (val) {
         this.employeeSelected = val;
-        debugger
       } else {
         this.employeeSelected = [];
       }
@@ -310,6 +346,15 @@ export default {
      */
     onToggle() {
       this.dataDetail = null;
+      this.isShow = true;
+    },
+    /**
+     * Hàm show dialog nhân bản nhân viên
+     * Author:NTLAM 27/10/2022
+     */
+    onToggleDuplicate(item){
+      this.dataDetail = item;
+      this.dataDetail["IsDuplicate"] = true;
       this.isShow = true;
     },
     /**
@@ -349,11 +394,13 @@ export default {
      * Author:NTLAM(27/10/2022)
      * @param {*} mode 
      */
-    showToasErr(mode){
+    showToasErr(mode,messErr){
       if(mode=="add"){
         this.isShow=true;
         this.messToast= this.MESS_TOAST.ADD_FAIL;
         this.showToastMess()
+        this.duplicateMess = messErr
+        this.isShowMessDuplicate = true
       }else{
         this.isShow=true;
         this.messToast= this.MESS_TOAST.EDIT_FAIL;
@@ -382,12 +429,12 @@ export default {
         ();
     },
     deleteMultipleEmployee(){
-      debugger
-      deleteMultiple(this.employeeSelected.join()).then((res)=>{
+      deleteMultiple(this.stringEmpID).then((res)=>{
         console.log("xoá thành công"); 
       })
       .catch(
-         console.log("ko ok") 
+        this.messToast=this.MESS_TOAST.DELETE_FAIL,
+            this.showToastMess()
       );
     },
     /**
@@ -434,5 +481,11 @@ export default {
   cursor: pointer;
   margin-left: 8px;
   color: red;
+}
+.btnDelete{
+  background-color: #EB3333;
+}
+.btnDelete:hover{
+  background-color: #F06666;
 }
 </style>
