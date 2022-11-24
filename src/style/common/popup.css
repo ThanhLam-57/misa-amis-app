@@ -5,6 +5,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    border-radius: 4px;
 }
 .popup-header{
     display: flex;
@@ -64,6 +65,7 @@
 }
 .label-gen{
     margin-left: 5px;
+    margin-right: 11px;
 }
 .gen{
     margin-right: 10px;

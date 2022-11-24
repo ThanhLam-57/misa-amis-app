@@ -8,6 +8,7 @@
         'validate-error': isValidate
       }"
       :name="name"
+      :tabIndex="tabIndex"
       ref="name"
       @blur="onBlur"
     />
@@ -39,6 +40,10 @@ export default {
     rules: {
       Type: String,
       default: "",
+    },
+    tabIndex:{
+      Type:Number,
+      default:null
     }
   },
   data() {

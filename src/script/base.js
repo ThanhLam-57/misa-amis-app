@@ -42,7 +42,7 @@ export function formatDateValue(date) {
 
       return `${year}-${month}-${dateValue}`;
     } else {
-      return "";
+      return null;
     }
   } catch (error) {
     console.log(error);

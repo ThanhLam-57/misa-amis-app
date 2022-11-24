@@ -39,6 +39,7 @@
               name="EmployeeCode"
               rules="Empty"
               ref="EmployeeCode"
+              :tabIndex="1"
               v-model:modelValue="employee.EmployeeCode"
             />
           </div>
@@ -50,6 +51,7 @@
               type="text"
               name="Tên nhân viên"
               rules="Empty"
+              tabIndex="2"
               v-model:modelValue="employee.EmployeeName"
             />
           </div>
@@ -67,6 +69,7 @@
               displayFieldCode="DepartmentCode"
               @select="selectDepartment"
               label="Đơn vị"
+              :tabIndex="3"
             />
           </div>
         </div>
@@ -78,6 +81,7 @@
             displayField="PositionName"
             valueField="PositionID"
             @select="selectPosition"
+            :tabIndex="4"
           />
         </div>
       </div>
@@ -89,6 +93,7 @@
               type="date"
               name="input"
               v-model:modelValue="employee.DateOfBirth"
+              tabIndex="5"
             />
           </div>
           <div class="m-row" style="padding-left: 10px">
@@ -100,6 +105,7 @@
                   id="1"
                   value="1"
                   v-model="employee.Gender"
+                  tabIndex="6"
                 />
                 <label class="label-gen" for="1">Nam</label>
 
@@ -108,6 +114,7 @@
                   id="0"
                   value="0"
                   v-model="employee.Gender"
+                  tabIndex="7"
                 />
                 <label class="label-gen" for="0">Nữ</label>
 
@@ -115,6 +122,7 @@
                   type="radio"
                   id="2"
                   value="2"
+                  tabIndex="8"
                   v-model="employee.Gender"
                 />
                 <label class="label-gen" for="2">Khác</label>
@@ -134,6 +142,7 @@
               rules="checkValueNumber"
               type="text"
               v-model:modelValue="employee.IdentityNumber"
+              tabIndex="9"
             />
           </div>
           <div class="m-row" style="width: 40%">
@@ -141,6 +150,7 @@
             <MBaseInput
               type="date"
               name="input"
+              tabIndex="10"
               v-model:modelValue="employee.IdentityIssuedDate"
             />
           </div>
@@ -150,6 +160,7 @@
           <MBaseInput
             type="text"
             name="input"
+            tabIndex="11"
             v-model:modelValue="employee.IdentityIssuedPlace"
           />
         </div>
@@ -161,6 +172,7 @@
         <MBaseInput
           type="text"
           name="input"
+          tabIndex="12"
           v-model:modelValue="employee.Address"
         />
       </div>
@@ -171,6 +183,7 @@
             type="text"
             name="Số điện thoại"
             rules="checkValueNumber"
+            tabIndex="13"
             v-model:modelValue="employee.TelephoneNumber"
           />
         </div>
@@ -180,6 +193,7 @@
             type="text"
             name="Số điện thoại"
             rules="checkValueNumber"
+            tabIndex="14"
             v-model:modelValue="employee.PhoneNumber"
           />
         </div>
@@ -189,6 +203,7 @@
             name="Email"
             rules="checkValueEmail"
             type="text"
+            tabIndex="15"
             v-model:modelValue="employee.Email"
           />
         </div>
@@ -200,6 +215,7 @@
             type="text"
             name="Tài khoản ngân hàng"
             rules="checkValueNumber"
+            tabIndex="16"
             v-model:modelValue="employee.BankAccountNumber"
           />
         </div>
@@ -208,6 +224,7 @@
           <MBaseInput
             type="text"
             name="input"
+            tabIndex="17"
             v-model:modelValue="employee.BankName"
           />
         </div>
@@ -216,6 +233,7 @@
           <MBaseInput
             type="text"
             name="input"
+            tabIndex="18"
             v-model:modelValue="employee.BankBranchName"
           />
         </div>
@@ -231,6 +249,8 @@
       index="1"
       text="Hủy"
       class="mess-footer__left"
+      :tabIndex="21"
+      @blur="handleTabIndex"
     />
     <div class="mess-footer__right">
       <MButton
@@ -240,14 +260,18 @@
         text="Cất"
         class="mess-footer__mid"
         type="submit"
+        :tabIndex="20"
       />
-      <MButton
-        @click="insertOrUpdateEmployee(false)"
-        title="Cất và thêm"
-        index="2"
-        text="Cất và thêm"
-        class="mess-footer_right"
-      />
+      <div class="m-l-8">
+        <MButton
+          @click="insertOrUpdateEmployee(false)"
+          title="Cất và thêm"
+          index="2"
+          text="Cất và thêm"
+          class="mess-footer_right"
+          :tabIndex="19"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -422,7 +446,9 @@ export default {
       try {
         var res = await getDepartment();
         this.dataDepartment = res.data;
-      } catch (e) {}
+      } catch (e) {
+        console.log("Không lấy được danh sách phòng ban")
+      }
     },
     /**
      * Hàm thực hiện gọi data Poisition
@@ -431,6 +457,8 @@ export default {
     getDataPoisition() {
       getPoisition().then((res) => {
         this.dataPoisition = res.data;
+      }).catch((err)=>{
+        console.log("Không thấy được danh sách phòng ban")
       });
     },
     /**
@@ -440,6 +468,8 @@ export default {
     getNewCodeEmployee(){
       getNewCode().then((res)=>{
         this.employee.EmployeeCode = res.data;
+      }).catch((err)=>{
+        console.log("Không lấy được mã code mới")
       })
     },
     /**
@@ -469,6 +499,7 @@ export default {
           });
           debugger
       } if (this.mode == "edit") {
+        debugger
         this.empID = "?recordID=" + this.employee.EmployeeID;
         insertOrUpdate(this.empID, this.employee)
           .then((res) => {
@@ -487,6 +518,13 @@ export default {
           });
       }
      },
+     /**
+      * Xử lý sự kiện tab Index
+      */
+      handleTabIndex(){
+        debugger
+        this.$refs.EmployeeCode.handleFocus();
+      }
     /**
      * Hàm thực hiện cất dữ liêu
      * Author:NTLAM 05/11/2022
@@ -527,4 +565,7 @@ export default {
 };
 </script>
 <style  scoped>
+.m-l-8{
+  margin-left: 8px;
+}
 </style>

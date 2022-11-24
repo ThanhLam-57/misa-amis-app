@@ -170,6 +170,7 @@ export const EMPLOYEE_HEADER = [
     Class: "text-align--left",
     CellClass: "text-align--left",
     Caption: "SỐ TÀI KHOẢN",
+    Title:"Số tài khoản ngân hàng",
     propValue: "BankAccountNumber",
     Width: "200",
   },

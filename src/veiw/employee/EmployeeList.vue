@@ -72,6 +72,14 @@
     @no-warning="cancelDelete"
     @yes-warning="deleteEmployeed"
     ></MWarning>
+<!-- Popup xoá nhiều -->
+    <MWarning
+    v-if="isShowWarningDeleteMultiple"
+    :text="warningText"
+    :dialogType="DIALOG_TYPE.ASK_CANCELABLE"
+    @no-warning="cancelDelete"
+    @yes-warning="deleteMultipleEmployee"
+    ></MWarning>
 
     <MWarning
     v-if="isShowMessDuplicate"
@@ -142,6 +150,7 @@ export default {
       warningText: "",
       duplicateMess:"",
       isShowWarningDelete: false,
+      isShowWarningDeleteMultiple:false,
       isShowMessDuplicate:false,
       isShowToas: false,
       MESS_TOAST:MESS_TOAST,
@@ -213,7 +222,7 @@ export default {
         "> không ?";
     },
     optionDeteleMultiple(){
-      this.isShowWarningDelete = true;
+      this.isShowWarningDeleteMultiple = true;
       this.warningText = "Bạn có muốn xoá danh sách nhân viên"
     },
     /**
@@ -222,6 +231,7 @@ export default {
      */
     cancelDelete() {
       this.isShowWarningDelete = false;
+      this.isShowWarningDeleteMultiple = false;
     },
     /**
      * Hàm thực hiện đóng popup thông báo 
@@ -237,10 +247,6 @@ export default {
      * Author:NTLAM (03/11/2022)
      */
     deleteEmployeed() {
-      debugger
-      this.EmpDeleted;
-      //kiểm tra xem có nhân viên được chọn từ table không
-      if(this.EmpDeleted != null){
         deleteByEmployeeId(this.EmpDeleted.EmployeeID)
           .then((res) => {
             //Xử lí khi xoá bản ghi duy nhất ở trng cuối cùng
@@ -249,21 +255,13 @@ export default {
             }
             this.getDataPagings();
             this.isShowWarningDelete = false;
-            this.messToast=this.MESS_TOAST.DELETE_SUCCSES,
+            this.messToast=this.MESS_TOAST.DELETE_SUCCSES;
             this.showToastMess()
           })
           .catch((err) => {
-            this.messToast=this.MESS_TOAST.DELETE_FAIL,
+            this.messToast=this.MESS_TOAST.DELETE_FAIL;
             this.showToastMess()
           }); 
-          //Sau khi gọi API xoá thì chuyển về nul để reset 
-          this.EmpDeleted= null;      
-      }
-      //Kiểm tra list empID xem có không
-      if(this.employeeSelected.length>0){
-        //nếu có thì thực hiện API xáo nhiểu
-        this.deleteMultipleEmployee();
-      }
     },
     /**
      * Hàm thực hiện lấy dữ liệu khi search
@@ -424,18 +422,32 @@ export default {
           this.showLoading = false;
           return this.totalRecord;
         })
-        .catch
-        // this.showLoading=false
-        ();
+        .catch((err)=>{
+
+        });
     },
+    /**
+     * Hàm thực hiện xoá nhiều
+     */
     deleteMultipleEmployee(){
-      deleteMultiple(this.stringEmpID).then((res)=>{
-        console.log("xoá thành công"); 
-      })
-      .catch(
-        this.messToast=this.MESS_TOAST.DELETE_FAIL,
+      deleteMultiple(this.employeeSelected).then((res)=>{
+          if(res.data){
+            this.getDataPagings();
+            this.isShowWarningDeleteMultiple = false;
+            this.messToast=this.MESS_TOAST.DELETE_SUCCSES;
             this.showToastMess()
-      );
+            this.$refs.unSelect.unSelectAll();
+          }
+          else{
+            this.messToast=this.MESS_TOAST.DELETE_FAIL;
+            this.showToastMess()
+          }
+        })
+        .catch( (err) => {
+            this.messToast = this.MESS_TOAST.DELETE_FAIL;
+            this.showToastMess()
+          }
+        );
     },
     /**
      * Ham sau khi bấn sửa truyền dữ liệu xuống cpn EmployeeDetal
@@ -479,7 +491,8 @@ export default {
 }
 .textOption{
   cursor: pointer;
-  margin-left: 8px;
+  /* margin-left: 8px;
+  margin-right: 8px; */
   color: red;
 }
 .btnDelete{

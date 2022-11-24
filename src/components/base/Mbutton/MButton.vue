@@ -1,5 +1,5 @@
 <template lang="">
-        <div class="mess-footer_right" :title="textTitle">
+        <div :tabIndex="tabIndex" class="mess-footer_right" :title="textTitle">
             <div 
                 :class="{
                     'btnCancel': index ==1,
@@ -11,10 +11,29 @@
 <script>
 export default {
     name:"MButton",
-    props:["text","index","textTitle"
-    ],
+    props:{
+        text:{
+            Type:String,
+            default:null
+        },
+        index:{
+            Type:Number,
+            default:null
+        },
+        textTitle:{
+            Type:String,
+            default:""
+        },
+        tabIndex:{
+            Type:Number,
+            default:null
+        }
+        //"text","index","textTitle"
+    },
 }
 </script>
-<style lang="">
-    
+<style scoped>
+    .btn{
+        margin-left: 0px;
+    }
 </style>

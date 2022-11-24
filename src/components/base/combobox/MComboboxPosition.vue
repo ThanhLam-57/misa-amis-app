@@ -1,7 +1,7 @@
 <template lang="">
     <div v-click-away="closeOption" class="select" style="position: relative">
         <div class="combobox">
-          <input @input="changeValue" :value="valueText" class="m-input" @click="openOption"/>
+          <input :tabIndex="tabIndex" @input="changeValue" :value="valueText" class="m-input" @click="openOption"/>
 
           <div @click="showOption" class="btn-select">
               <div class="combobox__btn" :class="{rotate:isShow}"></div>
@@ -21,6 +21,12 @@
 import MBaseInputVue from "../../base/input/MBaseInput.vue";
 export default {
   name: "MComboboxPosition",
+  props:{
+    tabIndex:{
+      Type:Number,
+      default:null
+    }
+  },
   components: { MBaseInputVue },
   methods: {
     /**
@@ -138,14 +144,18 @@ export default {
   }
 .select {
   border: 1px solid #babec5;
-  border-radius: 2px;
+  border-radius: 4px;
   z-index: 0;
 }
 .select .menu-option {
   position: absolute;
-  top: 32px;
+  top: 35px;
   background-color: white;
+  max-height: 200px;
+  overflow: auto;
   border: 1px solid #babec5;
+  width: 400px;
+  border-radius: 4px;
   /* display; */
 }
 .select ul {
@@ -163,29 +173,47 @@ export default {
   width: 100%;
 }
 .itemOption {
-  height: 32px;
+  height: 36px;
   padding: 0 16px;
-  width: 370px;
   align-items: center;
   display: flex;
   align-items: center;
+  margin: 0 8px;
+  border-radius: 4px;
 }
 .itemOption:hover {
     color: #2ca01c;
     background-color: #ebedf0;
+    cursor: pointer;
 }
 .btn-select{
-  height: 30px;
+  height: 34px;
 }
 .select ul li {
   padding: 0 16px;
 }
 .combobox {
   padding: 0;
-  height: 30px;
+  height: 34px;
+}
+.select:hover{
+  border-color: #73c663;
 }
 .m-input {
   border: none;
-  height: 30px;
+  height: 34px;
+}
+.menu-option::-webkit-scrollbar{
+    width: 6px;
+    height: 6px;
+    background: #f1f1f1;
+}
+.menu-option::-webkit-scrollbar-thumb{
+    background: #b8bcc3;
+}
+.menu-option::-webkit-scrollbar{
+    width: 6px;
+    height: 6px;
+    background: #f1f1f1;
 }
 </style>

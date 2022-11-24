@@ -12,7 +12,7 @@
 .input-wrapper{
     display: flex;
     border: 1px solid #babec5;
-    border-radius: 2px;
+    border-radius: 4px;
 }
 .input-wrapper:focus{
     border-color: #73c663;
@@ -23,11 +23,11 @@
 .m-input {
     padding: 0 12px 0 10px;
     font-size: 13px;
-    height: 32px;
+    height: 36px;
     color: inherit;
     /* position: relative; */
     padding: 0 10px;
-    border-radius: 2px;
+    border-radius: 4px;
     border: 1px solid #babec5;
     box-sizing: border-box;
     width: 100%;
@@ -40,7 +40,7 @@
 
 .m-input:hover {
     border-color: #73c663;
-    cursor: auto;
+    cursor: pointer;
 }
 input[type=checkbox]{
     height: 18px;

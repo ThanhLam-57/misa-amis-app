@@ -104,6 +104,7 @@ export default {
 <style scoped>
 .message{
   width: 396px;
+  border-radius: 4px;
 }
 .btnDelete{
   background-color: #EB3333;

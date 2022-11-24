@@ -8,7 +8,7 @@
                   :option="optionPaging"
                 />
               </div>
-              <div class="number-record">{{numberStart}} - {{numberEnd}} bản ghi</div>
+              <div class="number-record"><b>{{numberStart}}</b> - <b>{{numberEnd}}</b> bản ghi</div>
               <div class="paging-option">
                 <div
                   @click="prePage"

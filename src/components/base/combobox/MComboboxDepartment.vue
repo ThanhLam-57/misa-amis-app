@@ -5,10 +5,11 @@
     </label>
     <div class="row" style="width: 100%">
         <div class="input-wrapper"
-          :class="{'validate-error': isValidate}">
+          :class="{'validate-error': isValidate }">
             <input 
+            :tabIndex="tabIndex"
                 @input="changeValue" @blur="onBlur" :value="valueText"
-               class="m-input" style="height: 30px;border: none;" type="text"
+               class="m-input" style="height: 34px;border: none;" type="text"
                @click="openTable"/>
             <div @click="showTable"  id="btn-select__combobox" class="btn-select">
                 <div class="combobox__btn" :class="{rotate:isShowTb}"></div>
@@ -96,6 +97,10 @@ export default {
       value: [String, Number],
       default: null,
     },
+    tabIndex:{
+      Type:Number,
+      default:null
+    }
   },
   data() {
     return {
@@ -198,13 +203,17 @@ export default {
 </script>
 <style scoped>
 .input-wrapper {
-  height: 30px;
+  height: 34px;
+}
+.input-wrapper:hover{
+  border-color: #73c663;
 }
 .btn-select {
-  height: 30px;
+  height: 34px;
 }
 .ttable {
   width: 402px;
+  border-radius: 4px;
 }
 .itemHeader {
   display: flex;
@@ -214,14 +223,33 @@ export default {
 }
 .itemBody {
   display: flex;
-  height: 32px;
+  height: 36px;
   align-items: center;
+  margin: 0 8px;
+  border-radius: 4px;
 }
 .itemBody:hover {
   color: #2ca01c;
   background-color: #ebedf0;
+  cursor: pointer;
 }
 .cbb_active {
-  border-radius: 0%;
+  border-radius: 4px;
+}
+.m-input{
+  height: 34px;
+}
+#ttable::-webkit-scrollbar{
+    width: 6px;
+    height: 6px;
+    background: #f1f1f1;
+}
+#ttable::-webkit-scrollbar-thumb{
+    background: #b8bcc3;
+}
+#ttable::-webkit-scrollbar{
+    width: 6px;
+    height: 6px;
+    background: #f1f1f1;
 }
 </style>
