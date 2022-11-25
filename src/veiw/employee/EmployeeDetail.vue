@@ -91,7 +91,8 @@
             <label class="m-label">Ngày sinh</label>
             <MBaseInput
               type="date"
-              name="input"
+              name="Ngày sinh"
+              rules="dateTime"
               v-model:modelValue="employee.DateOfBirth"
               tabIndex="5"
             />
@@ -149,8 +150,9 @@
             <label class="m-label">Ngày cấp</label>
             <MBaseInput
               type="date"
-              name="input"
+              name="Ngày cấp"
               tabIndex="10"
+              rules="dateTime"
               v-model:modelValue="employee.IdentityIssuedDate"
             />
           </div>
@@ -492,14 +494,11 @@ export default {
             }
           })
           .catch((err) => {
-            debugger
             this.errorMessage = err.response.data.errorMessage;
             this.$emit("showToasErr", this.mode, this.errorMessage);
             return err.response.data.errorMessage;
           });
-          debugger
       } if (this.mode == "edit") {
-        debugger
         this.empID = "?recordID=" + this.employee.EmployeeID;
         insertOrUpdate(this.empID, this.employee)
           .then((res) => {
@@ -522,7 +521,6 @@ export default {
       * Xử lý sự kiện tab Index
       */
       handleTabIndex(){
-        debugger
         this.$refs.EmployeeCode.handleFocus();
       }
     /**

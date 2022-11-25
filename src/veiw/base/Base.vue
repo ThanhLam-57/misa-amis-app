@@ -73,6 +73,14 @@ export default {
                         return false;
                     }
                 }
+                if(rule =="dateTime"){
+                    var now = new Date();
+                    if(Date.parse(val)>Date.parse(now)){
+                        data.isValidate = true;
+                        data.errorValidate = props.name + " không được vượt quá ngày hiện tại"
+                        return false;
+                    }
+                } 
             }
            
             return true;

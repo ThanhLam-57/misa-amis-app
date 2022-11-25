@@ -108,6 +108,8 @@ export default {
 }
 .btnDelete{
   background-color: #EB3333;
+  width: 80px;
+  height: 36px;
 }
 .btnDelete:hover{
   background-color: #F06666;

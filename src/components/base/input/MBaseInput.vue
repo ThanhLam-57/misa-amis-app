@@ -12,7 +12,7 @@
       ref="name"
       @blur="onBlur"
     />
-    <div class="err-message" v-if="isValidate">
+    <div :title="errorValidate" class="err-message" v-if="isValidate">
       {{errorValidate}}
     </div>
 </template>

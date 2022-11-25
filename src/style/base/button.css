@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-left: 8px;
+    /* margin-left: 8px; */
 	min-width: 48px;
     border-radius: 4px;
     font-weight: 500;
@@ -20,14 +20,14 @@
 .btnSave{
     color: #fff;
     background: #50b83c;
-    height: 34px;
+    height: 36px;
     padding: 0 16px;
 
 }
 .btnCancel{
     background: #FFFFFF;
     border:1px solid #8d9096;
-    height: 32px;
+    height: 34px;
     padding: 0 16px;
     margin: 0;
     /* font-weight: 400; */

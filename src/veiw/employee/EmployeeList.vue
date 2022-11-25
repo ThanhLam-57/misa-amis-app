@@ -332,6 +332,7 @@ export default {
      * Author:NTLAM 22/10/2022
      */
     changeSelected(val) {
+      debugger
       if (val) {
         this.employeeSelected = val;
       } else {
@@ -491,12 +492,13 @@ export default {
 }
 .textOption{
   cursor: pointer;
-  /* margin-left: 8px;
-  margin-right: 8px; */
-  color: red;
+  /* margin-left: 8px;*/
+  margin-right: 8px;
+  color: #EB3333;
 }
 .btnDelete{
   background-color: #EB3333;
+  width: 80px;
 }
 .btnDelete:hover{
   background-color: #F06666;

@@ -4,6 +4,7 @@
     </div>
 </template>
 <script>
+import{formatDate,formatDateValue} from "../../script/base.js"
 export default {
   data() {
     return {
@@ -37,6 +38,15 @@ export default {
             if(val && this.checkEmailFormat(val) == null){
                 this.isValidate = true;
                 this.errorValidate = this.name + " không đúng định dạng";
+            }
+          }
+          if(rule =="dateTime"){
+            var now = new Date();
+            val;
+            if(Date.parse(val)>Date.parse(now)){
+              this.isValidate = true;
+              this.errorValidate = this.name + " không được vượt quá ngày hiện tại"
+              return;
             }
           }
         });
