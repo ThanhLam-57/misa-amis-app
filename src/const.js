@@ -273,5 +273,17 @@ export const MESS_TOAST ={
     headerMess:"Xoá không thành công",
     classColor:"color-fail",
     toastAct: "Bạn đã xoá không thành công nhân viên"
+  },
+  EXPORT_FAIL:{
+      classIcon:"icon-fail",
+      headerMess:"Không thành công",
+      classColor:"color-fail",
+      toastAct: "Xuất file excel không thành công"
+  },
+  EXPORT_SUCCSES:{
+    classIcon: "icon-succses",
+    headerMess:"Thành công",
+    classColor:"color-succses",
+    toastAct: "Xuất file excel thành công"
   }
 }

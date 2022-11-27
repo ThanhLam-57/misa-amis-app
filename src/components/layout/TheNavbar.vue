@@ -25,7 +25,7 @@ export default {
   data() {
     return {
       menuItems: [],
-      routeActive: null,
+      routeActive: "/nhan-vien",
     };
   },
   created() {

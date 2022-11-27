@@ -1,5 +1,5 @@
 <template lang="">
-  <MPopup :componentWidth="900">
+  <MPopup :componentWidth="900" @keyup.esc="closeOption">
     <template #header >
           <div class="popup-title">
             <div id="header-popup-title" class="header-popup-title">
@@ -69,7 +69,7 @@
               displayFieldCode="DepartmentCode"
               @select="selectDepartment"
               label="Đơn vị"
-              :tabIndex="3"
+              tabIndex="3"
             />
           </div>
         </div>
@@ -81,8 +81,8 @@
             displayField="PositionName"
             valueField="PositionID"
             @select="selectPosition"
-            :tabIndex="4"
-          />
+            tabIndex="4"
+            />
         </div>
       </div>
       <div class="content__employee1-right">
@@ -184,7 +184,6 @@
           <MBaseInput
             type="text"
             name="Số điện thoại"
-            rules="checkValueNumber"
             tabIndex="13"
             v-model:modelValue="employee.TelephoneNumber"
           />
@@ -194,7 +193,6 @@
           <MBaseInput
             type="text"
             name="Số điện thoại"
-            rules="checkValueNumber"
             tabIndex="14"
             v-model:modelValue="employee.PhoneNumber"
           />
@@ -247,6 +245,7 @@
   <div class="mess-footer">
     <MButton
       @click="closeOption"
+      @keyup.enter="closeOption"
       title="Hủy"
       index="1"
       text="Hủy"
@@ -257,6 +256,7 @@
     <div class="mess-footer__right">
       <MButton
         @click="insertOrUpdateEmployee(true)"
+        @keyup.enter="insertOrUpdateEmployee(true)"
         title="Cất"
         index="1"
         text="Cất"
@@ -267,6 +267,7 @@
       <div class="m-l-8">
         <MButton
           @click="insertOrUpdateEmployee(false)"
+          @keyup.enter="insertOrUpdateEmployee(false)"
           title="Cất và thêm"
           index="2"
           text="Cất và thêm"

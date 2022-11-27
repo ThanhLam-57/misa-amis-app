@@ -29,7 +29,7 @@
               </div>
             </div>
             <div @click="reLoadData" class="icon hw-24 icon-reload" title="Load lại dữ liệu"></div>
-
+            <div @click="exportExcel" class="icon hw-24 icon-export" title="Xuất file Excel"></div>
             </div>
           </div>
           <MTableEmployeeList
@@ -80,12 +80,21 @@
     @no-warning="cancelDelete"
     @yes-warning="deleteMultipleEmployee"
     ></MWarning>
-
+<!-- Popup thông báo trùng mã nhân viên -->
     <MWarning
     v-if="isShowMessDuplicate"
     :text="duplicateMess"
     :dialogType="DIALOG_TYPE.WARNING"
     @oke-warning="okeWarningDuplicate"
+    ></MWarning>
+<!-- Popup thông báo khi đóng Dialog thêm mới -->
+    <MWarning
+    v-if="isShowMessSaveData"
+    :text="warningText"
+    @cancel-warning="cancelWarning"
+    @yes-warning="closeAndSaveData"
+    ref="closeAndSaveData"
+    @no-warning="closeAndDontSave"
     ></MWarning>
     <!-- Toast mess delete -->
      <MToas
@@ -103,7 +112,8 @@ import MWarning from "../../components/base/MPopup/MWarning.vue";
 import {
   loadData,
   deleteByEmployeeId,
-  deleteMultiple
+  deleteMultiple,
+  exportExcelEmployee
 } from "../../axios/employeeController/employeeController.js";
 import TheLoading from "../../components/base/TheLoading.vue";
 import MbuttonIcon from "../../components/base/Mbutton/MbuttonIcon.vue";
@@ -152,6 +162,7 @@ export default {
       isShowWarningDelete: false,
       isShowWarningDeleteMultiple:false,
       isShowMessDuplicate:false,
+      isShowMessSaveData:false,
       isShowToas: false,
       MESS_TOAST:MESS_TOAST,
       messToast:{
@@ -279,7 +290,20 @@ export default {
       this.pageNumber = 1;
       this.getDataPagings();
     },
-
+    /**
+     * Hàm thực hiện export excel
+     * Author:NTLAM (25/11/2022)
+     */
+     exportExcel(){
+      try {
+        exportExcelEmployee();
+        this.messToast=this.MESS_TOAST.EXPORT_SUCCSES;
+        this.showToastMess();
+      } catch (error) {
+        this.messToast=this.MESS_TOAST.EXPORT_FAIL;
+        this.showToastMess()
+      }
+     },
     /**
      * Hàm lấy thông số paging
      * Autthor:NTTLAM 02/11/2022
@@ -332,7 +356,6 @@ export default {
      * Author:NTLAM 22/10/2022
      */
     changeSelected(val) {
-      debugger
       if (val) {
         this.employeeSelected = val;
       } else {
@@ -361,8 +384,30 @@ export default {
      * Author:NTLAM 27/10/2022
      */
     closeToggle() {
-      this.isShow = false;
+      //Hiển thị popup thông báo
+      this.isShowMessSaveData = true;
+      this.warningText = "Dữ liệu đã thay đổi. Bạn có muốn cất không?"
     },
+    /**
+     * Sự kiện huỷ đóng Dialog thêm mới
+     */
+    cancelWarning(){
+      this.isShow = true;
+      this.isShowMessSaveData = false;
+    },
+    /**
+     * Sự kiện đóng dialog thêm mới vào không lưu
+     */
+     closeAndDontSave(){
+      this.isShow = false;
+      this.isShowMessSaveData = false;
+     },
+     /**
+      * Sự kiện đóng dialof thêm mới và lưu thông tin
+      */
+      closeAndSaveData(){
+        this.$refs.closeAndSaveData.insertOrUpdateEmployee(true);
+      },
     /**
      * Hàm xử lý khi thêm mới/sửa thành công
      * Author: NTLAM (27/10/2022)

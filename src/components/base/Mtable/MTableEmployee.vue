@@ -94,7 +94,6 @@ export default {
       set: function (value) {
         var selected = [];
         if (value) {
-          debugger
           this.dataSource.forEach(function (employee) {
             selected.push(employee.EmployeeID);
           });
@@ -118,7 +117,6 @@ export default {
   watch: {
     selected: {
       handler(val) {
-        debugger
         this.$emit("changeSelect", val);       
       },
       deep: true,

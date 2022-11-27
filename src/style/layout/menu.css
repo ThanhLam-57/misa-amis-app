@@ -1,7 +1,7 @@
 .menu{
     grid-row-start: 1;
     grid-row-end: 3;
-    background-color: #393a3d;
+    background-color: #033C1A;
     position: relative;
 }
 .logo-container{
@@ -34,13 +34,13 @@
     opacity: 1;
     margin-left: 12px;
     margin-right: 12px;
-    background-color: #616161;
+    background-color: #089740;
 }
 .list-item__active{
     opacity: 1;
     margin-left: 12px;
     margin-right: 12px;
-    background-color: #616161;
+    background-color: #089740;
     font-family: Misa Bold;
     border-radius: 4px;
 }

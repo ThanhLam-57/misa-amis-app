@@ -59,3 +59,10 @@ export function insertOrUpdate(empId,params){
         
     }
 }
+export function exportExcelEmployee(){
+    try {
+        return  window.location.assign("http://localhost:26967/api/Employees/export");
+    } catch (error) {
+        
+    }
+}

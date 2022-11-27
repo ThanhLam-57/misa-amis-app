@@ -1,8 +1,7 @@
 <template lang="">
-    <div v-click-away="closeOption" class="select" style="position: relative">
-        <div class="combobox">
-          <input :tabIndex="tabIndex" @input="changeValue" :value="valueText" class="m-input" @click="openOption"/>
-
+    <div v-click-away="closeOption" class="select" :class="{'active': isFocus}" style="position: relative">
+        <div class="combobox" >
+          <input @focus="focus($event)" @blur="onBlur" :tabIndex="tabIndex" @input="changeValue" :value="valueText" style="border: none;" class="m-input" @click="openOption" @keyup="onKeyUp($event)"/>
           <div @click="showOption" class="btn-select">
               <div class="combobox__btn" :class="{rotate:isShow}"></div>
           </div>
@@ -21,14 +20,52 @@
 import MBaseInputVue from "../../base/input/MBaseInput.vue";
 export default {
   name: "MComboboxPosition",
-  props:{
-    tabIndex:{
-      Type:Number,
-      default:null
-    }
-  },
   components: { MBaseInputVue },
   methods: {
+    focus(e){
+      this.isFocus = true;
+    },
+    onBlur(val) {
+      this.isFocus = false;
+    },
+    onKeyUp(val){
+      switch(val.keyCode){
+        //Kiểm tra là enter
+        case 13:
+        this.showTable();
+          break;
+        //Kiểm tra là page down
+        case 38:
+          this.isShowTb = true;
+          if(this.valueText){
+            var index = this.optionData.findIndex(x => x[this.displayField] == this.valueText);
+            // this.valueText = this.optionData[index - 1][this.displayField];
+            // this.modelValue = this.optionData[index - 1][this.valueField];
+            this.$emit("select", this.optionData[index - 1]);
+          }
+          else{
+            // this.valueText = this.optionData[0][this.displayField];
+            // this.modelValue = this.optionData[0][this.valueField];
+            this.$emit("select", this.optionData[0]);
+          }
+          break;
+        //Kiểm tra là page up
+        case 40:
+          this.isShowTb = true;
+          if(this.valueText){
+            var index = this.optionData.findIndex(x => x[this.displayField] == this.valueText);
+            // this.valueText = this.optionData[index + 1][this.displayField];
+            // this.modelValue = this.optionData[index + 1][this.valueField];
+            this.$emit("select", this.optionData[index + 1]);
+          }
+          else{
+            this.$emit("select", this.optionData[0]);
+          }
+          break;
+        default:
+          break;
+      }
+    },
     /**
      * Hàm show option
      * Author:NTLAM 26/10/2022
@@ -56,7 +93,6 @@ export default {
       this.$emit("select", item);
       this.isShow=false
     },
-
     /**
      * Hàm thực hiện bắt sự kiện tìm kiếm trên imput Poisition
      * Author: NTLAM (02/11/2022)
@@ -91,6 +127,10 @@ export default {
       value: [String, Number],
       default: null,
     },
+    tabIndex:{
+      Type:String,
+      default:null
+    }
   },
   data() {
     return {
@@ -98,6 +138,7 @@ export default {
       classActive: null,
       valueText: null,
       optionData: [],
+      isFocus: false
     };
   },
   watch: {
@@ -147,6 +188,9 @@ export default {
   border-radius: 4px;
   z-index: 0;
 }
+.select.active {
+  border-color: #73c663 !important;
+}
 .select .menu-option {
   position: absolute;
   top: 35px;
@@ -193,13 +237,16 @@ export default {
   padding: 0 16px;
 }
 .combobox {
+  outline: none;
   padding: 0;
   height: 34px;
 }
 .select:hover{
-  border-color: #73c663;
+  border-color: #73c663 !important;
+  outline: none !important;
 }
 .m-input {
+  outline: none;
   border: none;
   height: 34px;
 }

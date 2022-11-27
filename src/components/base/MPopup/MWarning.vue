@@ -29,7 +29,7 @@
                     <div class="mess-footer__mid" >
                         <div class="btn btnCancel" @click="onNo">Không</div>
                     </div>
-                    <div class="mess-footer_right">
+                    <div class="mess-footer_right" style="margin-left: 8px;">
                         <div class="btn btnSave" @click="onYes">Có</div>
                     </div>
                 </div>

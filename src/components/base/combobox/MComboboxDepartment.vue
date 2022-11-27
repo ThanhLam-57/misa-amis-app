@@ -3,14 +3,15 @@
         <label class="m-label">{{label}} 
         <span class="input--required">*</span>
     </label>
-    <div class="row" style="width: 100%">
+    <div class="row" style="width: 100%" >
         <div class="input-wrapper"
-          :class="{'validate-error': isValidate }">
-            <input 
-            :tabIndex="tabIndex"
+          :class="[{'validate-error': isValidate },{'active': isFocus}]">
+          <input 
+          :tabIndex="tabIndex"
                 @input="changeValue" @blur="onBlur" :value="valueText"
                class="m-input" style="height: 34px;border: none;" type="text"
-               @click="openTable"/>
+               @keyup="onKeyUp($event)" 
+               @focus="focus($event)"/>
             <div @click="showTable"  id="btn-select__combobox" class="btn-select">
                 <div class="combobox__btn" :class="{rotate:isShowTb}"></div>
             </div>
@@ -98,7 +99,7 @@ export default {
       default: null,
     },
     tabIndex:{
-      Type:Number,
+      Type: String,
       default:null
     }
   },
@@ -107,6 +108,7 @@ export default {
       isShowTb: false,
       valueText: null,
       optionData: [],
+      isFocus: false
     };
   },
   watch: {
@@ -143,6 +145,47 @@ export default {
     },
   },
   methods: {
+    focus(e){
+      this.isFocus = true;
+    },
+    onKeyUp(val){
+      switch(val.keyCode){
+        //Kiểm tra là enter
+        case 13:
+        this.showTable();
+          break;
+        //Kiểm tra là page down
+        case 38:
+          this.isShowTb = true;
+          if(this.valueText){
+            var index = this.optionData.findIndex(x => x[this.displayField] == this.valueText);
+            // this.valueText = this.optionData[index - 1][this.displayField];
+            // this.modelValue = this.optionData[index - 1][this.valueField];
+            this.$emit("select", this.optionData[index - 1]);
+          }
+          else{
+            // this.valueText = this.optionData[0][this.displayField];
+            // this.modelValue = this.optionData[0][this.valueField];
+            this.$emit("select", this.optionData[0]);
+          }
+          break;
+        //Kiểm tra là page up
+        case 40:
+          this.isShowTb = true;
+          if(this.valueText){
+            var index = this.optionData.findIndex(x => x[this.displayField] == this.valueText);
+            // this.valueText = this.optionData[index + 1][this.displayField];
+            // this.modelValue = this.optionData[index + 1][this.valueField];
+            this.$emit("select", this.optionData[index + 1]);
+          }
+          else{
+            this.$emit("select", this.optionData[0]);
+          }
+          break;
+        default:
+          break;
+      }
+    },
     /**
      * Hàm thực hiện đóng mở combobox Department
      * Author :NTLAM (02/10/2022)
@@ -196,6 +239,7 @@ export default {
      * Hàm xửử lý khi blur
      */
     onBlur(val) {
+      this.isFocus = false;
       this.validate(val.target.value);
     },
   },
@@ -206,6 +250,9 @@ export default {
   height: 34px;
 }
 .input-wrapper:hover{
+  border-color: #73c663;
+}
+.input-wrapper.active {
   border-color: #73c663;
 }
 .btn-select {
@@ -220,6 +267,7 @@ export default {
   height: 32px;
   align-items: center;
   font-weight: 700;
+  padding: 0 8px;
 }
 .itemBody {
   display: flex;

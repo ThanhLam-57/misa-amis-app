@@ -10,5 +10,6 @@ export const API_URL ={
     UPDATE_EMPLOYEE:`${BASE_API}/api/Employees/`,
     DELETE_MULTIPLE:`${BASE_API}/Employees/DeleteBatch`,
     GET_POISITION:`${BASE_API}/Positions/get-all`,
-    GET_DEPARTMENT:`${BASE_API}/Departments/get-all`
+    GET_DEPARTMENT:`${BASE_API}/Departments/get-all`,
+    EXPORT_EXCELl:`${BASE_API}/Employees/export`,
 }

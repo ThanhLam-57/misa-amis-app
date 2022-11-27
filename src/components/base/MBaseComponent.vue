@@ -4,7 +4,6 @@
     </div>
 </template>
 <script>
-import{formatDate,formatDateValue} from "../../script/base.js"
 export default {
   data() {
     return {

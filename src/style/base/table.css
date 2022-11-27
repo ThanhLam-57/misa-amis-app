@@ -27,7 +27,7 @@ th{
     padding: 0 16px;
 }
 .table-header tr{
-    background-color: #F5F5F5;
+    background-color: #E7F5EC;
 }
 .table tbody tr:last-child {
     border-bottom: unset;
@@ -57,12 +57,12 @@ th{
 .sticky_header_left {
     position: sticky;
     left: 0px;
-    background-color: #F5F5F5;
+    background-color: #E7F5EC;
 }
 .sticky_header_left_1 {
     left: 48px;
     position: sticky;
-    background-color: #F5F5F5;
+    background-color: #E7F5EC;
 }
 .sticky_body_left {
     position: sticky;
@@ -78,7 +78,7 @@ th{
 .sticky_header_right {
     position: sticky;
     right: 0px;
-    background-color: #F5F5F5;
+    background-color: #E7F5EC;
 }
 .sticky_body_right {
     position: sticky;
