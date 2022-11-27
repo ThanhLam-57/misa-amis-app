@@ -39,13 +39,9 @@ export default {
           this.isShowTb = true;
           if(this.valueText){
             var index = this.optionData.findIndex(x => x[this.displayField] == this.valueText);
-            // this.valueText = this.optionData[index - 1][this.displayField];
-            // this.modelValue = this.optionData[index - 1][this.valueField];
             this.$emit("select", this.optionData[index - 1]);
           }
           else{
-            // this.valueText = this.optionData[0][this.displayField];
-            // this.modelValue = this.optionData[0][this.valueField];
             this.$emit("select", this.optionData[0]);
           }
           break;
@@ -54,8 +50,6 @@ export default {
           this.isShowTb = true;
           if(this.valueText){
             var index = this.optionData.findIndex(x => x[this.displayField] == this.valueText);
-            // this.valueText = this.optionData[index + 1][this.displayField];
-            // this.modelValue = this.optionData[index + 1][this.valueField];
             this.$emit("select", this.optionData[index + 1]);
           }
           else{
