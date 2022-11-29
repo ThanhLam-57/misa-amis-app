@@ -1,3 +1,9 @@
+/**
+ * Formatdate
+ * @param {*} date 
+ * @returns 
+ * Author:NTLAM(30/10/2022)
+ */
 export function formatDate(date) {
   try {
     if (date) {
@@ -23,7 +29,12 @@ export function formatDate(date) {
   }
 }
 
-
+/**
+ * Forrmatdate
+ * @param {*} date 
+ * @returns 
+ * Author:NTLAM(30/10/2022)
+ */
 export function formatDateValue(date) {
   try {
     if (date) {

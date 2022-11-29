@@ -17,8 +17,7 @@ export default {
       this.errorValidate = "";
       //Cắt điều kiện validate
       var lstRule = this.rules.split(",");
-      lstRule &&
-        lstRule.forEach((rule) => {
+      lstRule && lstRule.forEach((rule) => {
           if (rule == "Empty") {
             if (!val || val.trim() == "") {
               this.isValidate = true;
@@ -54,11 +53,17 @@ export default {
      * Funtion check có phải là chuối số không
      * Chuyền vào string
      * @param {*} str
+     * AUthor:NTLAM(30/10/2022)
      */
     isNumeric(str) {
       if (typeof str != "string") return false;
       return !isNaN(str) && !isNaN(parseFloat(str));
     },
+    /**
+     * Funtion check xem email có đúng định dạng không
+     * @param {*} email 
+     * AUthor:NTLAM(30/10/2022)
+     */
     checkEmailFormat(email) {
       try {
         const emailCheck =

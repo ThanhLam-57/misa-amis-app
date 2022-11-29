@@ -27,7 +27,7 @@ export default {
         }
     },
     methods:{
-            /**
+     /**
      * Lấy ra giá trị của ô input
      * Hàm truyền dữ liệu từ input lên để xử lý
      * @param {*} val 

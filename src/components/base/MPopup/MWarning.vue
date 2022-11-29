@@ -3,14 +3,14 @@
       <div class="mw-444">
         <div class="message">
           <div class="mess-content">
-            <div class="icon hw-48 mess-warning__icon" v-if="showDialogOnType.warning"></div>
+            <div class="delete-popup" v-if="showDialogOnType.warning">Mã nhân viên đã có trong hệ thống</div>
             <div class="icon hw-48 mess-err-icon" v-if="showDialogOnType.err"></div>
-            <div class="icon hw-48 mess-ask-icon" v-if="showDialogOnType.ask | showDialogOnType.askOption"></div>
+            <div class="delete-popup" v-if="showDialogOnType.ask">Xoá tài liệu</div>
+            <div class="delete-popup" v-if="showDialogOnType.askOption">Dữ liệu đã thay đổi</div>
             <div class="mess-content__text">
               {{text}}
             </div>
           </div>
-          <div class="mess-line"></div>
           <div>
             <div class="mess-footer" v-if="showDialogOnType.ask">
                 <div class="mess-footer__left btn btnCancel" @click="onNo"> Không </div>
@@ -113,5 +113,31 @@ export default {
 }
 .btnDelete:hover{
   background-color: #F06666;
+}
+.delete-popup{
+  font-size: 20px;
+  font-weight: 700;
+  color: #1F1F1F;
+  font-family: Misa Bold;
+}
+.mess-footer{
+  justify-content: end !important;;
+}
+.mess-footer_right{
+  padding-left: 8px;
+  margin-left: 0px !important;
+}
+.mess-content__text{
+  color: #1F1F1F;
+  font-size:14px;
+  line-height: 18px;
+  font-weight: 400;
+}
+.mess-footer__mid{
+  padding-left: 8px;
+}
+.mess-footer__alone{
+    display: flex;
+    justify-content: end;
 }
 </style>

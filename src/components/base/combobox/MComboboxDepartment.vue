@@ -7,6 +7,7 @@
         <div class="input-wrapper"
           :class="[{'validate-error': isValidate },{'active': isFocus}]">
           <input 
+          @click="openTable"
           :tabIndex="tabIndex"
                 @input="changeValue" @blur="onBlur" :value="valueText"
                class="m-input" style="height: 34px;border: none;" type="text"
@@ -54,6 +55,7 @@
 </template>
 <script>
 import MBaseComponent from "../MBaseComponent.vue";
+import {KEY_CODE} from "../../../const.js"
 export default {
   extends: MBaseComponent,
   name: "MComboboxDepartment",
@@ -98,20 +100,24 @@ export default {
       value: [String, Number],
       default: null,
     },
-    tabIndex:{
+    tabIndex: {
       Type: String,
-      default:null
-    }
+      default: null,
+    },
   },
   data() {
     return {
       isShowTb: false,
       valueText: null,
       optionData: [],
-      isFocus: false
+      isFocus: false,
     };
   },
   watch: {
+    /**
+     * Bắt sự kiện thay đổi của optionData khi nhập vào ô input và thực hiện tìm kiếm
+     * Author:NTLAM(30/10/2022)
+     */
     option: {
       handler(val) {
         this.optionData = val;
@@ -132,12 +138,10 @@ export default {
           var item = this.option.find((x) => x[this.valueField] == val);
           if (item) {
             this.valueText = item[this.displayField];
-          }
-          else{
+          } else {
             this.valueText = null;
           }
-        }
-        else{
+        } else {
           this.valueText = null;
         }
       },
@@ -145,40 +149,44 @@ export default {
     },
   },
   methods: {
-    focus(e){
+    /**
+     * Hàm thực hiện focus vào ô input
+     * @param {*} e
+     */
+    focus(e) {
       this.isFocus = true;
     },
-    onKeyUp(val){
-      switch(val.keyCode){
+    /**
+     * Sự kiện dùng bàn phím chọn item
+     * @param {} val
+     */
+    onKeyUp(val) {
+      switch (val.keyCode) {
         //Kiểm tra là enter
         case 13:
-        this.showTable();
+          this.showTable();
           break;
         //Kiểm tra là page down
         case 38:
           this.isShowTb = true;
-          if(this.valueText){
-            var index = this.optionData.findIndex(x => x[this.displayField] == this.valueText);
-            // this.valueText = this.optionData[index - 1][this.displayField];
-            // this.modelValue = this.optionData[index - 1][this.valueField];
+          if (this.valueText) {
+            var index = this.optionData.findIndex(
+              (x) => x[this.displayField] == this.valueText
+            );
             this.$emit("select", this.optionData[index - 1]);
-          }
-          else{
-            // this.valueText = this.optionData[0][this.displayField];
-            // this.modelValue = this.optionData[0][this.valueField];
+          } else {
             this.$emit("select", this.optionData[0]);
           }
           break;
         //Kiểm tra là page up
         case 40:
           this.isShowTb = true;
-          if(this.valueText){
-            var index = this.optionData.findIndex(x => x[this.displayField] == this.valueText);
-            // this.valueText = this.optionData[index + 1][this.displayField];
-            // this.modelValue = this.optionData[index + 1][this.valueField];
+          if (this.valueText) {
+            var index = this.optionData.findIndex(
+              (x) => x[this.displayField] == this.valueText
+            );
             this.$emit("select", this.optionData[index + 1]);
-          }
-          else{
+          } else {
             this.$emit("select", this.optionData[0]);
           }
           break;
@@ -240,7 +248,19 @@ export default {
      */
     onBlur(val) {
       this.isFocus = false;
-      this.validate(val.target.value);
+      //Kiểm tra giá trị đang nhập có trong danh sách hay không
+      if(this.valueText){
+        var item = this.optionData.find(x => x[this.displayField] == this.valueText);
+        if(item){
+          this.$emit("select", item);
+        }
+        else{
+          this.valueText = null;
+        }
+      }
+      setTimeout(() => {
+        this.validate(val.target.value);
+      }, 200);
     },
   },
 };
@@ -249,7 +269,7 @@ export default {
 .input-wrapper {
   height: 34px;
 }
-.input-wrapper:hover{
+.input-wrapper:hover {
   border-color: #73c663;
 }
 .input-wrapper.active {
@@ -284,20 +304,20 @@ export default {
 .cbb_active {
   border-radius: 4px;
 }
-.m-input{
+.m-input {
   height: 34px;
 }
-#ttable::-webkit-scrollbar{
-    width: 6px;
-    height: 6px;
-    background: #f1f1f1;
+#ttable::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background: #f1f1f1;
 }
-#ttable::-webkit-scrollbar-thumb{
-    background: #b8bcc3;
+#ttable::-webkit-scrollbar-thumb {
+  background: #b8bcc3;
 }
-#ttable::-webkit-scrollbar{
-    width: 6px;
-    height: 6px;
-    background: #f1f1f1;
+#ttable::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background: #f1f1f1;
 }
 </style>

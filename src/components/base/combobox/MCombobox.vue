@@ -16,7 +16,11 @@
 export default {
   name: "McCombobox",
   props:{
-    classActive:Number
+    classActive:Number,
+    option: {
+      value: Array,
+      default: [],
+    },
   },
   methods: {
     /**
@@ -54,16 +58,10 @@ export default {
       this.classActive = valuePageSize;
     });
   },
-  props: {
-    option: {
-      value: Array,
-      default: [],
-    },
-  },
   data() {
     return {
       isShow: false,
-      classActive: 10,
+      classActive: 20,
     };
   },
 };

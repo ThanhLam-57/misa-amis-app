@@ -115,9 +115,12 @@ export default {
     };
   },
   watch: {
+    /**
+     * Sự kiện chi selec input checkbox
+     */
     selected: {
       handler(val) {
-        this.$emit("changeSelect", val);       
+        this.$emit("changeSelect", val);
       },
       deep: true,
     },
@@ -127,7 +130,7 @@ export default {
      * Bắt sự kiện bỏ chọn tất cả check bõ từ EmployeeLIst
      * Author:NTLAM (15/11/2022)
      */
-    unSelectAll(){
+    unSelectAll() {
       this.selected = [];
     },
     /**
@@ -137,7 +140,7 @@ export default {
       this.$emit("deleteEmployee", this.itemSelected);
       // deleteByEmployeeId(this.idDelete)
     },
-    duplicateEmployee(){
+    duplicateEmployee() {
       this.$emit("duplicateEmployee", this.itemSelected);
     },
     /**
@@ -188,14 +191,12 @@ export default {
       if (item.propValue == "GenderName") {
         if (employee[item.propValue] == null) return "Khác";
       }
-      if (item.propValue == "Gender"){
-        if(employee[item.propValue] == 1){
-          return "Nữ";
-        }
-        else if(employee[item.propValue]==0){
+      if (item.propValue == "Gender") {
+        if (employee[item.propValue] == 1) {
           return "Nam";
-        }
-        else if(employee[item.propValue]==2){
+        } else if (employee[item.propValue] == 0) {
+          return "Nữ";
+        } else if (employee[item.propValue] == 2) {
           return "Khác";
         }
       }
@@ -208,21 +209,21 @@ export default {
 .index-td-selection {
   z-index: 1;
 }
+.option{
+  text-align: left;
+}
 .selectedTd {
   background-color: #dcf1d8 !important;
 }
 .mes-table {
-  justify-content: center;
-  /* height: 300px; */
   align-items: center;
   display: flex;
   font-size: 14px;
   font-weight: 700;
 
-
   position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(calc(-50%  100px), -50%);
+  top: 50%;
+  left: 50%;
+  transform: translate(calc(-50% 100px), -50%);
 }
 </style>

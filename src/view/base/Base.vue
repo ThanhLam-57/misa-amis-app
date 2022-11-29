@@ -5,6 +5,10 @@ export default {
     },
     name: "Base",
     methods: {
+        /**
+         * Hàm vailidate khi submit
+         * Author:NTLAM(15/11/2022)
+         */
         validate(){
             this.inputFalse = null;
             var isValidate = true;
@@ -22,7 +26,9 @@ export default {
                 inputs && inputs.forEach(input => {
                     //Lấy ra component chứa input
                     var component = input.__vueParentComponent;
+                    //check xem component có thuoc danh sách component cần validate hay không
                     if(component.type && component.type.name && components.includes(component.type.name)){
+                        //Nêys không thuộc return falsr
                         if(!this.validateComponent(component)){
                             isValidate = false;
                             if(!this.inputFalse){
@@ -33,6 +39,7 @@ export default {
                 });
             }
             setTimeout(() =>{
+                //forcus vào input lỗi đầu tiên
                 if(this.inputFalse){
                     this.inputFalse.focus();
                 }
@@ -89,11 +96,17 @@ export default {
          * Funtion check có phải là chuối số không
          * Chuyền vào string
          * @param {*} str
+         * Author:NTLAM(15/11/2022)
          */
         isNumeric(str) {
             if (typeof str != "string") return false;
             return !isNaN(str) && !isNaN(parseFloat(str));
         },
+        /**
+         * Funtion check validate email
+         * @param {*} email 
+         * Author:NTLAM(15/11/2022)
+         */
         checkEmailFormat(email) {
             try {
                 const emailCheck =

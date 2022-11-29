@@ -93,20 +93,21 @@ export const MENU_ITEMS =[
 ]
 //Số bản ghi trên trang
 export const OPTION_PAGING=[
-    {value: 10, name:"10"},
+    //{value: 10, name:"10"},
     {value: 20, name:"20"},
     {value: 30, name:"30"},
     {value: 50, name:"50"},
+    {value: 100, name:"100"},
 ]
 //Dữ liệu giới tính
 export const LIST_GENDER=[
   {
     value: 1,
-    name : "Nam"
+    name : "Nữ"
   },
   {
     value: 2,
-    name : "Nữ"
+    name : "Nam"
   },
   {
     value: 3,
@@ -286,4 +287,12 @@ export const MESS_TOAST ={
     classColor:"color-succses",
     toastAct: "Xuất file excel thành công"
   }
+}
+
+//Giá trị keyCode
+export const KEY_CODE ={
+  Insert : 45,
+  F9: 120,
+  F8:119,
+  Enter:13,
 }

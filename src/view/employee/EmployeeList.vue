@@ -5,6 +5,7 @@
           <m-button
             index="2"
             text="Thêm mới nhân viên"
+            title="Thêm mới nhân viên (Insert)"
             @click="onToggle"
           ></m-button>
         </div>
@@ -81,21 +82,11 @@
     @yes-warning="deleteMultipleEmployee"
     ></MWarning>
 <!-- Popup thông báo trùng mã nhân viên -->
-    <MWarning
+    <MPopupWarning
     v-if="isShowMessDuplicate"
-    :text="duplicateMess"
-    :dialogType="DIALOG_TYPE.WARNING"
     @oke-warning="okeWarningDuplicate"
-    ></MWarning>
-<!-- Popup thông báo khi đóng Dialog thêm mới -->
-    <MWarning
-    v-if="isShowMessSaveData"
-    :text="warningText"
-    @cancel-warning="cancelWarning"
-    @yes-warning="closeAndSaveData"
-    ref="closeAndSaveData"
-    @no-warning="closeAndDontSave"
-    ></MWarning>
+    ></MPopupWarning>
+
     <!-- Toast mess delete -->
      <MToas
       v-if="isShowToas"
@@ -109,6 +100,7 @@
 </template>
 <script>
 import MWarning from "../../components/base/MPopup/MWarning.vue";
+import MPopupWarning from "../../components/base/MPopup/MPopupWarning.vue";
 import {
   loadData,
   deleteByEmployeeId,
@@ -117,13 +109,13 @@ import {
 } from "../../axios/employeeController/employeeController.js";
 import TheLoading from "../../components/base/TheLoading.vue";
 import MbuttonIcon from "../../components/base/Mbutton/MbuttonIcon.vue";
-import EmployeeDetail from "../../veiw/employee/EmployeeDetail.vue";
+import EmployeeDetail from "../../view/employee/EmployeeDetail.vue";
 import MPaging from "../../components/base/paging/MPaging.vue";
 import MTableEmployeeList from "../../components/base/Mtable/MTableEmployee.vue";
 import MButton from "../../components/base/Mbutton/MButton.vue";
 import MInputIcon from "../../components/base/input/MInputIcon.vue";
 import MToas from "../../components/base/MToas.vue";
-import { EMPLOYEE_HEADER, DEFAULT_PARAMS, DIALOG_TYPE, MESS_TOAST,HEADER_DETAIL } from "../../const.js";
+import { EMPLOYEE_HEADER, DEFAULT_PARAMS, DIALOG_TYPE, MESS_TOAST,HEADER_DETAIL,KEY_CODE } from "../../const.js";
 export default {
   name: "EmployeeList",
   components: {
@@ -136,6 +128,7 @@ export default {
     MToas,
     TheLoading,
     MbuttonIcon,
+    MPopupWarning
   },
   data() {
     return {
@@ -148,12 +141,12 @@ export default {
       employees: [],
       totalRecord: 0,
       employeeSelected: [],
-      valuePageSize: 10,
+      valuePageSize: 20,
       employeeFilter: null,
       pageNumber: 1,
       filter: "",
       numberStart: 1,
-      numberEnd: 10,
+      numberEnd: 20,
       EmpDeleted: null,
       dataDetail: null,
       DIALOG_TYPE: DIALOG_TYPE,
@@ -182,6 +175,12 @@ export default {
     this.emitter.on("valueActive", (valueActive) => {
       this.valuePageSize = valueActive;
     });
+    //Thao tác bằng bàn phím
+    document.addEventListener("keyup",(e)=> {
+      if(e.keyCode == KEY_CODE.Insert){
+        this.onToggle();
+      }
+    })
   },
   watch: {
     /**
@@ -193,7 +192,6 @@ export default {
     pageNumber() {
       this.getFilter();
       this.getDataPagings();
-      this.getPaging();
     },
 
     //Get page size
@@ -201,14 +199,23 @@ export default {
       this.pageNumber = 1;
       this.getFilter();
       this.getDataPagings();
-      this.getPaging();
     },
   },
   methods: {
+    /**
+     * Sự kiện bằng bàn phím
+     * Author:NTLAM(25/11/2022)
+     */
+     onKeyUp(val){
+      console.log("sbc")
+      if(val.keyCode == 45){
+        this.onToggle();
+      }
+     },
     //Get flter đưa vào xử lý API get emlpyee filter
     getEmployeeFilter() {
       this.pageNumber = 1;
-      this.valuePageSize = 10;
+      this.valuePageSize = 20;
       this.getFilter();
       this.getDataPagings();
     },
@@ -375,6 +382,7 @@ export default {
      * Author:NTLAM 27/10/2022
      */
     onToggleDuplicate(item){
+      this.popupHeader = HEADER_DETAIL.PopupAddEmployee
       this.dataDetail = item;
       this.dataDetail["IsDuplicate"] = true;
       this.isShow = true;
@@ -384,30 +392,8 @@ export default {
      * Author:NTLAM 27/10/2022
      */
     closeToggle() {
-      //Hiển thị popup thông báo
-      this.isShowMessSaveData = true;
-      this.warningText = "Dữ liệu đã thay đổi. Bạn có muốn cất không?"
-    },
-    /**
-     * Sự kiện huỷ đóng Dialog thêm mới
-     */
-    cancelWarning(){
-      this.isShow = true;
-      this.isShowMessSaveData = false;
-    },
-    /**
-     * Sự kiện đóng dialog thêm mới vào không lưu
-     */
-     closeAndDontSave(){
       this.isShow = false;
-      this.isShowMessSaveData = false;
-     },
-     /**
-      * Sự kiện đóng dialof thêm mới và lưu thông tin
-      */
-      closeAndSaveData(){
-        this.$refs.closeAndSaveData.insertOrUpdateEmployee(true);
-      },
+    },
     /**
      * Hàm xử lý khi thêm mới/sửa thành công
      * Author: NTLAM (27/10/2022)
@@ -458,12 +444,12 @@ export default {
     getDataPagings() {
       this.showLoading = true;
       this.getFilter();
-      this.pageNumber
       loadData(this.filter)
         .then((res) => {
           this.employees = res.data.Data;
           if (this.totalRecord != null) {
             this.totalRecord = res.data.TotalCount;
+            this.getPaging();
           } 
           this.showLoading = false;
           return this.totalRecord;
@@ -502,6 +488,7 @@ export default {
     showEmployeeDetal(val) {
       this.popupHeader = HEADER_DETAIL.PopupEditEmployee;
       this.dataDetail = val;
+      this.dataDetail["IsDuplicate"] = false;
       this.isShow = true;
     },
 
@@ -513,7 +500,8 @@ export default {
       this.isShowToas=true;
         setTimeout(() => {
         this.isShowToas = false;
-      }, 4000);
+      }, 
+      4000);
     },
     /**
      * Sự kiện bỏ chọn tất cả select box

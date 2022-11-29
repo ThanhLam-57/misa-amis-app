@@ -1,5 +1,5 @@
 <template lang="">
-  <MPopup :componentWidth="900" @keyup.esc="closeOption">
+  <MPopup :componentWidth="900" @keyup.esc="closeOption" @keyup="onKeyUp($event)">
     <template #header >
           <div class="popup-title">
             <div id="header-popup-title" class="header-popup-title">
@@ -108,7 +108,7 @@
                   v-model="employee.Gender"
                   tabIndex="6"
                 />
-                <label class="label-gen" for="1">Nam</label>
+                <label class="label-gen" for="0">Nam</label>
 
                 <input
                   type="radio"
@@ -117,7 +117,7 @@
                   v-model="employee.Gender"
                   tabIndex="7"
                 />
-                <label class="label-gen" for="0">Nữ</label>
+                <label class="label-gen" for="1">Nữ</label>
 
                 <input
                   type="radio"
@@ -246,7 +246,7 @@
     <MButton
       @click="closeOption"
       @keyup.enter="closeOption"
-      title="Hủy"
+      title="Hủy(ESC)"
       index="1"
       text="Hủy"
       class="mess-footer__left"
@@ -257,7 +257,7 @@
       <MButton
         @click="insertOrUpdateEmployee(true)"
         @keyup.enter="insertOrUpdateEmployee(true)"
-        title="Cất"
+        title="Cất (Ctrl+F8)"
         index="1"
         text="Cất"
         class="mess-footer__mid"
@@ -268,7 +268,7 @@
         <MButton
           @click="insertOrUpdateEmployee(false)"
           @keyup.enter="insertOrUpdateEmployee(false)"
-          title="Cất và thêm"
+          title="Cất và thêm (Ctrl+F9)"
           index="2"
           text="Cất và thêm"
           class="mess-footer_right"
@@ -279,25 +279,33 @@
   </div>
 </template>
   </MPopup>
+  <!-- Popup thông báo khi đóng Dialog thêm mới -->
+    <MWarning
+    v-if="isShowMessSaveData"
+    :text="warningText"
+    @cancel-warning="cancelWarning"
+    @yes-warning="insertOrUpdateEmployee(true)"
+    ref="closeAndSaveData"
+    @no-warning="close"
+    ></MWarning>
 </template>
 <script>
+import MWarning from "../../components/base/MPopup/MWarning.vue";
 import MBaseInput from "../../components/base/input/MBaseInput.vue";
 import MRadio from "../../components/base/input/MRadio.vue";
 import MButton from "../../components/base/Mbutton/MButton.vue";
 import MComboboxPosition from "../../components/base/combobox/MComboboxPosition.vue";
 import MComboboxDepartment from "../../components/base/combobox/MComboboxDepartment.vue";
 import MPopup from "../../components/base/MPopup/MPopup.vue";
-import { DEPARTMENT_HEADER, POISITION_HEADER,} from "../../const.js";
+import { DEPARTMENT_HEADER, POISITION_HEADER,KEY_CODE} from "../../const.js";
 import { getDepartment } from "../../axios/departmentController/departmentController.js";
 import { getPoisition } from "../../axios/poisitionController/poisitionController.js";
 import {
-  postEmployee,
-  putEmployee,
   getNewCode,
   insertOrUpdate
 } from "../../axios/employeeController/employeeController.js";
 import { formatDateValue } from "../../script/base.js";
-import Base from "@/veiw/base/Base.vue"
+import Base from "@/view/base/Base.vue"
 
 export default {
   name: "EMployeeDetail",
@@ -309,9 +317,11 @@ export default {
     MComboboxPosition,
     MBaseInput,
     MPopup,
+    MWarning
   },
   data() {
     return {
+      isShowMessSaveData: false,
       optionSavevalue: null,
       isShowTb: false,
       headersDepartment: DEPARTMENT_HEADER,
@@ -343,7 +353,8 @@ export default {
         GenderName: null,
       },
       employee: null,
-      messErr:null
+      messErr:null,
+      employeeOld: null
     };
   },
   props: {
@@ -396,10 +407,15 @@ export default {
           //Tự động lấy mã Code nhân viên
           this.getNewCodeEmployee();
         }
+        this.employeeOld = {...this.employee};
       },
       immediate: true,
     },
   },
+  /**
+   * Gọi danh sách đơn vị
+   * Author:NTLAM(15/11/2022)
+   */
   async created() {
     await this.getDataDepartment();
     this.getDataPoisition();
@@ -409,6 +425,25 @@ export default {
     },100)
   },
   methods: {
+    /**
+     * Sự kiện dùng bàn phím cho form detail
+     */
+     onKeyUp(val){
+      if(val.keyCode == KEY_CODE.F8){
+        //Gọi sự kiện cất
+        this.insertOrUpdateEmployee(true)
+      }
+      if(val.keyCode == KEY_CODE.F9){
+        //Gọi sự kiện
+        this.insertOrUpdateEmployee(false)
+      }
+     },
+    /**
+     * Sự kiện huỷ đóng Dialog thêm mới
+     */
+     cancelWarning(){
+      this.isShowMessSaveData = false;
+    },
     /**
      * Hàm thực hiện sự kiện chon Poisition để xử lý bắn vào ô input Poisition
      * Author: NTLAM (02/11/2022)
@@ -440,6 +475,21 @@ export default {
      * Author:NTLAM 27/10/2022
      */
     closeOption() {
+      //Kiểm tra dữ liệu có thay đổi hay không
+      if(JSON.stringify(this.employeeOld) != JSON.stringify(this.employee)){
+        //Hiển thị popup thông báo
+        this.isShowMessSaveData = true;
+        this.warningText = "Dữ liệu đã thay đổi. Bạn có muốn cất không?"
+      }
+      else{
+        this.close();
+      }
+    },
+    /**
+     * hàm đóng popup
+     * Author:NTLAM 27/10/2022
+     */
+    close(){
       this.$emit("closeDiaLog");
     },
     /**
@@ -480,6 +530,7 @@ export default {
      * Author:NTLAM 05/11/2022
      */
      insertOrUpdateEmployee(closeForm){
+      this.isShowMessSaveData= false;
       if(!this.validate()){
         return
       };
@@ -491,6 +542,9 @@ export default {
               this.$emit("closeDiaLogAddSucceed", closeForm, this.mode);
             } else {
               this.employee = { ...this.employeeCreate };
+              //sinh mã nhân viên mới
+              this.getNewCodeEmployee();
+              this.handleTabIndex();
               this.$emit("closeDiaLogAddSucceed", closeForm, this.mode);
             }
           })
@@ -524,42 +578,6 @@ export default {
       handleTabIndex(){
         this.$refs.EmployeeCode.handleFocus();
       }
-    /**
-     * Hàm thực hiện cất dữ liêu
-     * Author:NTLAM 05/11/2022
-     */
-    // postDataEmployee(closeForm) {
-    //   this.validate();
-    //   if (this.mode == "add") {
-    //     postEmployee(this.employee)
-    //       .then((res) => {
-    //         if (closeForm == true) {
-    //           this.$emit("closeDiaLogAddSucceed", closeForm, this.mode);
-    //         } else {
-    //           this.employee = { ...this.employeeCreate };
-    //           this.$emit("closeDiaLogAddSucceed", closeForm, this.mode);
-    //         }
-    //       })
-    //       .catch((err) => {
-    //         this.messErr = err.response.data.ErrorMessage;
-    //         this.$emit("showToasErr", this.mode);
-    //       });
-    //   } else {
-    //     putEmployee(this.employee.EmployeeID, this.employee)
-    //       .then((res) => {
-    //         if (closeForm == true) {
-    //           this.$emit("closeDiaLogAddSucceed", closeForm, this.mode);
-    //         } else {
-    //           this.employee = { ...this.employeeCreate };
-    //           this.$emit("closeDiaLogAddSucceed", closeForm, this.mode);
-    //           this.mode = "add";
-    //         }
-    //       })
-    //       .catch((err) => {
-    //         this.$emit("showToasErr", this.mode);
-    //       });
-    //   }
-    // },
   },
 };
 </script>

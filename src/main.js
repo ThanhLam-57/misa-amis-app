@@ -3,8 +3,8 @@ import App from './App.vue'
 import { createRouter } from 'vue-router';
 import { createWebHistory } from 'vue-router';
 import VueClickAway from "vue3-click-away";
-import EmployeeList from '@/veiw/employee/EmployeeList.vue';
-import ReportList from './veiw/report/ReportList.vue';
+import EmployeeList from '@/view/employee/EmployeeList.vue';
+import ReportList from './view/report/ReportList.vue';
 import mitt from 'mitt';
 
 

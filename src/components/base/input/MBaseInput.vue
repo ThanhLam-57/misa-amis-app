@@ -57,6 +57,7 @@ export default {
      * Lấy ra giá trị của ô input
      * Hàm truyền dữ liệu từ input lên để xử lý
      * @param {*} val 
+     * Author:NTLAM(30/10/2022)
      */
     changeValue(val) {
       this.validate(val.target.value);
@@ -64,10 +65,15 @@ export default {
     },
     /**
      * Hàm xửử lý khi blur
+     * Author:NTLAM(30/10/2022)
      */
      onBlur(val){
       this.validate(val.target.value);
     },
+    /**
+     * Sử lý sự kiện khi blur
+     * Author:NTLAM(30/10/2022)
+     */
     handleFocus(){
       this.$refs.name.focus();
     }

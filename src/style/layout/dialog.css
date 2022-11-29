@@ -16,15 +16,13 @@
     left: 50%;
     transform: translate(-50%, -50%);
 }
-.mess-content{
-    display: flex;
-}
 .mess-content__text{
     overflow: auto;
     max-height: 400px;
-    margin-bottom: 32px;
-    padding-left: 16px;
-    padding-top: 12px;
+    /* margin-bottom: 32px; */
+    /* padding-left: 16px; */
+    padding-top: 24px;
+    padding-bottom: 24px;
 }
 .mess-line{
     height: 1px;
