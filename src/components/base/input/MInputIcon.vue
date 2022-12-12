@@ -1,6 +1,7 @@
 <template lang="">
     <input
         class="m-input input-search"
+        :maxlength="maxlength"
         :style="style"
         :type="type"
         :value="modelValue"
@@ -12,6 +13,7 @@
 export default {
     name:"MInputIcon",
     props:{
+        maxlength:Number,
         class: String,
         style: {
             type :String,

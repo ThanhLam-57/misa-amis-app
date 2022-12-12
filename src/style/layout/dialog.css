@@ -27,7 +27,7 @@
 .mess-line{
     height: 1px;
     background: #b8bcc3;
-    margin-bottom: 20px;
+    margin-bottom: 12px;
     /* margin-left: 32px;
     margin-right: 32px; */
 }
@@ -43,7 +43,9 @@
     display: flex;
 }
 .dialog-icon{
+    padding-top: 24px;
     display: flex;
+    padding-right: 24px;
 }
 
 

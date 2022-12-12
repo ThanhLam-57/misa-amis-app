@@ -29,6 +29,7 @@ export default {
      */
     focus(e) {
       this.isFocus = true;
+      this.isShow = true;
     },
     /**
      * Sự kiện sau khi blur
@@ -37,6 +38,18 @@ export default {
      */
     onBlur(val) {
       this.isFocus = false;
+      if(this.valueText){
+        var item = this.optionData.find(x => x[this.displayField] == this.valueText);
+        if(item){
+          this.$emit("select", item);
+        }
+        else{
+          this.valueText = null;
+        }
+      }
+      setTimeout(() => {
+        this.isShow = false;
+      }, 200); 
     },
     /**
      * Thao tác bằng bàn phím cho chọn item
@@ -47,11 +60,11 @@ export default {
       switch (val.keyCode) {
         //Kiểm tra là enter
         case 13:
-          this.showTable();
+          this.showOption();
           break;
         //Kiểm tra là page down
         case 38:
-          this.isShowTb = true;
+          this.isShow = true;
           if (this.valueText) {
             var index = this.optionData.findIndex(
               (x) => x[this.displayField] == this.valueText
@@ -63,7 +76,7 @@ export default {
           break;
         //Kiểm tra là page up
         case 40:
-          this.isShowTb = true;
+          this.isShow = true;
           if (this.valueText) {
             var index = this.optionData.findIndex(
               (x) => x[this.displayField] == this.valueText

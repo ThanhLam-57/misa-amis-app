@@ -5,7 +5,7 @@
             <div id="header-popup-title" class="header-popup-title">
               {{popupHeader}}
             </div>
-            <label class="ms-checkbox">
+            <!-- <label class="ms-checkbox">
               <input 
                 :value="modelValue"
                 :v-model="textModel"
@@ -18,7 +18,7 @@
                 :v-model="textModel"
                 type="checkbox" />
               <div class="checkbox-text pd-l-10">Là nhân viên</div>
-            </label>
+            </label> -->
           </div>
           <div class="dialog-icon">
             <div class="popup-help__icon icon hw-24"  title="Giúp (F1)"></div>
@@ -36,7 +36,8 @@
             >
             <MBaseInput
               type="text"
-              name="EmployeeCode"
+              name="Mã nhân viên"
+              :maxlength="20"
               rules="Empty"
               ref="EmployeeCode"
               :tabIndex="1"
@@ -536,6 +537,7 @@ export default {
       };
       var empID = ""
       if (this.mode == "add") {
+        debugger
         insertOrUpdate(empID,this.employee)
           .then((res) => {
             if (closeForm == true) {
@@ -567,6 +569,7 @@ export default {
           })
           .catch((err) => {
             this.errorMessage = err.response.data.errorMessage;
+            //this.errorMessage=err.response.data[0].value
             this.$emit("showToasErr", this.mode,this.errorMessage);
             return err.response.data.errorMessage;
           });

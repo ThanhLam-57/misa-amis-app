@@ -2,6 +2,7 @@
     <input
       :type="type"
       :value="modelValue"
+      :maxlength="maxlength"
       @input="changeValue"
       :class="{
         'm-input': type !== 'checkbox',
@@ -23,6 +24,7 @@ export default {
   extends:MBaseComponent,
   props: {
     type: String,
+    maxlength:Number,
     modelValue: String,
     name: String,
     isRequire: {

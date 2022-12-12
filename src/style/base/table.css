@@ -64,6 +64,11 @@ th{
     position: sticky;
     background-color: #E7F5EC;
 }
+.sticky_header_left_2 {
+    left: 210px;
+    position: sticky;
+    background-color: #E7F5EC;
+}
 .sticky_body_left {
     position: sticky;
     background-color: #fff;
@@ -74,6 +79,11 @@ th{
     position: sticky;
     background-color: #fff;
     /* z-index: 3; */
+}
+.sticky_body_left_2{
+    left: 210px;
+    position: sticky;
+    background-color: #fff;
 }
 .sticky_header_right {
     position: sticky;

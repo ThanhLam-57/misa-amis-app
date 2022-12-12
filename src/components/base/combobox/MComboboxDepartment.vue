@@ -8,6 +8,7 @@
           :class="[{'validate-error': isValidate },{'active': isFocus}]">
           <input 
           @click="openTable"
+          
           :tabIndex="tabIndex"
                 @input="changeValue" @blur="onBlur" :value="valueText"
                class="m-input" style="height: 34px;border: none;" type="text"
@@ -55,7 +56,8 @@
 </template>
 <script>
 import MBaseComponent from "../MBaseComponent.vue";
-import {KEY_CODE} from "../../../const.js"
+import {KEY_CODE} from "../../../const.js";
+import {TXT_FIELD} from "../../../resource .js"
 export default {
   extends: MBaseComponent,
   name: "MComboboxDepartment",
@@ -155,6 +157,7 @@ export default {
      */
     focus(e) {
       this.isFocus = true;
+      this.isShowTb = true;
     },
     /**
      * Sự kiện dùng bàn phím chọn item
@@ -259,8 +262,9 @@ export default {
         }
       }
       setTimeout(() => {
+        this.isShowTb = false;
         this.validate(val.target.value);
-      }, 200);
+      }, 200);  
     },
   },
 };

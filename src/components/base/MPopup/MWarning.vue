@@ -3,10 +3,13 @@
       <div class="mw-444">
         <div class="message">
           <div class="mess-content">
-            <div class="delete-popup" v-if="showDialogOnType.warning">Mã nhân viên đã có trong hệ thống</div>
-            <div class="icon hw-48 mess-err-icon" v-if="showDialogOnType.err"></div>
-            <div class="delete-popup" v-if="showDialogOnType.ask">Xoá tài liệu</div>
-            <div class="delete-popup" v-if="showDialogOnType.askOption">Dữ liệu đã thay đổi</div>
+            <div class="conten-warning">
+              <div class="delete-popup" v-if="showDialogOnType.warning">Mã nhân viên đã có trong hệ thống</div>
+              <div class="icon hw-48 mess-err-icon" v-if="showDialogOnType.err"></div>
+              <div class="delete-popup" v-if="showDialogOnType.ask">Xoá {{numberRecordDelete}} tài liệu</div>
+              <div class="delete-popup" v-if="showDialogOnType.askOption">Dữ liệu đã thay đổi</div>
+              <div class="icon hw-12 icon-close" @click="onNo" ></div>
+            </div>
             <div class="mess-content__text">
               {{text}}
             </div>
@@ -45,7 +48,8 @@ import {DIALOG_TYPE} from "../../../const.js"
 export default {
   props:{
     text:String,
-    dialogType:String
+    dialogType:String,
+    numberRecordDelete:Number
   },
   data() {
     return {
@@ -102,6 +106,11 @@ export default {
 };
 </script>
 <style scoped>
+.conten-warning{
+  display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 .message{
   width: 396px;
   border-radius: 4px;

@@ -12,4 +12,7 @@ export const API_URL ={
     GET_POISITION:`${BASE_API}/Positions/get-all`,
     GET_DEPARTMENT:`${BASE_API}/Departments/get-all`,
     EXPORT_EXCELl:`${BASE_API}/Employees/export`,
+};
+export const TXT_FIELD={
+    NOT_DATA:"Không có dữ liệu",
 }

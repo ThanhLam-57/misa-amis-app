@@ -22,6 +22,7 @@
             <div class="row" style="width: 250px">
               <div class="" style="padding-right: 10px">
                 <MInputIcon
+                :maxlength = "200"
                   type="text"
                   v-model:modelValue="employeeFilter"
                   v-on:keyup.enter="getDataPagingSearch"
@@ -77,6 +78,7 @@
     <MWarning
     v-if="isShowWarningDeleteMultiple"
     :text="warningText"
+    :numberRecordDelete="employeeSelected.length"
     :dialogType="DIALOG_TYPE.ASK_CANCELABLE"
     @no-warning="cancelDelete"
     @yes-warning="deleteMultipleEmployee"
@@ -164,7 +166,8 @@ export default {
         classIcon:null,
         classColor:null,
       },
-      stringEmpID:""
+      stringEmpID:"",
+      numberRecordDelete:0
     };
   },
   created() {
@@ -239,9 +242,18 @@ export default {
         this.EmpDeleted.EmployeeCode +
         "> không ?";
     },
+    /**
+     * hàm cảnh báo xóa danh sách nhân viên
+     * Author:NTLAM (03/11/2022)
+     */
     optionDeteleMultiple(){
       this.isShowWarningDeleteMultiple = true;
-      this.warningText = "Bạn có muốn xoá danh sách nhân viên"
+      if(this.employeeSelected.length > 1){
+        this.warningText = "Bạn có muốn xoá danh sách nhân viên ?"
+      }
+      if(this.employeeSelected.length == 1){
+        this.warningText = "Bạn có muốn xoá nhân viên ?"
+      }
     },
     /**
      * Hàm hủy xóa
@@ -426,15 +438,17 @@ export default {
      */
     showToasErr(mode,messErr){
       if(mode=="add"){
-        this.isShow=true;
-        this.messToast= this.MESS_TOAST.ADD_FAIL;
-        this.showToastMess()
-        this.duplicateMess = messErr
-        this.isShowMessDuplicate = true
+        //this.isShow=true;
+        //this.messToast= this.MESS_TOAST.ADD_FAIL;
+        //this.showToastMess();
+        this.duplicateMess = messErr;
+        this.isShowMessDuplicate = true;
       }else{
-        this.isShow=true;
-        this.messToast= this.MESS_TOAST.EDIT_FAIL;
-        this.showToastMess()
+        //this.isShow=true;
+        //this.messToast= this.MESS_TOAST.EDIT_FAIL;
+        //this.showToastMess();
+        this.duplicateMess = messErr;
+        this.isShowMessDuplicate = true;
       }
     },
     /**
@@ -464,6 +478,9 @@ export default {
     deleteMultipleEmployee(){
       deleteMultiple(this.employeeSelected).then((res)=>{
           if(res.data){
+            if(this.pageNumber>1&&(this.pageNumber - 1) * this.valuePageSize == this.totalRecord - 1){
+              this.pageNumber = this.pageNumber - 1;
+            }
             this.getDataPagings();
             this.isShowWarningDeleteMultiple = false;
             this.messToast=this.MESS_TOAST.DELETE_SUCCSES;

@@ -18,7 +18,8 @@
 }
 .popup-title{
     display: flex;
-    padding: 20px 32px;
+    /* padding: 20px 32px; */
+    padding: 24px;
 }
 .header-popup-title{
     font-size: 24px;
@@ -30,8 +31,8 @@
     display: flex;
 }
 .popup-content__employee{
-    padding: 0 32px;
-    padding-bottom: 20px;
+    padding: 0 24px;
+    /* padding-bottom: 20px; */
 }
 .popup-content__employee1{
     display: flex;
@@ -48,12 +49,12 @@
     width: 25%;
 }
 .popup-footer{
-    padding: 0 32px;
-    padding-bottom: 20px;
+    padding: 0 24px;
+    padding-bottom: 12px;
 }
 .popup .mess-line{
-    margin-left: 32px;
-    margin-right: 32px;
+    margin-left: 24px;
+    margin-right: 24px;
 }
 .employee1-right__user1{
     display: flex;

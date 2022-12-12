@@ -18,7 +18,7 @@ export  function getData(){
 */
 export  function loadData(params){
     try {
-        return axios.get(API_URL.FILTER_EMPLOYEE + params);
+        return axios.post(API_URL.FILTER_EMPLOYEE + params);
     } catch (error) {
         
     }

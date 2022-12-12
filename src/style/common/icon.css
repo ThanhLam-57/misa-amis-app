@@ -48,11 +48,11 @@
 }
 .popup-close__icon{
     background-position: -144px -144px;
-    margin: 12px;
+    margin-left: 12px;
 }
 .popup-help__icon {
     background-position: -89px -144px;
-    margin: 12px 0;
+    /* margin: 12px 0; */
 }
 .arrow-up--blueicon {
     background-position: -896px -359px;
@@ -87,10 +87,8 @@
     position: relative;
 }
 .icon-close {
-    background-position: -147px -147px;
-    width: 18px;
-    height: 18px;
-    margin-top: 2px;
+    background-position: -1178px -362px;
+    margin: 6px;
     cursor: pointer;
     position: relative;
 }

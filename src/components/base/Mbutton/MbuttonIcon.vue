@@ -35,12 +35,12 @@ export default {
     padding: 0 12px;
 }
     .btn__icon {
-    font-size: 20px;
+    /* font-size: 20px;
     background: url(../../../assets/img/Sprites.64af8f61.svg);
     background-repeat: no-repeat;
     margin-right: 10px;
     background-position:-464px -313px;
     height: 15px;
-    width: 15px;
+    width: 15px; */
 }
 </style>

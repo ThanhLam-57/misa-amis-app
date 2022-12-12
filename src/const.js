@@ -125,8 +125,8 @@ export const EMPLOYEE_HEADER = [
     Width: "130",
   },
   {
-    Class: "text-align--left",
-    CellClass: "text-align--left",
+    Class: "text-align--left sticky_header_left_2",
+    CellClass: "text-align--left sticky_body_left_2",
     Caption: "TÊN NHÂN VIÊN",
     propValue: "EmployeeName",
     Width: "200",
