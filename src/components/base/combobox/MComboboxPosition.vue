@@ -12,12 +12,13 @@
               {{item[displayField]}}
             </div>
           </div>
-          <div class="itemOption" v-else>Không có dữ liệu</div>
+          <div class="itemOption" v-else>{{txtField.NOT_DATA}}</div>
         </div>
     </div>
   </template>
   <script>
 import MBaseInputVue from "../../base/input/MBaseInput.vue";
+import { TXT_FIELD } from "../../../resource .js";
 export default {
   name: "MComboboxPosition",
   components: { MBaseInputVue },
@@ -163,6 +164,7 @@ export default {
       valueText: null,
       optionData: [],
       isFocus: false,
+      txtField:TXT_FIELD,
     };
   },
   watch: {
@@ -221,7 +223,7 @@ export default {
   max-height: 200px;
   overflow: auto;
   border: 1px solid #babec5;
-  width: 400px;
+  width: 410px;
   border-radius: 4px;
   /* display; */
 }

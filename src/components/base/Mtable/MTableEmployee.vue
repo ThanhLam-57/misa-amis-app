@@ -23,7 +23,7 @@
                     class="text-align--center sticky_header_right"
                     style="min-width: 120px"
                   >
-                    CHỨC NĂNG
+                    {{handleOption.FUNCTION}}
                   </th>
                 </tr>
               </thead>
@@ -48,18 +48,18 @@
                     style="min-width: 120px"
                   >
                     <div class="edit-option">
-                      <div @click="showDialog(employee)" class="text-edit">Sửa</div>
+                      <div @click="showDialog(employee)" class="text-edit">{{handleOption.EDIT}}</div>
                       <button @click="showOpttion(employee)" class="icon arrow-up--blueicon hw-16">
                       </button>
                     </div>
                     <div v-show="isShowOption && itemSelected.EmployeeID == employee.EmployeeID"  class="dlg-option"  v-if="this.isShowOption==true" v-click-away="closeOption">
-                      <div @click="deleteEmployee" class="option option-delete">Xoá</div>
-                      <div @click="duplicateEmployee" class="option option-stop__use">Nhân bản</div>
+                      <div @click="deleteEmployee" class="option option-delete">{{handleOption.DELETE}}</div>
+                      <div @click="duplicateEmployee" class="option option-stop__use">{{handleOption.DUPLICATE_RECORD}}</div>
                     </div>
                   </td>
                 </tr>
                 <div class="mes-table" v-if="dataSource.length == 0">
-                  Không có dữ liệu
+                  {{txtField.NOT_DATA}}
                 </div>
               </tbody>
             </table>
@@ -67,6 +67,7 @@
 </template>
 <script>
 import { formatDate } from "../../../script/base.js";
+import { TXT_FIELD,HANDLE_OPTION } from "../../../resource .js";
 export default {
   name: "MTableEmployeeList",
   components: {},
@@ -112,6 +113,8 @@ export default {
         Type: [String, Number],
         default: null,
       },
+      txtField:TXT_FIELD,
+      handleOption:HANDLE_OPTION,
     };
   },
   watch: {

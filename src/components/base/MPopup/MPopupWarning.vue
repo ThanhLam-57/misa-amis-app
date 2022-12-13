@@ -23,6 +23,7 @@
 </template>
 <script>
 import {DIALOG_TYPE} from "../../../const.js"
+import { TXT_FIELD } from "../../../resource ";
 export default {
   props:{
     text:String,
@@ -36,6 +37,7 @@ export default {
         warning: false,
         askOption: false,
         ask: false,
+        txtField:TXT_FIELD,
       }
     }
   },

@@ -45,10 +45,10 @@
                   >{{  item[displayField]}}</div>
                 </div>
             </div>
-            <div class="itemBody" style="padding:0 16px" v-else>Không có dữ liệu</div>
+            <div class="itemBody" style="padding:0 16px" v-else>{{txtField.NOT_DATA}}</div>
         </div>
         <div class="table-bot">
-                Cập nhật cơ cấu tổ chức
+                {{txtField.UPDATE_DEPARTMENT}}
         </div>
     </div>
     </div>
@@ -113,6 +113,7 @@ export default {
       valueText: null,
       optionData: [],
       isFocus: false,
+      txtField : TXT_FIELD,
     };
   },
   watch: {
@@ -283,7 +284,7 @@ export default {
   height: 34px;
 }
 .ttable {
-  width: 402px;
+  width: 410px;
   border-radius: 4px;
 }
 .itemHeader {

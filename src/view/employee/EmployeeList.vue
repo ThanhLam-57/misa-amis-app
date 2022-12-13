@@ -30,7 +30,7 @@
                 />
               </div>
             </div>
-            <div @click="reLoadData" class="icon hw-24 icon-reload" title="Load lại dữ liệu"></div>
+            <div @click="reLoadData" class="icon hw-24 icon-reload" title="Lấy dữ liệu"></div>
             <div @click="exportExcel" class="icon hw-24 icon-export" title="Xuất file Excel"></div>
             </div>
           </div>

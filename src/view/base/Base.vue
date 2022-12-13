@@ -10,6 +10,7 @@ export default {
          * Author:NTLAM(15/11/2022)
          */
         validate(){
+            debugger
             this.inputFalse = null;
             var isValidate = true;
             if(this.$refs.validate){

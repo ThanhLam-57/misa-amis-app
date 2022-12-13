@@ -66,5 +66,15 @@ export default {
   },
 };
 </script>
-<style lang="">
+<style scoped>
+.pageSize-ul{
+  padding-left: 0px !important;
+  width: 68px !important;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  border-radius: 4px;
+}
+.cbb_active{
+  border-radius: 0px;
+}
 </style>
